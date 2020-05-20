@@ -1,8 +1,10 @@
 package prlab.kbunit.business.ctciGenerator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -73,12 +75,15 @@ public class CreateCTCI {
 	 * @throws IOException
 	 */
     private static void createXML() throws IOException {
-        FileWriter writer;
+        FileOutputStream fileStream;
+        OutputStreamWriter writer;
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+        //Format f = outputter.getFormat();
+        //f.setEncoding("ISO-8859-1");
+        //outputter.setFormat(f);
 		try {
-			writer = new FileWriter(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
-			XMLOutputter outputter = new XMLOutputter();
-			//einrueckung
-			outputter.setFormat(Format.getPrettyFormat());
+			fileStream = new FileOutputStream(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
+			writer = new OutputStreamWriter(fileStream, "UTF-8");
 			outputter.output(doc, writer);
 		} finally {
 			doc.removeContent();// (!)

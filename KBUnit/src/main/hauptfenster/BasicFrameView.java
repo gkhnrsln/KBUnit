@@ -336,7 +336,9 @@ public class BasicFrameView extends JFrame
                         // + "(" + tci.getIdentifierName() + ")" + "</font>"
                         + "<font color=\"#808080\" size=+1>" 
                         + " (" + tci.getDisabledMessage() + ") " + "</font>"
-                        + " </font><p/><font color=\"#808080\">" + tci.getDesc()+"</font><html>");
+                        + " </font><p/><font color=\"#808080\">" 
+                        + tci.getDesc()
+                        +"</font><html>");
                 }
                 else{
                     this.lblOpenedTest.setText("<html><font size=+1>"
@@ -344,21 +346,39 @@ public class BasicFrameView extends JFrame
                         //+ "<font color=\"#808080\" size=+1>" 
                         // + "(" + tci.getIdentifierName() + ")" + "</font>"
                         + "<font color=\"#808080\" size=+1>" + " (" + "Disabled" + ") " + "</font>"
-                        + " </font><p/><font color=\"#808080\">" + tci.getDesc()+"</font><html>");
+                        + " </font><p/><font color=\"#808080\">" 
+                        + tci.getDesc()
+                    	+"</font><html>");
                 }
             }
             else
-            {
+            {            	
+            	this.lblOpenedTest.setText("<html><font size=+1>"
+                        + text
+                        + " </font><p/><font color=\"#808080\">3" 
+                        + tci.getDesc()
+                        	//.replace("ä", "&auml;")
+                        	//.replace("ö", "&ouml;")
+                        	//.replace("ü", "&uuml;")
+                        	//.replace("Ä", "&Auml;")
+                        	//.replace("Ö", "&Ouml;")
+                        	//.replace("Ü", "&Uuml;")
+                        	//.replace("ß", "&szlig;")
+                        +"</font></html>");
+            	/*
                 this.lblOpenedTest.setText("<html><font size=+1>"
                     + text
                     + " </font><p/><font color=\"#808080\">" + tci.getDesc()+"</font><html>");
+                    */
             }
         }
         else if(tci != null)
         {
             this.lblOpenedTest.setText("<html><font size=+1>"
                 + tci.getIdentifierName()
-                + " </font><p/><font color=\"#808080\">" + tci.getDesc()+"</font><html>");
+                + " </font><p/><font color=\"#808080\">" 
+                + tci.getDesc()
+                +"</font><html>");
         }
         this.pnlNeueKonfiguration.getPnlParameter().clearUserInterface();
         this.pnlNeueKonfiguration.buildUserInterface(tci);
