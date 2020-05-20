@@ -28,10 +28,13 @@ public class Variables {
 	//-------------------------FORMATS-FOR-DATE-AND-TIME----------------------------------------
 	/**{@value #FORMAT_FOR_DATE_TIME}*/
 	public final static String FORMAT_FOR_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+	//public final static String FORMAT_FOR_DATE_TIME = "yyyy/MM/dd HH:mm";
 	/**{@value #FORMAT_FOR_DATE}*/
 	public final static String FORMAT_FOR_DATE = "yyyy-MM-dd";
+	//public final static String FORMAT_FOR_DATE = "yyyy/MM/dd";
 	/**{@value #FORMAT_FOR_TIME}*/
 	public final static String FORMAT_FOR_TIME = "HH:mm:ss";
+	//public final static String FORMAT_FOR_TIME = "HH:mm";
 	/**{@value #INITIAL_TIME}*/
 	public final static int INITIAL_TIME = 3601000;
 	
@@ -53,6 +56,8 @@ public class Variables {
 	//-------------------------FILE-SCANNER---------------------------------------------
 	/**{@value #EXTENSION_JAVA}*/
 	public final static String EXTENSION_JAVA = ".java";
+	/**{@value #EXTENSION_TEST_JAVA}*/
+	public final static String EXTENSION_TEST_JAVA = "Test.java";
 	/**{@value #EXTENSION_XML}*/  
 	public final static String EXTENSION_XML = ".xml";
 	

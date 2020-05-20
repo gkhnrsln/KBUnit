@@ -22,7 +22,7 @@ public class KontoTest {
      * Testmethode einzigartigen Parameternamen zusammengesetzt sein
      */
 	/** vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos */
-    public static String setKundeZumKonto_Nachname = "Musterperson";
+    public static String testSetKundeZumKonto_Nachname = "Musterperson";
     
     // das zu testende Konto-Objekt
 	private Konto k;
@@ -62,13 +62,12 @@ public class KontoTest {
 	 * @throws IOException , falls die zu testende Methode eine IOException wirft
      */
 	@Test
-    public void setKundeZumKonto() throws IOException {
+    public void testSetKundeZumKonto() throws IOException {
      	File file = folder.newFile("test.txt");
-        this.k.setKunde(new Kunde("Elke", setKundeZumKonto_Nachname));
+        this.k.setKunde(new Kunde("Elke", testSetKundeZumKonto_Nachname));
         assertTrue("Der Kunde wurde zum Konto nicht gesetzt",
-			setKundeZumKonto_Nachname.equals(this.k.getKunde().getNachname()));
+			testSetKundeZumKonto_Nachname.equals(this.k.getKunde().getNachname()));
         assertTrue("Das Konto kC wurde nicht kreiert.", kC != null);
     	assertTrue(file.exists());
-    }    
-
+    }
 }

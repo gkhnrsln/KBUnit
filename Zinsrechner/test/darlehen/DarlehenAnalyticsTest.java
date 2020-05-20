@@ -29,22 +29,20 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DarlehenAnalyticsTest {
 
-    /** vom Wissenstraeger einstellbare Mindestdarlehen */
+    /** vom Wissenstr[:a]ger einstellbare Mindestdarlehen */
     public static int testSollTilgungsdarlehenAkzeptiertWerden_MinDarlehen = 50;
-    /** vom Wissenstraeger einstellbare maximale Laufzeit */
+    /** vom Wissenstr[:a]ger einstellbare maximale Laufzeit */
     public static int testSollTilgungsdarlehenAkzeptiertWerden_MaxLaufzeit = 100;
-    /** vom Wissenstraeger einstellbare minimale Jahreszahl */
+    /** vom Wissenstr[:a]ger einstellbare minimale Jahreszahl */
     public static int testSollTilgungsdarlehenAkzeptiertWerden_MinJahreszahl = 2018;
 
     /** vom Wissenstraeger einstellbare minimale Gesamtschuld,
      * die sie unter den Darlehen befinden soll */
-    public static double testGetGesamtschuldenMin_MinGesamtschuld
-        = Double.MIN_VALUE;
+    public static double testGetGesamtschuldenMin_MinGesamtschuld = Double.MIN_VALUE;
 
     /** vom Wissenstraeger einstellbare maximale Gesamtschuld,
      * die sie unter den Darlehen befinden soll */
-    public static double testGetGesamtschuldenMax_MaxGesamtschuld
-        = Double.MAX_VALUE;
+    public static double testGetGesamtschuldenMax_MaxGesamtschuld = Double.MAX_VALUE;
 
     /** vom Wissenstraeger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub .
      * Angabe der Wert erfolgt durch das Trennen mit Komma */

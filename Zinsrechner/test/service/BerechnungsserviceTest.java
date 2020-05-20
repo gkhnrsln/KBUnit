@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 /**
  * Die Zahlen fuer die Addition und Multiplikation, die aus
  * dem sogenannten Datenzugriffsobjekt (Data Access Object - DAO)
- * stammen, werden gemockt. Das heißt sie werden durch vom
+ * stammen, werden gemockt. Das heisst sie werden durch vom
  * Wissenstraeger definierte Zahlen ersetzt.
  * Beispiel stammt aus YouTube-Video:
  * @see <a href="https://www.youtube.com/watch?v=7ndQXjP9yMw">JUnit5-Mockito Tutorial | 15 mins Video | Fully Explained</a>
@@ -24,13 +24,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BerechnungsserviceTest {
 
-    // Der erste Parameter für die Addition
+    /** Der erste Parameter fuer die Addition */
     public static int testAddiereAlleZahlen_EingabeZahl1 = 1;
-    // Der zweite Parameter für die Addition
+    /** Der zweite Parameter fuer die Addition */
     public static int testAddiereAlleZahlen_EingabeZahl2 = 2;
-    // Der dritte Parameter für die Addition
+   	/** Der dritte Parameter fuer die Addition */
     public static int testAddiereAlleZahlen_EingabeZahl3 = 3;
-    // Ergebnis-Summe, die zur Ueberpruefung dient
+    /** Ergebnis-Summe, die zur Ueberpruefung dient */
     public static int testAddiereAlleZahlen_exp_ErgebnisSumme = 6;
 
     @InjectMocks

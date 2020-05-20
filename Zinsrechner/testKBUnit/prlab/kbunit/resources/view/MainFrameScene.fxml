@@ -1,163 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<BorderPane prefWidth="1200.0" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="prlab.kbunit.gui.windowMainFrame.MainFrameController">
-   <bottom>
-      <SplitPane dividerPositions="0.2600334448160535, 0.5" 
-          nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
-        <items>
-            <TabPane tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                  <Tab text="Testklasse">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.0" 
-                          prefWidth="328.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" text="Testklasse:"
-                                  AnchorPane.leftAnchor="14.0" />
-                              <Button fx:id="javaFileButton" layoutX="14.0" 
-                                  layoutY="66.0" mnemonicParsing="false" 
-                                  onAction="#scan" text="Öffnen" />
-                              <ComboBox fx:id="javafileComboBox" layoutX="14.0" 
-                                  layoutY="31.0" prefHeight="25.0" prefWidth="282.0" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Logger">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="99.0" 
-                           prefWidth="200.0">
-                           <children>
-                              <ComboBox fx:id="selectionComboBox" layoutX="14.0" 
-                                 layoutY="50.0" prefHeight="25.0" prefWidth="180.0" />
-                              <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" 
-                                 strokeWidth="0.0" text
-                                    ="Erstellt Log-Files für aktive Testkonfigurationen aus der DB." 
-                                 wrappingWidth="238.13671875" />
-                              <Button fx:id="startLoggerButton" 
-                                  disable="true" layoutX="14.0" layoutY="100.0" prefWidth="180.0"
-                                  mnemonicParsing="false" 
-                                  onAction="#runLogger" text="Start (geöffnete Testklasse)" />
-                              <Button fx:id="startLoggerButtonAllTestclasses" 
-                                  layoutX="14.0" layoutY="140.0" prefWidth="180.0"
-                                  mnemonicParsing="false" 
-                                  onAction="#runLoggerAllTestclasses" text="Start (alle Testklassen)" />
-                            </children>
-                         </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="Runner">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="23.0" layoutY="27.0" strokeType="OUTSIDE" 
-                                  strokeWidth="0.0" text
-                                      ="Generiert Testklassen mit aktiven Testkonfigurationen aus der DB." 
-                                  wrappingWidth="238.13671875" />
-                              <Button fx:id="startRunnerButton" 
-                                  disable="true" layoutX="23.0" layoutY="55.0" prefWidth="180.0" 
-                                  mnemonicParsing="false" 
-                                  onAction="#runRunner" text="Start (geöffnete Testklasse)" />
-                              <Button fx:id="startRunnerButtonAllTestclasses" 
-                                  layoutX="23.0" layoutY="95.0" prefWidth="180.0" 
-                                  mnemonicParsing="false" 
-                                  onAction="#runRunnerAllTestclasses" text="Start (alle Testklassen)" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
+
+<BorderPane prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prlab.kbunit.gui.windowMainFrame.MainFrameController">
+ <bottom>
+  <SplitPane dividerPositions="0.5" nodeOrientation="LEFT_TO_RIGHT" prefHeight="214.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+   <items>
+    <SplitPane dividerPositions="0.27388535031847133" orientation="VERTICAL" prefWidth="614.0">
+       <items>
+        <AnchorPane prefHeight="46.0" prefWidth="614.0">
+            <Label layoutX="14.0" layoutY="6.0" text="Testklasse:" AnchorPane.leftAnchor="14.0" />
+            
+            <ComboBox fx:id="javafileComboBox" layoutX="14.0" layoutY="23.0" onAction="#javafileChoose" prefHeight="25.0" prefWidth="282.0" />
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                     </padding>
+        </AnchorPane>
+        <AnchorPane prefHeight="251.0" prefWidth="614.0">
+          <SplitPane dividerPositions="0.5" prefHeight="222.0" prefWidth="614.0">
+           <items>
+            <AnchorPane>
+              <TabPane prefHeight="220.0" prefWidth="297.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                <Tab text="?" />
+                <Tab text="CustomerTestCaseInformation">
+                 <content>
+                  <AnchorPane>
+                   <children>
+                    <Text layoutX="8.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert CustomerTestCaseInformation.xml." wrappingWidth="238.13671875" />
+                    <Button fx:id="startGenerateCTCIButton" disable="true" layoutX="8.0" layoutY="55.0" mnemonicParsing="false" onAction="#generateCTCI" prefWidth="180.0" text="Start (ausgewählte Testklasse)" />
+                    <Button fx:id="startGenerateCTCIButtonAllTestclasses" disable="true" layoutX="8.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateCTCIAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                   </children>
+                  </AnchorPane>
+                 </content>
+                </Tab>
                </tabs>
-            </TabPane>
-            <Pane prefHeight="200.0" prefWidth="200.0" />
-            <Pane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <TableView fx:id="inactiveResultTable" layoutX="22.0" layoutY="10.0" prefHeight="189.0" 
-                     prefWidth="145.0">
-                     <columns>
-                        <TableColumn fx:id="inactiveIdColumn" prefWidth="145.0" text="ID" />
-                     </columns>
-                  </TableView>
-                  <Button fx:id="deleteInactiveButton" disable="true" layoutX="214.0" layoutY="105.0" 
-                      mnemonicParsing="false" onAction="#handleDeleteInactiveId" 
-                      text="Inaktive Testkonfiguration löschen" />
-                  <Text layoutX="214.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" 
-                      text="Inaktive Testkonfigurationen" wrappingWidth="182.5859375" />
-               </children>
-            </Pane>
-         </items>
+              </TabPane>
+            </AnchorPane>
+            <AnchorPane prefHeight="217.0" prefWidth="309.0">
+              <TabPane layoutY="26.0" prefHeight="197.0" prefWidth="309.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                <Tab text="Logger">
+                 <content>
+                  <AnchorPane prefHeight="165.0" prefWidth="309.0">
+                   <children>
+                    <ComboBox fx:id="selectionComboBox" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="180.0" />
+                    <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Erstellt Log-Files für aktive Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
+                    <Button fx:id="startLoggerButton" disable="true" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#runLogger" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
+                    <Button fx:id="startLoggerButtonAllTestclasses" disable="true" layoutX="14.0" layoutY="130.0" mnemonicParsing="false" onAction="#runLoggerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                   </children>
+                                             <padding>
+                                                <Insets bottom="5.0" top="5.0" />
+                                             </padding>
+                  </AnchorPane>
+                 </content>
+                </Tab>
+                <Tab text="Runner">
+                 <content>
+                  <AnchorPane>
+                   <children>
+                    <Text layoutX="23.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert Testklassen mit aktiven Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
+                    <Button fx:id="startRunnerButton" disable="true" layoutX="23.0" layoutY="55.0" mnemonicParsing="false" onAction="#runRunner" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
+                    <Button fx:id="startRunnerButtonAllTestclasses" disable="true" layoutX="23.0" layoutY="95.0" mnemonicParsing="false" onAction="#runRunnerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                   </children>
+                  </AnchorPane>
+                 </content>
+                </Tab>
+               </tabs>
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+              </TabPane>
+	            	<Button fx:id="javaFileButton" disable="true" layoutX="87.0" layoutY="2.0" mnemonicParsing="false" onAction="#scan" text="Testklasse Öffnen" />
+            </AnchorPane>
+           </items>
+          </SplitPane>
+        </AnchorPane>
+       </items>
       </SplitPane>
-   </bottom>
-   <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <TableView fx:id="activeResultTable" prefHeight="250.0" prefWidth="1200.0">
-               <columns>
-                  <TableColumn fx:id="idColumn" prefWidth="48.0" text="ID" />
-                  <TableColumn fx:id="dateColumn" prefWidth="111.0" text="Date" />
-                  <TableColumn fx:id="pathColumn" prefWidth="389.0" text="Path" />
-                  <TableColumn fx:id="successColumn" minWidth="0.0" prefWidth="51.0" text="Success" />
-                  <TableColumn fx:id="messageColumn" prefWidth="452.0" text="Message" />
-                  <TableColumn fx:id="exceptionExpectedColumn" prefWidth="132.0" 
-                     text="Exception erwartet" />
-                  </columns>
-               </TableView>
-               <HBox nodeOrientation="RIGHT_TO_LEFT">
-                  <children>
-                     <HBox spacing="10.0">
-                        <children>
-                           <Button fx:id="deleteActiveButton" disable="true" mnemonicParsing="false" 
-                              onAction="#handleDeleteId" text="Testkonfiguration löschen" />
-                        </children>
-                        <padding>
-                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                        </padding>
-                     </HBox>
-                     <HBox spacing="10.0">
-                        <children>
-                           <Button fx:id="newTestcaseButton" disable="true" mnemonicParsing="false" 
-                              onAction="#handleNewResults" text="Testkonfiguration hinzufügen" />
-                           <ComboBox fx:id="newTestcaseComboBox" nodeOrientation="LEFT_TO_RIGHT" 
-                              prefHeight="25.0" prefWidth="272.0" />
-                        </children>
-                        <padding>
-                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                        </padding>
-                        <opaqueInsets>
-                           <Insets />
-                        </opaqueInsets>
-                     </HBox>
-                  </children>
-               </HBox>
-            </children>
-         </VBox>
-      </center>
-      <top>
-         <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
-            <children>
-               <MenuBar>
-                  <menus>
-                     <Menu mnemonicParsing="false" text="Programm">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Beenden" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Information">
-                  <items>
-                     <MenuItem mnemonicParsing="false" onAction="#handleAbout" 
-                        text="Information zur Lizenz öffnen" />
-                     <MenuItem mnemonicParsing="false" onAction="#handleDocu" 
-                        text="Dokumentation öffnen" />
-                   </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </VBox>
-   </top>   
+      
+    <Pane prefHeight="306.0" prefWidth="572.0">
+     <children>
+      <TableView fx:id="inactiveResultTable" layoutX="22.0" layoutY="10.0" prefHeight="189.0" prefWidth="145.0">
+       <columns>
+        <TableColumn fx:id="inactiveIdColumn" prefWidth="145.0" text="ID" />
+       </columns>
+      </TableView>
+      <Button fx:id="deleteInactiveButton" disable="true" layoutX="214.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleDeleteInactiveId" text="Inaktive Testkonfiguration löschen" />
+      <Text layoutX="214.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inaktive Testkonfigurationen" wrappingWidth="182.5859375" />
+     </children>
+    </Pane>
+   </items>
+  </SplitPane>
+ </bottom>
+ <center>
+  <VBox BorderPane.alignment="CENTER">
+   <children>
+    <TableView fx:id="activeResultTable" prefHeight="250.0" prefWidth="1200.0">
+     <columns>
+      <TableColumn fx:id="idColumn" prefWidth="48.0" text="ID" />
+      <TableColumn fx:id="dateColumn" prefWidth="111.0" text="Date" />
+      <TableColumn fx:id="pathColumn" prefWidth="389.0" text="Path" />
+      <TableColumn fx:id="successColumn" minWidth="0.0" prefWidth="51.0" text="Success" />
+      <TableColumn fx:id="messageColumn" prefWidth="452.0" text="Message" />
+      <TableColumn fx:id="exceptionExpectedColumn" prefWidth="132.0" text="Exception erwartet" />
+     </columns>
+    </TableView>
+    <HBox nodeOrientation="RIGHT_TO_LEFT">
+     <children>
+      <HBox spacing="10.0">
+       <children>
+        <Button fx:id="deleteActiveButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteId" text="Testkonfiguration löschen" />
+       </children>
+       <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+       </padding>
+      </HBox>
+      <HBox spacing="10.0">
+       <children>
+        <Button fx:id="newTestcaseButton" disable="true" mnemonicParsing="false" onAction="#handleNewResults" text="Testkonfiguration hinzufügen" />
+        <ComboBox fx:id="newTestcaseComboBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="272.0" />
+       </children>
+       <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+       </padding>
+       <opaqueInsets>
+        <Insets />
+       </opaqueInsets>
+      </HBox>
+     </children>
+    </HBox>
+   </children>
+  </VBox>
+ </center>
+ <top>
+  <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+   <children>
+    <MenuBar>
+     <menus>
+      <Menu mnemonicParsing="false" text="Programm">
+       <items>
+        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Beenden" />
+       </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Information">
+       <items>
+        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Information zur Lizenz öffnen" />
+        <MenuItem mnemonicParsing="false" onAction="#handleDocu" text="Dokumentation öffnen" />
+       </items>
+      </Menu>
+     </menus>
+    </MenuBar>
+   </children>
+  </VBox>
+ </top>
 </BorderPane>

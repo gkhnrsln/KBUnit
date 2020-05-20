@@ -170,7 +170,7 @@ public final class MainFrameModel {
 	}
 
 	/**
-	 * Scannt nach allen Java-Files im sourcefolder "test"
+	 * Scannt nach allen Test Java-Files im sourcefolder "test"
 	 * @param dirName
 	 * @return
 	 * @throws IOException
@@ -179,10 +179,10 @@ public final class MainFrameModel {
 		ObservableList<File> filePaths 
 		    = FXCollections.observableArrayList(FolderScanner
 		    .scanFolder(new File(dirName), new ArrayList<File>(), 
-		    Variables.EXTENSION_JAVA));
+		    Variables.EXTENSION_TEST_JAVA));
 		return filePaths;
 	}
-
+	
 	/**
 	 * @return the openedTestClass
 	 */

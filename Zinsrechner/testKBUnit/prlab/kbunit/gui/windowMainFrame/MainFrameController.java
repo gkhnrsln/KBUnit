@@ -14,11 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import junit.framework.TestResult;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import prlab.kbunit.Main;
+import prlab.kbunit.business.ctciGenerator.CreateCTCI;
 import prlab.kbunit.business.dataModel.ActiveResult;
 import prlab.kbunit.business.dataModel.ActiveResultParameter;
 import prlab.kbunit.business.dataModel.InactiveResult;
@@ -82,13 +85,21 @@ public class MainFrameController implements Initializable {
 	@FXML
 	private Button deleteActiveButton;
 
-	// Combobox mit allen Testklassen (*.java), die sich in 
+	// Combobox mit allen Testklassen (*Test.java), die sich in 
 	// Sourcefolder "test" befinden
 	@FXML
 	private ComboBox<File> javafileComboBox;
 	@FXML 
 	private Button javaFileButton;
 
+	
+	// Generate CTCI
+	private File file;
+	@FXML
+	private Button startGenerateCTCIButton;
+	@FXML
+	private Button startGenerateCTCIButtonAllTestclasses;
+	
 	// Logger
 	@FXML
 	private ComboBox<Selection> selectionComboBox; 
@@ -110,6 +121,8 @@ public class MainFrameController implements Initializable {
 	private Button newTestcaseButton;
 
 	private MainFrameModel mainFrameModel;
+
+
 
 	/**
 	 * Konstruktor MainFrameControll
@@ -155,15 +168,21 @@ public class MainFrameController implements Initializable {
 		try {
 			javafileComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_SOURCE));
+			//falls Testklassen vorhanden, sind Buttons aktiv
+			if (mainFrameModel.scanSourceFolder(Variables.TEST_SOURCE) != null) {
+				startGenerateCTCIButtonAllTestclasses.setDisable(false);
+				startLoggerButtonAllTestclasses.setDisable(false);
+				startRunnerButtonAllTestclasses.setDisable(false);
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Fehler!");
-			alert.setHeaderText("Fehler beim Laden der Testklassen");
-			alert.setContentText(e1.getMessage());
-			alert.showAndWait();
+			showMessage(AlertType.WARNING, "Fehler!", 
+					"Fehler beim Laden der Testklassen", e1.getMessage());
 		}
-		javafileComboBox.getSelectionModel().select(0);
+
+		file = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
+
+		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
 
@@ -419,6 +438,135 @@ public class MainFrameController implements Initializable {
 		return tri;
 	}
 
+	/**
+	 * method for the "javafile" Combobox.
+	 * @param event
+	 */
+	@FXML
+	private void javafileChoose(ActionEvent event) {
+		if (javafileComboBox.getSelectionModel().selectedItemProperty() != null) {
+			startGenerateCTCIButton.setDisable(false);
+			if (file.exists()) javaFileButton.setDisable(false);
+		}
+	}
+	
+	@FXML
+	/**
+	 * method for the "generate CustomerTestCaseInformation" button.
+	 * @param event
+	 */
+	private void generateCTCI(ActionEvent event)  {
+		Alert alert;
+		//bestaetigung fuer das ersetzen der XML Datei
+		Boolean isPermitted = true;
+		
+		if (file.exists()) {
+			alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setContentText("Sind Sie damit einverstanden?");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() != ButtonType.OK){
+				isPermitted = false;
+			}
+		}
+		
+		if (isPermitted) {
+			try {
+				CreateCTCI.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
+				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+					showMessage(AlertType.INFORMATION, "Information",
+							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
+				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Problem!");
+					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
+					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
+					
+					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					textArea.setEditable(false);
+					textArea.setWrapText(true);
+					
+					textArea.setMaxWidth(Double.MAX_VALUE);
+					textArea.setMaxHeight(Double.MAX_VALUE);
+					GridPane.setVgrow(textArea, Priority.ALWAYS);
+					GridPane.setHgrow(textArea, Priority.ALWAYS);
+					
+					GridPane expContent = new GridPane();
+					expContent.setMaxWidth(Double.MAX_VALUE);
+					expContent.add(textArea, 0, 0);
+					
+					// Set expandable Exception into the dialog pane.
+					alert.getDialogPane().setExpandableContent(expContent);
+					alert.showAndWait();
+				}
+			} catch(Exception ex) {
+				showMessage(AlertType.ERROR, "Information",
+						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
+			}
+		}
+		
+	}
+	
+	/**
+	 * method for the "generate All CustomerTestCaseInformation" button.
+	 */
+	@FXML
+	private void generateCTCIAllTestclasses(ActionEvent event) {
+		Alert alert;
+		//bestaetigung fuer das ersetzen der XML Datei
+		Boolean isPermitted = true;
+		
+		if (file.exists()) {
+			alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setContentText("Sind Sie damit einverstanden?");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() != ButtonType.OK){
+				isPermitted = false;
+			}
+		}
+		
+		if (isPermitted) {
+			try {
+				CreateCTCI.createFile();
+				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+					showMessage(AlertType.INFORMATION, "Information",
+							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
+				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Problem!");
+					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
+					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
+					
+					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					textArea.setEditable(false);
+					textArea.setWrapText(true);
+					
+					textArea.setMaxWidth(Double.MAX_VALUE);
+					textArea.setMaxHeight(Double.MAX_VALUE);
+					GridPane.setVgrow(textArea, Priority.ALWAYS);
+					GridPane.setHgrow(textArea, Priority.ALWAYS);
+					
+					GridPane expContent = new GridPane();
+					expContent.setMaxWidth(Double.MAX_VALUE);
+					expContent.add(textArea, 0, 0);
+					
+					// Set expandable Exception into the dialog pane.
+					alert.getDialogPane().setExpandableContent(expContent);
+					alert.showAndWait();
+				}
+			} catch(Exception ex) {
+				showMessage(AlertType.ERROR, "Information",
+						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
+			}
+		}
+		
+	}
+	
 	/**
 	 * method for the delete button.
 	 */
