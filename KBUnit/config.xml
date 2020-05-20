@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <rest>
+  	<path>http://localhost:8080/KBUnitServer/rest/kbUnit</path>
+  </rest>
+  <documentation>
+  	<path>Anwendungsdokumentation_KBUnit.pdf</path>
+  </documentation>
+</root>
+

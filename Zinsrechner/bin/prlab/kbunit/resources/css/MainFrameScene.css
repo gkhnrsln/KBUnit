@@ -1,0 +1,44 @@
+.root {
+	-fx-font-family: Geneva;
+}
+.button{
+	-fx-font-size: 12;
+	-fx-background-color: #e0e0e0;
+	-fx-background-radius: 5;
+	-fx-border-color: #6e6e6e;
+	-fx-border-radius: 5;
+}
+
+.button:hover{
+	-fx-background-color: #aeaeae;
+}
+
+.combo-box{
+	-fx-border-radius: 5;
+	-fx-background-radius: 5;
+}
+.combo-box:hover{
+	
+}
+
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+
+.table-row-cell:nojunitfiles 
+{
+    -fx-background-color: #b9dbd5 ; 
+}
+
+
+.table-row-cell:active 
+{
+    -fx-background-color: #b9dbd5 ; 
+}
+
+.table-row-cell:inactive
+{
+   
+}

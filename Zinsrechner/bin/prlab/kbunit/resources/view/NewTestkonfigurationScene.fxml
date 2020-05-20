@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="443.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController">
+   <children>
+      <Label layoutX="250.0" layoutY="14.0" text="Erzeugen einer neuen Testkonfiguration">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="parameterTableView" layoutY="42.0" prefHeight="358.0" 
+          prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="parameterColumn" editable="false" prefWidth="456.0" 
+              sortable="false" text="Parameter" />
+          <TableColumn fx:id="valueColumn" minWidth="0.0" prefWidth="243.0" 
+              sortable="false" text="Wert" />
+        </columns>
+      </TableView>
+      <Button layoutX="601.0" layoutY="410.0" mnemonicParsing="false" 
+          onAction="#handleCreate" text="Hinzufügen" />
+      <CheckBox fx:id="expectedCheckbox" layoutX="464.0" layoutY="414.0" 
+          mnemonicParsing="false" text="Exception erwartet" />
+   </children>
+</AnchorPane>

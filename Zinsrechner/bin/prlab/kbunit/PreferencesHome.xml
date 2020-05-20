@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <rest>
+  	<host>http://localhost:8080/KBUnitServer/rest/kbUnit</host>
+  </rest>
+  <update>
+    <date>2020-04-16</date>
+    <time>14:04:12</time>
+  </update>
+</root>

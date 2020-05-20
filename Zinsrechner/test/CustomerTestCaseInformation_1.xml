@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <date> 2011/01/27 17:41 </date>
+    <testcases>
+        <testcase>  
+            <path> darlehen.TilgungsdarlehenTest.testBerechneAnnuitaetFuerPeriode </path>
+            <desc> Dieser Test &#252;berpr&#252;ft die Annuit&#228;tsberechnung. </desc>
+            <testtype> 5 </testtype>
+            <parameters>
+                <parameter>
+                    <name> testBerechneAnnuitaetFuerPeriode_Darlehen </name>
+                    <desc> Darlehen, das zur&#252;ckgezahlt werden soll </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneAnnuitaetFuerPeriode_Laufzeit </name>
+                    <desc> Laufzeit des Darlehens in Raten </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneAnnuitaetFuerPeriode_Zinssatz </name>
+                    <desc> Zinssatz, der vor Zahlung jeder Rate auf die Restschuld 
+                        berechnet wird (1% = 0,01)</desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneAnnuitaetFuerPeriode_Periode </name>
+                    <desc> Periode bzw. Rate, für die die Annuitaet ermittelt werden soll </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneAnnuitaetFuerPeriode_exp_ErwarteteAnnuitaet </name>
+                    <desc> erwartete Annuitaet der angegebenen Periode bzw. Rate </desc>
+                </parameter>
+            </parameters>
+        </testcase>
+        <testcase>
+            <path> darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld </path>
+            <desc> Dieser Test &#252;berpr&#252;ft die Berechnung der Gesamtschuld. </desc>
+            <testtype> 5 </testtype>
+            <parameters>
+                <parameter>
+                    <name> testBerechneGesamtschuld_User </name>
+                    <desc> Benutzer, welcher die Berechnung durchf&#252;hren darf. </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneGesamtschuld_Darlehen </name>
+                    <desc> Darlehen, das zur&#252;ckgezahlt werden soll </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneGesamtschuld_Laufzeit </name>
+                    <desc> Laufzeit des Darlehens in Raten </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneGesamtschuld_Zinssatz </name>
+                    <desc> Zinssatz, der vor Zahlung jeder Rate auf die Restschuld 
+                        berechnet wird (1% = 0,01) </desc>
+                </parameter>
+                <parameter>
+                    <name> testBerechneGesamtschuld_exp_ErwarteteGesamtschuld </name>
+                    <desc> erwartete Gesamtschuld (Summe aller Tilgungen und Zinsen), 
+                        die an den Kreditgeber zur&#228;ckgezahlt werden muss </desc>
+                </parameter>
+            </parameters>
+        </testcase>
+        <testcase>  
+            <path> konten.KontoTest.setKundeZumKonto </path>
+            <desc> Dieser Test &#252;berpr&#252;ft das Setzen eines Kunden zu einem Konto. </desc>
+            <testtype> 4 </testtype>
+            <parameters>
+                <parameter>
+                    <name> setKundeZumKonto_Nachname </name>
+                    <desc> Nachname des Kunden, der dem Konto zugeordnet werden soll </desc>
+                </parameter>
+            </parameters>
+        </testcase>
+    </testcases>
+</root>
