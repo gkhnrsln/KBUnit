@@ -21,7 +21,7 @@ import prlab.kbunit.enums.Variables;
  */
 public class DocData {
 	/** JUnit Testtyp der Testklasse */
-	private String strTestTyp;
+	private int testTyp;
 	/** Liste der TestMethoden der Testklasse */
 	private List<String> listeTestMethoden;
 	/** Liste der TestAttribute der Testklasse */
@@ -37,7 +37,7 @@ public class DocData {
 	 * @throws IOException 
 	 */
 	public DocData(File file) throws IOException {
-		setStrTestTyp(getTestType(file.toString()));
+		setTestTyp(getTestType(file.toString()));
 		setListeTestMethoden(getTestMethoden(file.toString()));
 		setListeDescTestMethoden(getDescTestMethoden(file.toString()));
 		setListeTestAttribute(getTestAttribute(file.toString()));
@@ -111,13 +111,13 @@ public class DocData {
 				}
 				strDesc = strDesc.replace("*", "")
 						//umlaute
-						.replace("[:ss]", "&#223;")
-						.replace("[:A]", "&#196;")
-						.replace("[:O]", "&#214;")
-						.replace("[:U]", "&#220;")
-						.replace("[:a]", "&#228;")
-						.replace("[:o]", "&#246;")
-						.replace("[:u]", "&#252;");
+						.replace("[:ss]", "ß")
+						.replace("[:A]", "Ä")
+						.replace("[:O]", "Ö")
+						.replace("[:U]", "Ü")
+						.replace("[:a]", "ä")
+						.replace("[:o]", "ö")
+						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -182,13 +182,13 @@ public class DocData {
 						.replace("{@link ", "")
 						.replace("}", "")
 						//umlaute
-						.replace("[:ss]", "&#223;")
-						.replace("[:A]", "&#196;")
-						.replace("[:O]", "&#214;")
-						.replace("[:U]", "&#220;")
-						.replace("[:a]", "&#228;")
-						.replace("[:o]", "&#246;")
-						.replace("[:u]", "&#252;");
+						.replace("[:ss]", "ß")
+						.replace("[:A]", "Ä")
+						.replace("[:O]", "Ö")
+						.replace("[:U]", "Ü")
+						.replace("[:a]", "ä")
+						.replace("[:o]", "ö")
+						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -203,19 +203,16 @@ public class DocData {
 	 * @return Entweder {@code 5} oder {@code 4}.
 	 * @exception IOException
 	 */
-	static String getTestType (String file) throws IOException {
+	static int getTestType (String file) throws IOException {
 		Stream<String> testTyp;
-		String s = "";
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
 					.map(Objects::toString)
 					//JUnit 5 Testfaelle beinhalten immer folgenden import
 					.filter(type -> type.contains("import org.junit.jupiter"));
-			s = testTyp.count() > 0 ? "5" : "4";
+			return testTyp.count() > 0 ? 5 : 4;
 		}
-		return s;
 	}
-	
 	/**
 	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Methoden gelistet werden sollen.
@@ -286,12 +283,12 @@ public class DocData {
 	}
 
 	//getter and setter
-	public String getStrTestTyp() {
-		return strTestTyp;
+	public int getTestTyp() {
+		return testTyp;
 	}
 
-	public void setStrTestTyp(String strTestTyp) {
-		this.strTestTyp = strTestTyp;
+	public void setTestTyp(int testTyp) {
+		this.testTyp = testTyp;
 	}
 
 	public List<String> getListeTestMethoden() {

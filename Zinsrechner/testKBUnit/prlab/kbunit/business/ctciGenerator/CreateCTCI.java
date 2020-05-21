@@ -2,7 +2,6 @@ package prlab.kbunit.business.ctciGenerator;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ import org.jdom2.output.XMLOutputter;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
 /**
- * Diese Klasse stellt Methoden für die Generierung der {@code CustomerTestcaseInformation.xml}
+ * Diese Klasse stellt Methoden f&uuml;r die Generierung der {@code CustomerTestcaseInformation.xml}
  * Datei bereit.
  * 
  * @author G&ouml;khan Arslan
@@ -78,15 +77,12 @@ public class CreateCTCI {
         FileOutputStream fileStream;
         OutputStreamWriter writer;
         XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-        //Format f = outputter.getFormat();
-        //f.setEncoding("ISO-8859-1");
-        //outputter.setFormat(f);
 		try {
 			fileStream = new FileOutputStream(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 			writer = new OutputStreamWriter(fileStream, "UTF-8");
 			outputter.output(doc, writer);
 		} finally {
-			doc.removeContent();// (!)
+			doc.removeContent();
 		}
     }
     
@@ -120,7 +116,7 @@ public class CreateCTCI {
         		.substring(5, strKlasse.indexOf(".java"));
         
         DocData testKlasse = new DocData(listeKlassen.get(index));
-        String strTestType = testKlasse.getStrTestTyp();
+        int testType = testKlasse.getTestTyp();
         //Gehe jede Testmethode der Testklasse durch
         for (String strMeth : testKlasse.getListeTestMethoden()) {
             j = 0;
@@ -150,7 +146,7 @@ public class CreateCTCI {
  
            elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
             	.addContent(elDescMethode.clone().setText(strDescMeth))
-            	.addContent(elTestType.clone().setText(strTestType))
+            	.addContent(elTestType.clone().setText(""+testType))
             	.addContent(elParameters.clone()
         	);
             	
@@ -191,7 +187,7 @@ public class CreateCTCI {
             		.substring(5, strKlasse.indexOf(".java"));
             
         	DocData testKlasse = new DocData(listeKlassen.get(i));
-        	String strTestType = testKlasse.getStrTestTyp();
+        	int testType = testKlasse.getTestTyp();
         	k = 0;
             boolean isNextClass = true;
             //Gehe jede Testmethode der Testklasse durch
@@ -227,7 +223,7 @@ public class CreateCTCI {
  
             	elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
             		.addContent(elDescMethode.clone().setText(strDescMeth))
-            		.addContent(elTestType.clone().setText(strTestType))
+            		.addContent(elTestType.clone().setText(""+ testType))
             		.addContent(elParameters.clone()
         		);
             	
