@@ -103,7 +103,7 @@ public abstract class BasicFrameXmlModel {
         jarFileName = filename;
         JarFile jarFile = new JarFile(filename);
         JarEntry entry = jarFile.getJarEntry("CustomerTestCaseInformation.xml");
-        InputStreamReader stream = new InputStreamReader(jarFile.getInputStream(entry));
+        InputStreamReader stream = new InputStreamReader(jarFile.getInputStream(entry), "UTF-8");
         SAXBuilder builder = new SAXBuilder();
         Document document = (Document) builder.build(stream);
         rootNode = document.getRootElement();
