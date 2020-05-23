@@ -96,7 +96,7 @@ private static void load() {
 Das Root-Element ist das Wurzelverzeichnis des Dokuments.
 
 #### `<date>`
-Das Datum und die Uhrzeit wird mit der Funktion LocalDateTime.now() ermittelt. Hierbei wird die aktuelle Systemzeit verwendet. Als Rückgabewert wird dies jedoch in der ISO-8601 Norm angegeben (z. B. 2020-05-05T12:15:00.445). Dies entspricht nicht dem gewünschten Format (2020/05/05 12:15). Die Funktion DateTimeFormatter.ofPattern() legt dieses Format fest. Mit der LocalDateTime.now.format() wird in das gewünschte Format formatiert und der Rückgabewert anschließend als Inhalt des Date-Elements festgelegt. 
+Das Datum und die Uhrzeit wird mit der Funktion `LocalDateTime.now()` ermittelt. Hierbei wird die aktuelle Systemzeit verwendet. Als Rückgabewert wird dies jedoch in der ISO-8601 Norm angegeben (z. B. `2020-05-05T12:15:00.445`). Dies entspricht nicht dem gewünschten Format (`2020/05/05 12:15`). Die Funktion `DateTimeFormatter.ofPattern()` legt dieses Format fest. Mit der `LocalDateTime.now.format()` wird in das gewünschte Format formatiert und der Rückgabewert anschließend als Inhalt des Date-Elements festgelegt. 
 Dem Root-Element werden als Kinder das Date-Element sowie das Testcases-Element hinzugefügt. 
 
 
