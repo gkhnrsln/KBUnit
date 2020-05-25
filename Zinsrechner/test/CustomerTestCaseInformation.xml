@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <date>2020-05-19T18:10:41.504639900</date>
+  <date>2020-05-25T22:36:37.921760100</date>
   <testcases>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
-      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissenstraeger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
+      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
           <name>testSollTilgungsdarlehenAkzeptiertWerden_MinDarlehen</name>
-          <desc>vom Wissenstr&amp;#228;ger einstellbare Mindestdarlehen</desc>
+          <desc>vom Wissensträger einstellbare Mindestdarlehen</desc>
         </parameter>
         <parameter>
           <name>testSollTilgungsdarlehenAkzeptiertWerden_MaxLaufzeit</name>
-          <desc>vom Wissenstr&amp;#228;ger einstellbare maximale Laufzeit</desc>
+          <desc>vom Wissensträger einstellbare maximale Laufzeit</desc>
         </parameter>
         <parameter>
           <name>testSollTilgungsdarlehenAkzeptiertWerden_MinJahreszahl</name>
-          <desc>vom Wissenstr&amp;#228;ger einstellbare minimale Jahreszahl</desc>
+          <desc>vom Wissensträger einstellbare minimale Jahreszahl</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -34,7 +34,7 @@
       <parameters>
         <parameter>
           <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
-          <desc>vom Wissenstraeger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+          <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -45,26 +45,26 @@
       <parameters>
         <parameter>
           <name>testGetGesamtschuldenMax_MaxGesamtschuld</name>
-          <desc>vom Wissenstraeger einstellbare maximale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+          <desc>vom Wissensträger einstellbare maximale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldMaxUsingMocks</path>
-      <desc>Bestimmt das Maximum aus einer vom Wissenstraeger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
+      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
           <name>testGetGesamtschuldMaxUsingMocks_Gesamtschulden</name>
-          <desc>vom Wissenstraeger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub . Angabe der Wert erfolgt durch das Trennen mit Komma</desc>
+          <desc>vom Wissensträger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub . Angabe der Wert erfolgt durch das Trennen mit Komma</desc>
         </parameter>
         <parameter>
           <name>testGetGesamtschuldMaxUsingMocks_NumOfGetGesamtschuldenCallsForEach</name>
-          <desc>vom Wissenstraeger einstellbare Anzahl der Methodenaufrufe von darlehen.Tilgungsdarlehen#getGesamtschuld, die fuer jedes Tilgungsdarlehen durchgefuehrt werden, um das Maximum zu bestimmen</desc>
+          <desc>vom Wissensträger einstellbare Anzahl der Methodenaufrufe von darlehen.Tilgungsdarlehen#getGesamtschuld, die fuer jedes Tilgungsdarlehen durchgefuehrt werden, um das Maximum zu bestimmen</desc>
         </parameter>
         <parameter>
           <name>testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld</name>
-          <desc>vom Wissenstraeger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissenstraeger einstellbaren Werten bestimmt werden soll</desc>
+          <desc>vom Wissensträger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissensträger einstellbaren Werten bestimmt werden soll</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -75,7 +75,7 @@
       <parameters>
         <parameter>
           <name>testFuerAssumptions1_Zahl</name>
-          <desc>vom Wissenstraeger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -86,7 +86,7 @@
       <parameters>
         <parameter>
           <name>testFuerAssumptions2_Zahl</name>
-          <desc>vom Wissenstraeger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
         </parameter>
       </parameters>
     </testcase>

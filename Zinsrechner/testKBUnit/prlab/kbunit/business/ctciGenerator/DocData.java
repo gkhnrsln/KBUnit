@@ -55,9 +55,7 @@ public class DocData {
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
 		List<String> liste = new ArrayList<String>();
-		/*
-		 * Lese file zeilenweise aus und fuege zeile in eine Liste
-		 */
+		//Lese file zeilenweise aus und fuege zeile in eine Liste
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(file));
@@ -75,9 +73,7 @@ public class DocData {
 		
 		int i = 0; //zaehler fuer Zeilen abwaerts
 		
-		/*
-		 * gehe jede Zeile abwaerts durch
-		 */
+		// gehe jede Zeile abwaerts durch
 		while (i<tmp.size()) {
 			//JavaDoc Beschreibung der TestMethoden
 			String strDesc = "";
@@ -241,7 +237,6 @@ public class DocData {
 					.collect(Collectors.toList());
 		}
 		
-		String methode;
 		for (int i = 0; i<liste.size(); i++) {
 			String line = liste.get(i);
 			
@@ -252,9 +247,8 @@ public class DocData {
 					|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
 					) 
 			{
-				methode = liste.get(i+1).substring(liste.get(i+1).indexOf("test"));
-				methode = methode.substring(0, methode.indexOf('('));
-				methoden.add(methode);
+				String methode = liste.get(i+1).substring(liste.get(i+1).indexOf("test"));
+				methoden.add(methode.substring(0, methode.indexOf('(')));
 			}
 		}
 		return methoden;
