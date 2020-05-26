@@ -1,21 +1,19 @@
-# Dokumentation der Praxisphase
+# 1. Dokumentation der Praxisphase
 Beginn: 06.04.2020
-
 Ende: 14.06.2020
 
 Gökhan Arslan
-
 Hochschule Bochum
 
-<img src="https://www.hochschule-bochum.de/typo3conf/ext/hochschule_bochum/Resources/Public/Images/hs_bochum_logo.svg" alt="Kitten"
-	title="A cute kitten" width="250" />
+<img src="https://www.hochschule-bochum.de/typo3conf/ext/hochschule_bochum/Resources/Public/Images/hs_bochum_logo.svg" width="250" />
 
-## Inhalt
+## 1.1. Inhalt
 Inhaltsangabe folgt
 
-## Generieren von „CustomerTestCaseInformation.xml“ anhand von JavaDocs der JUnit Testklassen
+## 1.2. Generieren von „CustomerTestCaseInformation.xml“ anhand von JavaDocs der JUnit Testklassen
 Die *CustomerTestCaseInformation.xml* Datei wird vom Anwender noch selbst getippt. Sinnvoller wäre es diese generieren zu lassen. Die benötigten Informationen hierfür liefern die Testklassen im Source Verzeichnis „test“. 
 
+Das untere Listing bildet eine Beispiel.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
@@ -54,9 +52,12 @@ Die *CustomerTestCaseInformation.xml* Datei wird vom Anwender noch selbst getipp
 </root>
 ```
 
-Um die Generierung zu implementieren sind folgende Schritte notwendig:
+## 1.3. Benutzte Tools
+* JDOM
+    * Für die XML Struktur.
+* 
 
-### Schritt 1: root, date, testcases
+### 1.3.1. Schritt 1: root, date, testcases
 Deklarierung der Klassenattribute von CreateCTCI
 ```java
 private static Document doc;
@@ -91,15 +92,13 @@ private static void load() {
 }
 ```
 
-#### `<root>`
+#### 1.3.1.1. `<root>`
 
 Das Root-Element ist das Wurzelverzeichnis des Dokuments.
 
-#### `<date>`
-Das Datum und die Uhrzeit wird mit der Funktion `LocalDateTime.now()` ermittelt. Hierbei wird die aktuelle Systemzeit verwendet. Als Rückgabewert wird dies jedoch in der ISO-8601 Norm angegeben (z. B. `2020-05-05T12:15:00.445`). Dies entspricht nicht dem gewünschten Format (`2020/05/05 12:15`). Die Funktion `DateTimeFormatter.ofPattern()` legt dieses Format fest. Mit der `LocalDateTime.now.format()` wird in das gewünschte Format formatiert und der Rückgabewert anschließend als Inhalt des Date-Elements festgelegt. 
+#### 1.3.1.2. `<date>`
+Das Datum und die Uhrzeit wird mit der Funktion LocalDateTime.now() ermittelt. Hierbei wird die aktuelle Systemzeit verwendet. Als Rückgabewert wird dies jedoch in der ISO-8601 Norm angegeben (z. B. 2020-05-05T12:15:00.445). Dies entspricht nicht dem gewünschten Format (2020/05/05 12:15). Die Funktion DateTimeFormatter.ofPattern() legt dieses Format fest. Mit der LocalDateTime.now.format() wird in das gewünschte Format formatiert und der Rückgabewert anschließend als Inhalt des Date-Elements festgelegt. 
 Dem Root-Element werden als Kinder das Date-Element sowie das Testcases-Element hinzugefügt. 
 
-
-
-## Automatisches Generieren eines normalen JUnit-Test in einen KBUnit-fähigen JUnit-Test
-To be done! <code>dd</code>
+## 1.4. Automatisches Generieren eines normalen JUnit-Test in einen KBUnit-fähigen JUnit-Test
+To be done!
