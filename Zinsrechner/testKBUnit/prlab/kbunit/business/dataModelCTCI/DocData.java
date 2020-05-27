@@ -106,14 +106,14 @@ public class DocData {
 					}
 				}
 				strDesc = strDesc.replace("*", "")
-						//umlaute
-						.replace("[:ss]", "ÃŸ")
-						.replace("[:A]", "Ã„")
-						.replace("[:O]", "Ã–")
-						.replace("[:U]", "Ãœ")
-						.replace("[:a]", "Ã¤")
-						.replace("[:o]", "Ã¶")
-						.replace("[:u]", "Ã¼");
+						//Umlaute
+						.replace("[:ss]", "ß")
+						.replace("[:A]", "Ä")
+						.replace("[:O]", "Ö")
+						.replace("[:U]", "Ü")
+						.replace("[:a]", "ä")
+						.replace("[:o]", "ö")
+						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -178,13 +178,13 @@ public class DocData {
 						.replace("{@link ", "")
 						.replace("}", "")
 						//umlaute
-						.replace("[:ss]", "ÃŸ")
-						.replace("[:A]", "Ã„")
-						.replace("[:O]", "Ã–")
-						.replace("[:U]", "Ãœ")
-						.replace("[:a]", "Ã¤")
-						.replace("[:o]", "Ã¶")
-						.replace("[:u]", "Ã¼");
+						.replace("[:ss]", "ß")
+						.replace("[:A]", "Ä")
+						.replace("[:O]", "Ö")
+						.replace("[:U]", "Ü")
+						.replace("[:a]", "ä")
+						.replace("[:o]", "ö")
+						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}

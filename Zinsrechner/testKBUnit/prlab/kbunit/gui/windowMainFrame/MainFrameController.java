@@ -324,7 +324,7 @@ public class MainFrameController implements Initializable {
 						|| testExecutionSummary.getContainersSkippedCount() > 0)
 					{
 						testSuccess = TestResultInfo.TESTSKIPPED;
-						testMessage = "Test wurde ï¿½bersprungen";
+						testMessage = "Test wurde übersprungen";
 					}
 					else if(testExecutionSummary.getTestsSucceededCount() > 0)
 					{
@@ -462,8 +462,8 @@ public class MainFrameController implements Initializable {
 		
 		if (file.exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestï¿½tigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird ï¿½berschrieben.");
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -520,8 +520,8 @@ public class MainFrameController implements Initializable {
 		
 		if (file.exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestï¿½tigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird ï¿½berschrieben.");
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -582,7 +582,7 @@ public class MainFrameController implements Initializable {
 			}
 			catch (Exception exc) {
 				showMessage(AlertType.WARNING, "Problem!", 
-					"Fehler beim Lï¿½schen des der Testkonfiguration!", exc.getMessage());
+					"Fehler beim Löschen des der Testkonfiguration!", exc.getMessage());
 				ok = false;
 			}
 			if(ok) {				
@@ -600,7 +600,7 @@ public class MainFrameController implements Initializable {
 		}
 		else {
 			showMessage(AlertType.WARNING, "Problem!", 
-				"Keine Testkonfiguration ausgewï¿½hlt!", "Bitte wï¿½hlen Sie eine Testkonfiguration aus!");
+				"Keine Testkonfiguration ausgewählt!", "Bitte wählen Sie eine Testkonfiguration aus!");
 		}
 	}
 
@@ -610,7 +610,7 @@ public class MainFrameController implements Initializable {
 			if(inactiveResultTable.getSelectionModel().isEmpty()){
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Alert!");
-				alert.setHeaderText("Keine inaktive ID ausgewï¿½hlt");
+				alert.setHeaderText("Keine inaktive ID ausgewählt");
 				alert.showAndWait();
 			} 
 			else {
@@ -625,7 +625,7 @@ public class MainFrameController implements Initializable {
 			}
 		} catch (Exception e) {
 			showMessage(AlertType.WARNING, "Warnung", 
-				"Keine ID ausgewï¿½hlt!", e.getMessage());
+				"Keine ID ausgewählt!", e.getMessage());
 		}
 	}
 	
@@ -686,7 +686,7 @@ public class MainFrameController implements Initializable {
 		}
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geï¿½ffnet werden.");
+				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
 		}
 	}
 		
@@ -749,7 +749,7 @@ public class MainFrameController implements Initializable {
         }
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geï¿½ffnet werden.");
+				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
 		}
 	}
 
