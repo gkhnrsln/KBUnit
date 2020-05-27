@@ -21,10 +21,10 @@ import javafx.stage.Stage;
 import junit.framework.TestResult;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import prlab.kbunit.Main;
-import prlab.kbunit.business.ctciGenerator.CreateCTCI;
 import prlab.kbunit.business.dataModel.ActiveResult;
 import prlab.kbunit.business.dataModel.ActiveResultParameter;
 import prlab.kbunit.business.dataModel.InactiveResult;
+import prlab.kbunit.business.dataModelCTCI.CreateXML;
 import prlab.kbunit.business.run.Run;
 import prlab.kbunit.business.testClassInfo.TestClassInfo;
 import prlab.kbunit.business.windowMainFrame.MainFrameModel;
@@ -324,7 +324,7 @@ public class MainFrameController implements Initializable {
 						|| testExecutionSummary.getContainersSkippedCount() > 0)
 					{
 						testSuccess = TestResultInfo.TESTSKIPPED;
-						testMessage = "Test wurde übersprungen";
+						testMessage = "Test wurde ï¿½bersprungen";
 					}
 					else if(testExecutionSummary.getTestsSucceededCount() > 0)
 					{
@@ -462,8 +462,8 @@ public class MainFrameController implements Initializable {
 		
 		if (file.exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestätigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setTitle("Bestï¿½tigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird ï¿½berschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -474,17 +474,17 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
-				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+				CreateXML.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
+				if (CreateXML.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+				} else if (!CreateXML.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					TextArea textArea = new TextArea(CreateXML.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -520,8 +520,8 @@ public class MainFrameController implements Initializable {
 		
 		if (file.exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestätigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setTitle("Bestï¿½tigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird ï¿½berschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -532,17 +532,17 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI.createFile();
-				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+				CreateXML.createFile();
+				if (CreateXML.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+				} else if (!CreateXML.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					TextArea textArea = new TextArea(CreateXML.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -582,7 +582,7 @@ public class MainFrameController implements Initializable {
 			}
 			catch (Exception exc) {
 				showMessage(AlertType.WARNING, "Problem!", 
-					"Fehler beim Löschen des der Testkonfiguration!", exc.getMessage());
+					"Fehler beim Lï¿½schen des der Testkonfiguration!", exc.getMessage());
 				ok = false;
 			}
 			if(ok) {				
@@ -600,7 +600,7 @@ public class MainFrameController implements Initializable {
 		}
 		else {
 			showMessage(AlertType.WARNING, "Problem!", 
-				"Keine Testkonfiguration ausgewählt!", "Bitte wählen Sie eine Testkonfiguration aus!");
+				"Keine Testkonfiguration ausgewï¿½hlt!", "Bitte wï¿½hlen Sie eine Testkonfiguration aus!");
 		}
 	}
 
@@ -610,7 +610,7 @@ public class MainFrameController implements Initializable {
 			if(inactiveResultTable.getSelectionModel().isEmpty()){
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Alert!");
-				alert.setHeaderText("Keine inaktive ID ausgewählt");
+				alert.setHeaderText("Keine inaktive ID ausgewï¿½hlt");
 				alert.showAndWait();
 			} 
 			else {
@@ -625,7 +625,7 @@ public class MainFrameController implements Initializable {
 			}
 		} catch (Exception e) {
 			showMessage(AlertType.WARNING, "Warnung", 
-				"Keine ID ausgewählt!", e.getMessage());
+				"Keine ID ausgewï¿½hlt!", e.getMessage());
 		}
 	}
 	
@@ -686,7 +686,7 @@ public class MainFrameController implements Initializable {
 		}
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestcaseInformation.xml konnte nicht geï¿½ffnet werden.");
 		}
 	}
 		
@@ -749,7 +749,7 @@ public class MainFrameController implements Initializable {
         }
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestcaseInformation.xml konnte nicht geï¿½ffnet werden.");
 		}
 	}
 

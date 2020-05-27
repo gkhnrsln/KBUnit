@@ -1,4 +1,4 @@
-package prlab.kbunit.business.ctciGenerator;
+package prlab.kbunit.business.dataModelCTCI;
 
 import java.io.BufferedReader;
 import java.io.File;

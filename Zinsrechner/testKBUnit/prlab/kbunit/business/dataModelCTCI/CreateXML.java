@@ -1,4 +1,4 @@
-package prlab.kbunit.business.ctciGenerator;
+package prlab.kbunit.business.dataModelCTCI;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +22,7 @@ import prlab.kbunit.scan.FolderScanner;
  * 
  * @author G&ouml;khan Arslan
  */
-public class CreateCTCI {
+public class CreateXML {
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -243,6 +243,6 @@ public class CreateCTCI {
 	}
 
 	public static void setStrMissingDescs(String strMissingDescs) {
-		CreateCTCI.strMissingDescs = strMissingDescs;
+		CreateXML.strMissingDescs = strMissingDescs;
 	}
 }

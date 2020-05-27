@@ -21,14 +21,15 @@
 
 <BorderPane prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prlab.kbunit.gui.windowMainFrame.MainFrameController">
  <bottom>
-  <SplitPane dividerPositions="0.5" nodeOrientation="LEFT_TO_RIGHT" prefHeight="214.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+  <SplitPane dividerPositions="0.5292153589315526" nodeOrientation="LEFT_TO_RIGHT" prefHeight="214.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
    <items>
-    <SplitPane dividerPositions="0.27388535031847133" orientation="VERTICAL" prefWidth="614.0">
+    <SplitPane dividerPositions="0.27388535031847133" orientation="VERTICAL" prefHeight="243.0" prefWidth="599.0">
        <items>
-        <AnchorPane prefHeight="46.0" prefWidth="614.0">
+        <AnchorPane prefHeight="0.0" prefWidth="642.0">
             <Label layoutX="14.0" layoutY="6.0" text="Testklasse:" AnchorPane.leftAnchor="14.0" />
             
             <ComboBox fx:id="javafileComboBox" layoutX="14.0" layoutY="23.0" onAction="#javafileChoose" prefHeight="25.0" prefWidth="282.0" />
+	            	<Button fx:id="javaFileButton" disable="true" layoutX="304.0" layoutY="23.0" mnemonicParsing="false" onAction="#scan" text="Testklasse Öffnen" />
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -36,66 +37,66 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" />
                      </padding>
         </AnchorPane>
-        <AnchorPane prefHeight="251.0" prefWidth="614.0">
-          <SplitPane dividerPositions="0.5" prefHeight="222.0" prefWidth="614.0">
-           <items>
-            <AnchorPane>
-              <TabPane prefHeight="220.0" prefWidth="297.0" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-                <Tab text="?" />
-                <Tab text="CustomerTestCaseInformation">
-                 <content>
-                  <AnchorPane>
-                   <children>
-                    <Text layoutX="8.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert CustomerTestCaseInformation.xml." wrappingWidth="238.13671875" />
-                    <Button fx:id="startGenerateCTCIButton" disable="true" layoutX="8.0" layoutY="55.0" mnemonicParsing="false" onAction="#generateCTCI" prefWidth="180.0" text="Start (ausgewählte Testklasse)" />
-                    <Button fx:id="startGenerateCTCIButtonAllTestclasses" disable="true" layoutX="8.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateCTCIAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
-                   </children>
-                  </AnchorPane>
-                 </content>
-                </Tab>
-               </tabs>
-              </TabPane>
-            </AnchorPane>
-            <AnchorPane prefHeight="217.0" prefWidth="309.0">
-              <TabPane layoutY="26.0" prefHeight="197.0" prefWidth="309.0" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-                <Tab text="Logger">
-                 <content>
-                  <AnchorPane prefHeight="165.0" prefWidth="309.0">
-                   <children>
-                    <ComboBox fx:id="selectionComboBox" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="180.0" />
-                    <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Erstellt Log-Files für aktive Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
-                    <Button fx:id="startLoggerButton" disable="true" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#runLogger" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
-                    <Button fx:id="startLoggerButtonAllTestclasses" disable="true" layoutX="14.0" layoutY="130.0" mnemonicParsing="false" onAction="#runLoggerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
-                   </children>
-                                             <padding>
-                                                <Insets bottom="5.0" top="5.0" />
-                                             </padding>
-                  </AnchorPane>
-                 </content>
-                </Tab>
-                <Tab text="Runner">
-                 <content>
-                  <AnchorPane>
-                   <children>
-                    <Text layoutX="23.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert Testklassen mit aktiven Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
-                    <Button fx:id="startRunnerButton" disable="true" layoutX="23.0" layoutY="55.0" mnemonicParsing="false" onAction="#runRunner" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
-                    <Button fx:id="startRunnerButtonAllTestclasses" disable="true" layoutX="23.0" layoutY="95.0" mnemonicParsing="false" onAction="#runRunnerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
-                   </children>
-                  </AnchorPane>
-                 </content>
-                </Tab>
-               </tabs>
-                                 <padding>
-                                    <Insets bottom="5.0" />
-                                 </padding>
-              </TabPane>
-	            	<Button fx:id="javaFileButton" disable="true" layoutX="87.0" layoutY="2.0" mnemonicParsing="false" onAction="#scan" text="Testklasse Öffnen" />
-            </AnchorPane>
-           </items>
-          </SplitPane>
-        </AnchorPane>
+       <SplitPane dividerPositions="0.5">
+        <items>
+         <AnchorPane>
+           <TabPane prefHeight="195.0" prefWidth="333.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+             <Tab text="Testklasse transferieren">
+             <content>
+               <AnchorPane>
+                <children>
+                 <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NULL" wrappingWidth="238.13671875" />
+                 <ComboBox layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="282.0" />
+                </children>
+               </AnchorPane>
+              </content>
+             </Tab>
+             <Tab text="CustomerTestCaseInformation">
+              <content>
+               <AnchorPane>
+                <children>
+                 <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert CustomerTestCaseInformation.xml." wrappingWidth="238.13671875" />
+                 <Button fx:id="startGenerateCTCIButton" disable="true" layoutX="14.0" layoutY="55.0" mnemonicParsing="false" onAction="#generateCTCI" prefWidth="180.0" text="Start (ausgewählte Testklasse)" />
+                 <Button fx:id="startGenerateCTCIButtonAllTestclasses" disable="true" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#generateCTCIAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                </children>
+               </AnchorPane>
+              </content>
+             </Tab>
+            </tabs>
+           </TabPane>
+           </AnchorPane>
+           <AnchorPane>
+           <TabPane prefHeight="184.0" prefWidth="303.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+             <Tab text="Logger">
+              <content>
+               <AnchorPane>
+                <children>
+                 <ComboBox fx:id="selectionComboBox" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="180.0" />
+                 <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Erstellt Log-Files für aktive Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
+                 <Button fx:id="startLoggerButton" disable="true" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#runLogger" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
+                 <Button fx:id="startLoggerButtonAllTestclasses" disable="true" layoutX="14.0" layoutY="130.0" mnemonicParsing="false" onAction="#runLoggerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                </children>
+               </AnchorPane>
+              </content>
+             </Tab>
+             <Tab text="Runner">
+              <content>
+               <AnchorPane>
+                <children>
+                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generiert Testklassen mit aktiven Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
+                 <Button fx:id="startRunnerButton" disable="true" layoutX="14.0" layoutY="55.0" mnemonicParsing="false" onAction="#runRunner" prefWidth="180.0" text="Start (geöffnete Testklasse)" />
+                 <Button fx:id="startRunnerButtonAllTestclasses" disable="true" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#runRunnerAllTestclasses" prefWidth="180.0" text="Start (alle Testklassen)" />
+                </children>
+               </AnchorPane>
+              </content>
+             </Tab>
+            </tabs>
+           </TabPane>
+         </AnchorPane>
+        </items>
+       </SplitPane>
        </items>
       </SplitPane>
       
