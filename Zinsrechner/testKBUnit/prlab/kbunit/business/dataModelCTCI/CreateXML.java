@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +15,8 @@ import org.jdom2.output.XMLOutputter;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
 /**
- * Diese Klasse stellt Methoden f&uuml;r die Generierung der {@code CustomerTestcaseInformation.xml}
- * Datei bereit.
+ * Diese Klasse stellt Methoden f&uuml;r die Generierung der 
+ * {@code CustomerTestcaseInformation.xml} Datei bereit.
  * 
  * @author G&ouml;khan Arslan
  */
@@ -27,8 +25,6 @@ public class CreateXML {
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
 	private static Element elRoot;
-	/** Tag {@code <date>} f&uuml;r das XML Dokument*/
-	private static Element elDate;
 	/** Tag {@code <testcases>} f&uuml;r das XML Dokument*/
 	private static Element elTestCases;
 	/** Tag {@code <testcase>} f&uuml;r das XML Dokument*/
@@ -56,7 +52,6 @@ public class CreateXML {
 	private static void load() {
 		doc = new Document();
 		elRoot = new Element("root");
-		elDate = new Element("date");
 		elTestCases = new Element(Variables.CTCI_NODE_TESTCASES);
 		elTestCase = new Element(Variables.CTCI_NODE_TESTCASE);
 		elPath = new Element(Variables.CTCI_NODE_PATH);
@@ -69,7 +64,8 @@ public class CreateXML {
 	}
 	/**
 	 * Erstellt eine {@code CustomerTestCaseInformation.xml} im Source Verzeichnis,
-	 * welche mit {@link prlab.kbunit.enums.Variables#CUSTOMER_TEST_CASE_INFO_FILE_PATH Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
+	 * welche mit {@link prlab.kbunit.enums.Variables#
+	 * CUSTOMER_TEST_CASE_INFO_FILE_PATH Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
 	 * festgelegt wurde.
 	 * @throws IOException
 	 */
@@ -80,9 +76,11 @@ public class CreateXML {
 		try {
 			fileStream = new FileOutputStream(
 					Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
+			//charset wegen Umlaute auf UTF-8 setzen
 			writer = new OutputStreamWriter(fileStream, "UTF-8");
 			outputter.output(doc, writer);
 		} finally {
+			//ersetze vorhandenen Text
 			doc.removeContent();
 		}
 	}
@@ -90,13 +88,12 @@ public class CreateXML {
 	/**
 	 * Erstelle CustomerTestCaseInformation fuer eine Klasse.
 	 * @param index gibt die Position des ausgew&auml;hlten Elements der 
-	 * {@link prlab.kbunit.gui.windowMainFrame.MainFrameController#javafileComboBox javafileComboBox} an.
+	 * {@link prlab.kbunit.gui.windowMainFrame.MainFrameController
+	 * #javafileComboBox javafileComboBox} an.
 	 * @throws IOException
 	 */
 	public static void createFile(int index) throws IOException {
 		load();
-		elRoot.addContent(elDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY/MM/dd HH:mm"))));
-		//elRoot.addContent(elDate.setText(Variables.getTime().toString()));
 		elRoot.addContent(elTestCases);
 
 		//Gehe jede Testklasse durch
@@ -110,7 +107,6 @@ public class CreateXML {
 		strMissingDescs = "Ausgabeformat:\nTestmethode\n\tTestattribut\n\n";
 		List<Element> listeElParameters = new ArrayList<>();
 		
-		//////////////////////////////////////////////////
 		String strKlasse = listeKlassen.get(index).toString();
 		strKlasse = strKlasse
 				.replace("\\", ".")
@@ -154,7 +150,6 @@ public class CreateXML {
 			elTestCases.addContent(elTestCase.clone());
 			k++; //naechste testMethode
 		}
-		/////////////////////////////////////////////////////////
 		doc.setContent(elRoot);
 		//Erstelle die XML-Datei
 		createXML();
@@ -166,8 +161,6 @@ public class CreateXML {
 	 */
 	public static void createFile() throws IOException {
 		load();
-		//elRoot.addContent(elDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY/MM/dd HH:mm"))));
-		elRoot.addContent(elDate.setText(Variables.getTime().toString()));
 		elRoot.addContent(elTestCases);
 
 		//Gehe jede Testklasse durch
@@ -176,7 +169,6 @@ public class CreateXML {
 		FolderScanner.scanFolder(source, listeKlassen, Variables.EXTENSION_TEST_JAVA);
 		
 		//zaehler fuer Schleifen
-		//int i = 0; //testKlassen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
 		strMissingDescs = "Ausgabeformat:\npackage.Testklasse\n\tTestmethode\n\t\tTestattribut\n\n";
@@ -233,7 +225,6 @@ public class CreateXML {
 			}
 		}
 		doc.setContent(elRoot);
-		
 		//Erstelle die XML-Datei
 		createXML();
 	}
