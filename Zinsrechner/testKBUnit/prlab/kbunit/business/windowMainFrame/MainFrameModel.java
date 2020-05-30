@@ -182,6 +182,20 @@ public final class MainFrameModel {
 		    Variables.EXTENSION_TEST_JAVA));
 		return filePaths;
 	}
+	/**
+	 * Scann nach allen Java-Files im sourcefolder
+	 * @param dirName
+	 * @param extension
+	 * @return
+	 * @throws IOException
+	 */
+	public ObservableList<File> scanSourceFolder(String dirName, String extension)
+			throws IOException {
+		ObservableList<File> filePaths 
+		    = FXCollections.observableArrayList(FolderScanner
+		    .scanFolder(new File(dirName), new ArrayList<File>(), extension));
+		return filePaths;
+	}
 	
 	/**
 	 * @return the openedTestClass

@@ -41,6 +41,8 @@ public class Variables {
 	//-------------------------FILES, FOLDERS-------------------------------------------
 	/**{@value #TEST_SOURCE}*/
 	public final static String TEST_SOURCE     = "test";
+	/**{@value #TEST_PLAIN_SOURCE}*/
+	public final static String TEST_PLAIN_SOURCE = "testPlain";
 	/**{@value #TEST_NEW_SOURCE}*/
 	public final static String TEST_NEW_SOURCE = "testKBUnit";
 	/**{@value #ALLTEST_PACKAGE}*/
@@ -58,6 +60,8 @@ public class Variables {
 	public final static String EXTENSION_JAVA = ".java";
 	/**{@value #EXTENSION_TEST_JAVA}*/
 	public final static String EXTENSION_TEST_JAVA = "Test.java";
+	/**{@value #EXTENSION_TEST_PLAIN_JAVA}*/
+	public final static String EXTENSION_TEST_PLAIN_JAVA = "TestPlain.java";
 	/**{@value #EXTENSION_XML}*/  
 	public final static String EXTENSION_XML = ".xml";
 	

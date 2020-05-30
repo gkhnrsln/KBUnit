@@ -19,7 +19,7 @@ import prlab.kbunit.enums.Variables;
  * {@code CustomerTestcaseInformation.xml} Datei vor.
  * @author G&ouml;khan Arslan
  */
-public class DocData {
+public class DataCTCI {
 	/** JUnit Testtyp der Testklasse */
 	private int testTyp;
 	/** Liste der TestMethoden der Testklasse */
@@ -36,7 +36,7 @@ public class DocData {
 	 * @param file Dateipfad der Testklasse
 	 * @throws IOException 
 	 */
-	public DocData(File file) throws IOException {
+	public DataCTCI(File file) throws IOException {
 		setTestTyp(getTestType(file.toString()));
 		setListeTestMethoden(getTestMethoden(file.toString()));
 		setListeDescTestMethoden(getDescTestMethoden(file.toString()));
@@ -175,7 +175,9 @@ public class DocData {
 				strDesc = strDesc.replace("/**", "")
 						.replace("*/", "")
 						.replace("*", "")
+						//Javadoc tags
 						.replace("{@link ", "")
+						.replace("{@code", "")
 						.replace("}", "")
 						//umlaute
 						.replace("[:ss]", "ß")

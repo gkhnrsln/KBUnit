@@ -20,7 +20,7 @@ import prlab.kbunit.scan.FolderScanner;
  * 
  * @author G&ouml;khan Arslan
  */
-public class CreateXML {
+public class CreateCTCI {
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -43,7 +43,7 @@ public class CreateXML {
 	private static Element elParameter;
 	/** Tag {@code <name>} f&uuml;r das XML Dokument*/
 	private static Element elName;
-	/**  Text zu Klassen mit fehlenden Beschreibungen */
+	/** Text zu Klassen mit fehlenden Beschreibungen */
 	private static String strMissingDescs;
 	
 	/**
@@ -63,10 +63,9 @@ public class CreateXML {
 		elName = new Element(Variables.CTCI_NODE_NAME);
 	}
 	/**
-	 * Erstellt eine {@code CustomerTestCaseInformation.xml} im Source Verzeichnis,
-	 * welche mit {@link prlab.kbunit.enums.Variables#
+	 * Erstellt im Source Verzeichnis {@link prlab.kbunit.enums.Variables#
 	 * CUSTOMER_TEST_CASE_INFO_FILE_PATH Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
-	 * festgelegt wurde.
+	 * eine {@code CustomerTestCaseInformation.xml}-Datei.
 	 * @throws IOException
 	 */
 	private static void createXML() throws IOException {
@@ -95,11 +94,14 @@ public class CreateXML {
 	public static void createFile(int index) throws IOException {
 		load();
 		elRoot.addContent(elTestCases);
-
+		
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
-		File source = new File(Variables.TEST_SOURCE);
-		FolderScanner.scanFolder(source, listeKlassen, Variables.EXTENSION_TEST_JAVA);
+		FolderScanner.scanFolder(
+				new File(Variables.TEST_SOURCE),
+				listeKlassen,
+				Variables.EXTENSION_TEST_JAVA
+				);
 		
 		//zaehler fuer Schleifen
 		int j = 0; //testAttribute
@@ -112,7 +114,7 @@ public class CreateXML {
 				.replace("\\", ".")
 				.substring(5, strKlasse.indexOf(".java"));
 		
-		DocData testKlasse = new DocData(listeKlassen.get(index));
+		DataCTCI testKlasse = new DataCTCI(listeKlassen.get(index));
 		int testType = testKlasse.getTestTyp();
 		//Gehe jede Testmethode der Testklasse durch
 		for (String strMeth : testKlasse.getListeTestMethoden()) {
@@ -165,8 +167,11 @@ public class CreateXML {
 
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
-		File source = new File(Variables.TEST_SOURCE);
-		FolderScanner.scanFolder(source, listeKlassen, Variables.EXTENSION_TEST_JAVA);
+		FolderScanner.scanFolder(
+				new File(Variables.TEST_SOURCE),
+				listeKlassen,
+				Variables.EXTENSION_TEST_JAVA
+				);
 		
 		//zaehler fuer Schleifen
 		int j = 0; //testAttribute
@@ -179,7 +184,7 @@ public class CreateXML {
 					.replace("\\", ".")
 					.substring(5, strKlasse.indexOf(".java"));
 			
-			DocData testKlasse = new DocData(listeKlassen.get(i));
+			DataCTCI testKlasse = new DataCTCI(listeKlassen.get(i));
 			int testType = testKlasse.getTestTyp();
 			k = 0;
 			boolean isNextClass = true;
@@ -234,6 +239,6 @@ public class CreateXML {
 	}
 
 	public static void setStrMissingDescs(String strMissingDescs) {
-		CreateXML.strMissingDescs = strMissingDescs;
+		CreateCTCI.strMissingDescs = strMissingDescs;
 	}
 }
