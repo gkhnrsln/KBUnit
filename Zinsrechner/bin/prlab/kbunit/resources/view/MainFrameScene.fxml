@@ -29,9 +29,6 @@
        <Label layoutX="14.0" layoutY="6.0" text="Testklasse:" AnchorPane.leftAnchor="14.0" />
         <ComboBox fx:id="javaFileComboBox" layoutX="14.0" layoutY="23.0" onAction="#javaFileChoose" prefHeight="25.0" prefWidth="282.0" />
 	     <Button fx:id="javaFileButton" disable="true" layoutX="304.0" layoutY="23.0" mnemonicParsing="false" onAction="#scan" text="Testklasse Öffnen" />
-          <opaqueInsets>
-           <Insets />
-          </opaqueInsets>
           <padding>
           <Insets bottom="5.0" left="5.0" right="5.0" />
          </padding>
@@ -39,7 +36,7 @@
        <SplitPane dividerPositions="0.5">
         <items>
          <AnchorPane>
-           <TabPane prefHeight="195.0" prefWidth="333.0" tabClosingPolicy="UNAVAILABLE">
+           <TabPane prefHeight="195.0" prefWidth="333.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <tabs>
              <Tab text="Testklasse transferieren">
              <content>
@@ -52,7 +49,7 @@
                </AnchorPane>
               </content>
              </Tab>
-             <Tab text="CustomerTestCaseInformation">
+             <Tab text="CTCI">
               <content>
                <AnchorPane>
                 <children>
@@ -67,11 +64,11 @@
            </TabPane>
            </AnchorPane>
            <AnchorPane>
-           <TabPane prefHeight="195.0" prefWidth="303.0" tabClosingPolicy="UNAVAILABLE">
+           <TabPane prefHeight="195.0" prefWidth="303.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <tabs>
              <Tab text="Logger">
               <content>
-               <AnchorPane prefHeight="194.0" prefWidth="303.0">
+               <AnchorPane prefHeight="102.0" prefWidth="249.0">
                 <children>
                  <ComboBox fx:id="selectionComboBox" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="180.0" />
                  <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Erstellt Log-Files für aktive Testkonfigurationen aus der DB." wrappingWidth="238.13671875" />
@@ -99,7 +96,6 @@
        </SplitPane>
        </items>
       </SplitPane>
-      
     <Pane prefHeight="306.0" prefWidth="572.0">
      <children>
       <TableView fx:id="inactiveResultTable" layoutX="22.0" layoutY="10.0" prefHeight="189.0" prefWidth="145.0">
@@ -145,9 +141,6 @@
        <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
        </padding>
-       <opaqueInsets>
-        <Insets />
-       </opaqueInsets>
       </HBox>
      </children>
     </HBox>
