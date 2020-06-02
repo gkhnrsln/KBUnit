@@ -1,18 +1,12 @@
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JOptionPane;
+import java.net.URI;
 
 import prlab.kbunit.enums.Variables;
-import prlab.kbunit.scan.FolderScanner;
+
 /**
  * TODO:
  * Transferiere JUnit Test in KBUnit Test.
@@ -23,32 +17,32 @@ public class Transfer {
 	
 	/**
 	 * Gibt Methode einer Klasse zurueck.
-	 * @param klasse
+	 * @param file
 	 */
-	static void getMethode (String klasse) {
+	static String getMethode (String file) {
+		String s = "";
 		try {
-			Class<?> c = Class.forName(klasse);
+			Class<?> c = Class.forName(file);
 			for (Method method : c.getDeclaredMethods()) {
 				String name = method.getName();
 				Class<?> returnType = method.getReturnType();
-				System.out.println(returnType + " " + name);
+				s = returnType + " " + name;
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return s;
 	}
 	/**
 	 * 
-	 * @param klasse
+	 * @param file
 	 * @return
 	 */
-	static String getKlasse (String klasse) {
+	static String getKlasse (String file) {
 		String s = "";
 		try {
-			Class<?> c = Class.forName(klasse);
-			//System.out.println(c.getCanonicalName());
-			//System.out.println(c.getName());
+			Class<?> c = Class.forName(file);
 			s = c.getSimpleName();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -57,7 +51,11 @@ public class Transfer {
 	
 	}
 	
-	static void magic (String file) {
+	static void magic (File file) {
+		String strKlasseName = file.getName();
+		String strPackage = file.getParent();
+		String strPath = strPackage.replace("testPlain\\", "") + "." + strKlasseName.replace(Variables.EXTENSION_JAVA, "");
+
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(file));
@@ -65,7 +63,7 @@ public class Transfer {
 			do {
 				zeile = in.readLine();
 				//Klassename
-				if (zeile.contains(getKlasse("darlehen.TilgungsdarlehenTestPlain"))) {
+				if (zeile.contains(getKlasse(strPath))) {
 					zeile = zeile.replace("Plain", "");
 				}
 				/* TODO: parameter
@@ -77,18 +75,23 @@ public class Transfer {
 				//...
 				//methode, welche Werte sollen parametrisiert werden
 				//...
+				
+				if (zeile.contains(getMethode(strPath))) {
+					System.out.println("ZEILE GEFUNDEN");
+				}
+				/*
 				while(true) {
 					String val = JOptionPane.showInputDialog("Geben Sie das zu parametrisierte Wert ein");
 					if (zeile.contains(val)) {
 						
 					}
-					System.exit(0);
+					//System.exit(0);
 					
 					if(true) {
 						
 						break;
 					}
-				}
+				}*/
 				
 				System.out.println(zeile);
 			} while(zeile != null);
@@ -101,9 +104,10 @@ public class Transfer {
 	
 	public static void main(String[] args) {
 		//getMethode("darlehen.TilgungsdarlehenTestPlain");
-		File file = new File("C:/Users/Herfel/eclipse-workspace/Zinsrechner/testPlain/darlehen/TilgungsdarlehenTestPlain.java");
-		magic(file.toString());
+		File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
+		magic(file);
 		//getKlasse("darlehen.TilgungsdarlehenTestPlain");
+
 	}
 
 }

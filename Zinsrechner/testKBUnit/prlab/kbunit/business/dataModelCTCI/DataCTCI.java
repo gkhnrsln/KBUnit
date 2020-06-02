@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -32,16 +33,16 @@ public class DataCTCI {
 	private List<String> listeDescTestAttribute;
 	
 	/**
-	 * Konstruktor f&uuml;r die Klasse DocData.
+	 * Konstruktor f&uuml;r die Klasse.
 	 * @param file Dateipfad der Testklasse
 	 * @throws IOException 
 	 */
-	public DataCTCI(File file) throws IOException {
-		setTestTyp(getTestType(file.toString()));
-		setListeTestMethoden(getTestMethoden(file.toString()));
-		setListeDescTestMethoden(getDescTestMethoden(file.toString()));
-		setListeTestAttribute(getTestAttribute(file.toString()));
-		setListeDescTestAttribute(getDescTestAttribute(file.toString()));
+	public DataCTCI(URI file) throws IOException {
+		setTestTyp(getTestType(file));
+		setListeTestMethoden(getTestMethoden(file));
+		setListeDescTestMethoden(getDescTestMethoden(file));
+		setListeTestAttribute(getTestAttribute(file));
+		setListeDescTestAttribute(getDescTestAttribute(file));
 	}
 	
 	/**
@@ -50,7 +51,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testmethoden.
 	 * @exception IOException
 	 */
-	static List<String> getDescTestMethoden (String file) {
+	static List<String> getDescTestMethoden (URI file) {
 		//temporaere Liste fuer zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
@@ -58,7 +59,8 @@ public class DataCTCI {
 		//Lese file zeilenweise aus und fuege zeile in eine Liste
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new FileReader(file));
+			File f = new File(file);
+			in = new BufferedReader(new FileReader(f));
 			String s = in.readLine();
 			tmp.add(s);
 			while(s != null){
@@ -128,7 +130,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	static List<String> getDescTestAttribute (String file)  {
+	static List<String> getDescTestAttribute (URI file)  {
 		//temporaere Liste fuer Abgleich
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
@@ -136,7 +138,8 @@ public class DataCTCI {
 		
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new FileReader(file));
+			File f = new File(file);
+			in = new BufferedReader(new FileReader(f));
 			String s = in.readLine();
 			tmp.add(s);
 			while(s != null){
@@ -201,7 +204,7 @@ public class DataCTCI {
 	 * @return Entweder {@code 5} oder {@code 4}.
 	 * @exception IOException
 	 */
-	static int getTestType (String file) throws IOException {
+	static int getTestType (URI file) throws IOException {
 		Stream<String> testTyp;
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
@@ -217,7 +220,7 @@ public class DataCTCI {
 	 * @return Liste der Testmethoden
 	 * @exception IOException
 	 */
-	static List<String> getTestMethoden (String file) throws IOException {
+	static List<String> getTestMethoden (URI file) throws IOException {
 		List<String> liste = null;
 		List<String> methoden = new ArrayList<>();
 		
@@ -262,7 +265,7 @@ public class DataCTCI {
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
-	static List<String> getTestAttribute (String file) throws IOException {
+	static List<String> getTestAttribute (URI file) throws IOException {
 		List<String> liste = null;
 		//lies die Datei zeilenweise aus
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {

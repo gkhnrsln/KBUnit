@@ -106,15 +106,15 @@ public class CreateCTCI {
 		//zaehler fuer Schleifen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
-		strMissingDescs = "Ausgabeformat:\nTestmethode\n\tTestattribut\n\n";
+		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
 		
 		String strKlasse = listeKlassen.get(index).toString();
 		strKlasse = strKlasse
 				.replace("\\", ".")
-				.substring(5, strKlasse.indexOf(".java"));
+				.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 		
-		DataCTCI testKlasse = new DataCTCI(listeKlassen.get(index));
+		DataCTCI testKlasse = new DataCTCI(listeKlassen.get(index).toURI());
 		int testType = testKlasse.getTestTyp();
 		//Gehe jede Testmethode der Testklasse durch
 		for (String strMeth : testKlasse.getListeTestMethoden()) {
@@ -176,15 +176,15 @@ public class CreateCTCI {
 		//zaehler fuer Schleifen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
-		strMissingDescs = "Ausgabeformat:\npackage.Testklasse\n\tTestmethode\n\t\tTestattribut\n\n";
+		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
 		for (int i=0; listeKlassen.size()>i; i++) {
 			String strKlasse = listeKlassen.get(i).toString();
 			strKlasse = strKlasse
 					.replace("\\", ".")
-					.substring(5, strKlasse.indexOf(".java"));
+					.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 			
-			DataCTCI testKlasse = new DataCTCI(listeKlassen.get(i));
+			DataCTCI testKlasse = new DataCTCI(listeKlassen.get(i).toURI());
 			int testType = testKlasse.getTestTyp();
 			k = 0;
 			boolean isNextClass = true;
