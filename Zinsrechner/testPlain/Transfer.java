@@ -2,8 +2,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import prlab.kbunit.enums.Variables;
 
@@ -16,42 +18,49 @@ import prlab.kbunit.enums.Variables;
 public class Transfer {
 	
 	/**
-	 * Gibt Methode einer Klasse zurueck.
+	 * Gibt eine Lister der Testmethoden einer Klasse zurueck.
 	 * @param file
+	 * @return Liste der Testmethoden
 	 */
-	static String getMethode (String file) {
-		String s = "";
+	static List<String> getTestMethode (String file) {
+		List<String> liste = new ArrayList<>();
+
 		try {
 			Class<?> c = Class.forName(file);
 			for (Method method : c.getDeclaredMethods()) {
-				String name = method.getName();
-				Class<?> returnType = method.getReturnType();
-				s = returnType + " " + name;
+				Annotation[] anon = method.getAnnotations();
+
+				for (Annotation s : anon) {
+					String strAnno = "@" + s.annotationType().getSimpleName();
+					if(strAnno.equals(Variables.ANNOTATION_TEST5) 
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
+							) {
+							Class<?> returnType = method.getReturnType();
+							liste.add(returnType + " " + method.getName());
+						
+					}
+				}
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return s;
+		return liste;
 	}
 	/**
-	 * 
-	 * @param file
-	 * @return
+	 * Gibt den Namen der Klasse zur&uuml;ck.
+	 * @param file Klasse
+	 * @return Klassenname
+	 * @throws ClassNotFoundException 
 	 */
-	static String getKlasse (String file) {
-		String s = "";
-		try {
-			Class<?> c = Class.forName(file);
-			s = c.getSimpleName();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return s;
-	
+	static String getKlasseName (String file) throws ClassNotFoundException {
+		Class<?> c = Class.forName(file);
+		return c.getSimpleName();
 	}
 	
-	static void magic (File file) {
+	static void magic (File file) throws ClassNotFoundException {
 		String strKlasseName = file.getName();
 		String strPackage = file.getParent();
 		String strPath = strPackage.replace("testPlain\\", "") + "." + strKlasseName.replace(Variables.EXTENSION_JAVA, "");
@@ -60,12 +69,21 @@ public class Transfer {
 		try {
 			in = new BufferedReader(new FileReader(file));
 			String zeile;
+			
+			//Klassename
 			do {
 				zeile = in.readLine();
-				//Klassename
-				if (zeile.contains(getKlasse(strPath))) {
+				
+				if (zeile.contains(getKlasseName(strPath))) {
 					zeile = zeile.replace("Plain", "");
+					System.out.println(zeile);
+					break;
 				}
+				System.out.println(zeile);
+			} while(zeile != null);
+			
+			while (zeile != null){
+				zeile = in.readLine();
 				/* TODO: parameter
 				 * - werden in der Maske definiert
 				 * Format:
@@ -76,8 +94,11 @@ public class Transfer {
 				//methode, welche Werte sollen parametrisiert werden
 				//...
 				
-				if (zeile.contains(getMethode(strPath))) {
+				if (zeile.contains(getTestMethode(strPath).get(0))) {
 					System.out.println("ZEILE GEFUNDEN");
+					
+					//naechste Zeile pruefen
+					
 				}
 				/*
 				while(true) {
@@ -94,7 +115,8 @@ public class Transfer {
 				}*/
 				
 				System.out.println(zeile);
-			} while(zeile != null);
+			}
+
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -103,10 +125,13 @@ public class Transfer {
 	
 	
 	public static void main(String[] args) {
-		//getMethode("darlehen.TilgungsdarlehenTestPlain");
-		File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
-		magic(file);
-		//getKlasse("darlehen.TilgungsdarlehenTestPlain");
+		for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain"))
+			System.err.println(methode);
+		
+		
+		//File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
+		//magic(file);
+		//getKlasseName("darlehen.TilgungsdarlehenTestPlain");
 
 	}
 

@@ -3,6 +3,8 @@ package darlehen;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.RepeatedTest;
+
 /**
  * Die Klasse enthaelt JUnit Tests der Version 5 zur Klasse
  * Tilgungsdarlehen.
@@ -21,6 +23,7 @@ class TilgungsdarlehenTestPlain {
 	 * @throws Exception , falls die zu testende Methode eine Exception
 	 * wirft
 	 */
+
 	@Test
 	void testBerechneGesamtschuld() throws Exception {
 		this.t = new Tilgungsdarlehen(10000000, 10, 2);
@@ -30,4 +33,18 @@ class TilgungsdarlehenTestPlain {
 				"Die berechnete Gesamtschuld entspricht nicht der " 
 			        + "erwarteten.");
 		}
+	
+	@Test
+	void Nix() {
+		
+	}
+	
+	@Test
+	void testNix() {
+		
+	}
+	
+	void testNix2() {
+		
+	}
 }

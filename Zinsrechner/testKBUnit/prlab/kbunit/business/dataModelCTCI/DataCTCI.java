@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -39,7 +41,8 @@ public class DataCTCI {
 	 */
 	public DataCTCI(URI file) throws IOException {
 		setTestTyp(getTestType(file));
-		setListeTestMethoden(getTestMethoden(file));
+	//	setListeTestMethoden(getTestMethoden(file));
+		setListeTestMethoden(getTestMethoden2(file));
 		setListeDescTestMethoden(getDescTestMethoden(file));
 		setListeTestAttribute(getTestAttribute(file));
 		setListeDescTestAttribute(getDescTestAttribute(file));
@@ -214,12 +217,55 @@ public class DataCTCI {
 			return testTyp.count() > 0 ? 5 : 4;
 		}
 	}
+	
+	
+	/**
+	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
+	 * @param file Datei, dessen Methoden gelistet werden sollen.
+	 * @return Liste der Testmethoden
+	 * @exception ClassNotFoundException
+	 */
+	static List<String> getTestMethoden2 (URI file) {
+		//nicht elegant (anfang)
+		String strFile = file.toString();
+		strFile = strFile.substring(file.toString().indexOf("test"));
+		strFile = strFile.substring(strFile.indexOf("/"));
+		strFile = strFile.substring(1, strFile.indexOf(".java"));
+		strFile = strFile.replace("/", ".");
+		//nicht elegant (ende)
+		
+		List<String> liste = new ArrayList<>();
+		try {
+			Class<?> c = Class.forName(strFile);
+
+			for (Method method : c.getDeclaredMethods()) {
+				Annotation[] anno = method.getAnnotations();
+
+				for (Annotation s : anno) {
+					String strAnno = "@" + s.annotationType().getSimpleName();
+					if(strAnno.equals(Variables.ANNOTATION_TEST5) 
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
+							|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
+							) {
+							liste.add(method.getName());
+					}
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return liste;
+	}
+	
 	/**
 	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Methoden gelistet werden sollen.
 	 * @return Liste der Testmethoden
 	 * @exception IOException
 	 */
+	@Deprecated
 	static List<String> getTestMethoden (URI file) throws IOException {
 		List<String> liste = null;
 		List<String> methoden = new ArrayList<>();
