@@ -2,6 +2,7 @@
 <root>
   <testcases>
     <testcase>
+<<<<<<< HEAD
       <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
       <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
       <testtype>5</testtype>
@@ -10,6 +11,10 @@
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
       <desc>Beschreibung fehlt</desc>
+=======
+      <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
+      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -27,6 +32,7 @@
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
@@ -39,18 +45,36 @@
     </testcase>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
+=======
+      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters />
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMin</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
+<<<<<<< HEAD
           <name>testFuerAssumptions1_Zahl</name>
           <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+=======
+          <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
+          <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMax</path>
+<<<<<<< HEAD
       <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
+=======
+      <desc>Beschreibung fehlt</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -61,7 +85,11 @@
     </testcase>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldMaxUsingMocks</path>
+<<<<<<< HEAD
       <desc>Beschreibung fehlt</desc>
+=======
+      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -79,17 +107,27 @@
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMin</path>
+=======
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
+<<<<<<< HEAD
           <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
           <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+=======
+          <name>testFuerAssumptions1_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>darlehen.TilgungsdarlehenTest.testBerechnungGesamtschuldMitInflation</path>
       <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
       <testtype>5</testtype>
@@ -117,12 +155,25 @@
         <parameter>
           <name>testBerechnungGesamtschuldMitInflation_Bias</name>
           <desc>vom Wissenstraeger tolerierte Abweichung zwischen erwarteter und berechneter Gesamtschuld</desc>
+=======
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerAssumptions2_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
     <testcase>
       <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
+<<<<<<< HEAD
       <desc>Test zur Methode berechneAnnuitaetFuerPeriode aus der Klasse Tilgungsdarlehen</desc>
+=======
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -149,7 +200,11 @@
     </testcase>
     <testcase>
       <path>darlehen.TilgungsdarlehenTest.testBerechneAnnuitaetFuerPeriode</path>
+<<<<<<< HEAD
       <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen mit dem Setzen der Inflationsrate. Durch die randomisierte Ermittlung der Inflationsrate ist die Testausfuehrung zufallsbehaftet, was ein Grund fuer den Einsatz von RepeatedTests sein kann.</desc>
+=======
+      <desc>Test zur Methode berechneAnnuitaetFuerPeriode aus der Klasse Tilgungsdarlehen</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -175,6 +230,7 @@
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>konten.JUnit5KontoTest.testFuerDisabled</path>
       <desc>Test zum Setzen des Kunden zu dem Konto</desc>
       <testtype>5</testtype>
@@ -182,10 +238,40 @@
         <parameter>
           <name>testFuerDisabled_Musterstring</name>
           <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+=======
+      <path>darlehen.TilgungsdarlehenTest.testBerechnungGesamtschuldMitInflation</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen mit dem Setzen der Inflationsrate. Durch die randomisierte Ermittlung der Inflationsrate ist die Testausfuehrung zufallsbehaftet, was ein Grund fuer den Einsatz von RepeatedTests sein kann.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Bias</name>
+          <desc>vom Wissenstraeger tolerierte Abweichung zwischen erwarteter und berechneter Gesamtschuld</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>konten.JUnit5KontoTest.testWithArg</path>
       <desc>Test zum Setzen des Konto zu dem Kunden</desc>
       <testtype>5</testtype>
@@ -194,28 +280,9 @@
     <testcase>
       <path>konten.JUnit5KontoTest.testSetKontoZumKunden</path>
       <desc>Test von Multiplikation. Die Formatierung ist absichtlich so gewaehlt, als Test fuer den KBUnit-Runner</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testSetKontoZumKunden_Nachname</name>
-          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>konten.JUnit5KontoTest.testWithExternalMethodSource</path>
-      <desc>Dieser Testfall befindet sich nicht im Testfallverwaltungsdokument CustomerTestCaseInformation.xml, wird aber in der zu exportierenden JAR als Teil dieser Klasse mit den anderen Testfaellen verpackt.</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testWithExternalMethodSource_Musterstring</name>
-          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
+=======
       <path>konten.JUnit5KontoTest.testSetKundeZumKonto</path>
-      <desc>Beschreibung fehlt</desc>
+      <desc>Test zum Setzen des Kunden zu dem Konto</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -225,13 +292,81 @@
       </parameters>
     </testcase>
     <testcase>
+      <path>konten.JUnit5KontoTest.testSetKontoZumKunden</path>
+      <desc>Test zum Setzen des Konto zu dem Kunden</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testSetKontoZumKunden_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+<<<<<<< HEAD
+      <path>konten.JUnit5KontoTest.testWithExternalMethodSource</path>
+      <desc>Dieser Testfall befindet sich nicht im Testfallverwaltungsdokument CustomerTestCaseInformation.xml, wird aber in der zu exportierenden JAR als Teil dieser Klasse mit den anderen Testfaellen verpackt.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testWithExternalMethodSource_Musterstring</name>
+          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+=======
       <path>konten.JUnit5KontoTest.testRechneAlterMal2</path>
-      <desc>Dieser Test ist erfolgreich, falls der Anwender Musterstring eingibt.</desc>
+      <desc>Test von Multiplikation. Die Formatierung ist absichtlich so gewaehlt, als Test fuer den KBUnit-Runner</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
           <name>testRechneAlterMal2_Alter</name>
           <desc>vom Wissenstraeger einstellbares Alter des Kunden des Kontos</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+<<<<<<< HEAD
+      <path>konten.JUnit5KontoTest.testSetKundeZumKonto</path>
+=======
+      <path>konten.JUnit5KontoTest.testWithArg</path>
+      <desc>Dieser Testfall befindet sich nicht im Testfallverwaltungsdokument CustomerTestCaseInformation.xml, wird aber in der zu exportierenden JAR als Teil dieser Klasse mit den anderen Testfaellen verpackt.</desc>
+      <testtype>5</testtype>
+      <parameters />
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testWithExternalMethodSource</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+<<<<<<< HEAD
+          <name>testSetKundeZumKonto_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+=======
+          <name>testWithExternalMethodSource_Musterstring</name>
+          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+<<<<<<< HEAD
+      <path>konten.JUnit5KontoTest.testRechneAlterMal2</path>
+=======
+      <path>konten.JUnit5KontoTest.testFuerDisabled</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+      <desc>Dieser Test ist erfolgreich, falls der Anwender Musterstring eingibt.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+<<<<<<< HEAD
+          <name>testRechneAlterMal2_Alter</name>
+          <desc>vom Wissenstraeger einstellbares Alter des Kunden des Kontos</desc>
+=======
+          <name>testFuerDisabled_Musterstring</name>
+          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
@@ -247,13 +382,22 @@
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
+=======
+      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
+<<<<<<< HEAD
           <name>testRaiseToPowerTemplate_Base</name>
           <desc>Beschreibung fehlt</desc>
+=======
+          <name>testRaiseToPowerStandard_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
@@ -269,11 +413,16 @@
       </parameters>
     </testcase>
     <testcase>
+<<<<<<< HEAD
       <path>math.MathDotPowTest.testRaiseToPowerPerformance</path>
+=======
+      <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
+<<<<<<< HEAD
           <name>testRaiseToPowerPerformance_Base</name>
           <desc>Beschreibung fehlt</desc>
         </parameter>
@@ -293,23 +442,57 @@
     </testcase>
     <testcase>
       <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
+=======
           <name>testRaiseToPowerParameterized_Base</name>
           <desc>Beschreibung fehlt</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
+      <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
+<<<<<<< HEAD
+          <name>testRaiseToPowerParameterized_Base</name>
+=======
+          <name>testRaiseToPowerTemplate_Base</name>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+<<<<<<< HEAD
+      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
+=======
+      <path>math.MathDotPowTest.testRaiseToPowerPerformance</path>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+<<<<<<< HEAD
           <name>testRaiseToPowerStandard_Base</name>
           <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
+=======
+          <name>testRaiseToPowerPerformance_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_TimeoutInNanos</name>
+          <desc>vom Wissenstraeger einstellbarer Wert, nach wie vielen Millisekunden die Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_Exponent</name>
+          <desc>vom Wissenstraeger einstellbarer Exponent, mit der die zugehoerige Basis im Performance-Test potenziert werden soll</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_exp_Result</name>
+          <desc>vom Wissenstraeger einstellbares Ergebnis, das im Performance-Test zu den entsprechenden Parametern erwartet wird</desc>
+>>>>>>> b46a9bb0826568d10b3fe685cfcb575baf5b0384
         </parameter>
       </parameters>
     </testcase>
