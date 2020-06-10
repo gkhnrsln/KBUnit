@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,38 @@ import prlab.kbunit.enums.Variables;
  * @author G&ouml;khan Arslan
  */
 public class Transfer {
+	
+	/**
+	 * Gibt den Namen der Klasse zur&uuml;ck.
+	 * @param file Klasse
+	 * @return Klassenname
+	 * @throws ClassNotFoundException 
+	 */
+	static String getKlasseName (String file) throws ClassNotFoundException {
+		Class<?> c = Class.forName(file);
+		return c.getSimpleName();
+	}
+	
+	/**
+	 * Gibt eine Liste der Testattribute einer Klasse zurueck.
+	 * @param file
+	 * @return Liste der Testattribute
+	 */
+	static List<String> getTestAttribut (String file) {
+		List<String> liste = new ArrayList<>();
+		
+		try {
+			Class<?> c = Class.forName(file);
+			for (Field field : c.getDeclaredFields()) {
+				if(field.getName().startsWith("test")) {
+					liste.add(field.getName());
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return liste;
+	}
 	
 	/**
 	 * Gibt eine Lister der Testmethoden einer Klasse zurueck.
@@ -33,14 +66,13 @@ public class Transfer {
 				for (Annotation s : anon) {
 					String strAnno = "@" + s.annotationType().getSimpleName();
 					if(strAnno.equals(Variables.ANNOTATION_TEST5) 
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
-							) {
-							Class<?> returnType = method.getReturnType();
-							liste.add(returnType + " " + method.getName());
-						
+						|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
+						|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+						|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
+						|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
+						) {
+						Class<?> returnType = method.getReturnType();
+						liste.add(returnType + " " + method.getName());
 					}
 				}
 			}
@@ -49,17 +81,12 @@ public class Transfer {
 		}
 		return liste;
 	}
+
 	/**
-	 * Gibt den Namen der Klasse zur&uuml;ck.
-	 * @param file Klasse
-	 * @return Klassenname
-	 * @throws ClassNotFoundException 
+	 * TEST
+	 * @param file
+	 * @throws ClassNotFoundException
 	 */
-	static String getKlasseName (String file) throws ClassNotFoundException {
-		Class<?> c = Class.forName(file);
-		return c.getSimpleName();
-	}
-	
 	static void magic (File file) throws ClassNotFoundException {
 		String strKlasseName = file.getName();
 		String strPackage = file.getParent();
@@ -76,7 +103,7 @@ public class Transfer {
 				
 				if (zeile.contains(getKlasseName(strPath))) {
 					zeile = zeile.replace("Plain", "");
-					System.out.println(zeile);
+					System.err.println(zeile);
 					break;
 				}
 				System.out.println(zeile);
@@ -93,12 +120,13 @@ public class Transfer {
 				//...
 				//methode, welche Werte sollen parametrisiert werden
 				//...
-				
-				if (zeile.contains(getTestMethode(strPath).get(0))) {
-					System.out.println("ZEILE GEFUNDEN");
-					
-					//naechste Zeile pruefen
-					
+				for (String methode : getTestMethode(strPath)) {
+
+					if (zeile.contains(methode)) {
+						System.err.println("TESTMETHODE GEFUNDEN: [" +methode  +"]");
+						//naechste Zeile pruefen
+						
+					}
 				}
 				/*
 				while(true) {
@@ -125,12 +153,16 @@ public class Transfer {
 	
 	
 	public static void main(String[] args) {
-		for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain"))
-			System.err.println(methode);
+		//for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain")) System.err.println(methode);
 		
 		
-		//File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
-		//magic(file);
+		File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
+		try {
+			magic(file);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//getKlasseName("darlehen.TilgungsdarlehenTestPlain");
 
 	}

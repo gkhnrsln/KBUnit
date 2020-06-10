@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.file.Files;
@@ -38,14 +39,14 @@ public class DataCTCI {
 	 * Konstruktor f&uuml;r die Klasse.
 	 * @param file Dateipfad der Testklasse
 	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public DataCTCI(URI file) throws IOException {
-		setTestTyp(getTestType(file));
-	//	setListeTestMethoden(getTestMethoden(file));
-		setListeTestMethoden(getTestMethoden2(file));
-		setListeDescTestMethoden(getDescTestMethoden(file));
-		setListeTestAttribute(getTestAttribute(file));
-		setListeDescTestAttribute(getDescTestAttribute(file));
+	public DataCTCI(URI file) throws IOException, ClassNotFoundException {
+		setTestTyp(testType(file));
+		setListeTestMethoden(testMethoden(file));
+		setListeDescTestMethoden(descTestMethoden(file));
+		setListeTestAttribute(testAttribute(file));
+		setListeDescTestAttribute(descTestAttribute(file));
 	}
 	
 	/**
@@ -54,7 +55,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testmethoden.
 	 * @exception IOException
 	 */
-	static List<String> getDescTestMethoden (URI file) {
+	static List<String> descTestMethoden (URI file) {
 		//temporaere Liste fuer zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
@@ -84,11 +85,11 @@ public class DataCTCI {
 			String strDesc = "";
 			//falls aktuelle Zeile eine Testmethode ist
 			if(tmp.get(i).contains("void test") 
-					|| tmp.get(i).contains(Variables.DYNAMIC_NODE) 
-					|| tmp.get(i).contains(Variables.DYNAMIC_TEST)
-					|| tmp.get(i).contains(Variables.DYNAMIC_CONTAINER)
-					) {
-				//zaehler fuer zeilen aufwaerts
+				|| tmp.get(i).contains(Variables.DYNAMIC_NODE) 
+				|| tmp.get(i).contains(Variables.DYNAMIC_TEST)
+				|| tmp.get(i).contains(Variables.DYNAMIC_CONTAINER)
+				) {
+				//Zaehler fuer Zeilen aufwaerts
 				int j = 1;
 				//pruefe bis in vorherige Zeile "/**" vorkommt
 				while (!tmp.get(i-j).startsWith("/**")) {
@@ -99,9 +100,8 @@ public class DataCTCI {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
 					//Zeile ueberspringen wenn bestimmte Zeichen vorkommen 
-					else if(prevLine.startsWith("@") 
-							|| prevLine.contains("*/") 
-							|| prevLine.contains("* @")) {
+					else if(prevLine.startsWith("@") || prevLine.contains("*/") 
+						|| prevLine.contains("* @")) {
 						j++;//naechste Zeile (aufwaerts)
 						continue;
 					}
@@ -110,16 +110,10 @@ public class DataCTCI {
 						j++; //naechste Zeile (aufwaerts)
 					}
 				}
-				strDesc = strDesc.replace("*", "")
-						//Umlaute
-						.replace("[:ss]", "ß")
-						.replace("[:A]", "Ä")
-						.replace("[:O]", "Ö")
-						.replace("[:U]", "Ü")
-						.replace("[:a]", "ä")
-						.replace("[:o]", "ö")
-						.replace("[:u]", "ü");
-				//fuege der Liste ein neue Beschreibung hinzu
+				strDesc = strDesc.replace("*", "").replace("[:ss]", "ß")
+						.replace("[:A]", "Ä").replace("[:O]", "Ö")
+						.replace("[:U]", "Ü").replace("[:a]", "ä")
+						.replace("[:o]", "ö").replace("[:u]", "ü");
 				liste.add(strDesc);
 			}
 			i++;//naechste Zeile (abwaerts)
@@ -133,7 +127,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	static List<String> getDescTestAttribute (URI file)  {
+	static List<String> descTestAttribute (URI file)  {
 		//temporaere Liste fuer Abgleich
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
@@ -178,20 +172,15 @@ public class DataCTCI {
 					j++; //naechste Zeile (aufwaerts)
 				} while (!tmp.get(i-j).endsWith("*/"));
 				//letzte Formatierungen
-				strDesc = strDesc.replace("/**", "")
-						.replace("*/", "")
+				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
 						//Javadoc tags
-						.replace("{@link ", "")
-						.replace("{@code", "")
+						.replace("{@link ", "").replace("{@code", "")
 						.replace("}", "")
 						//umlaute
-						.replace("[:ss]", "ß")
-						.replace("[:A]", "Ä")
-						.replace("[:O]", "Ö")
-						.replace("[:U]", "Ü")
-						.replace("[:a]", "ä")
-						.replace("[:o]", "ö")
+						.replace("[:ss]", "ß").replace("[:A]", "Ä")
+						.replace("[:O]", "Ö").replace("[:U]", "Ü")
+						.replace("[:a]", "ä").replace("[:o]", "ö")
 						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
@@ -207,17 +196,16 @@ public class DataCTCI {
 	 * @return Entweder {@code 5} oder {@code 4}.
 	 * @exception IOException
 	 */
-	static int getTestType (URI file) throws IOException {
+	static int testType (URI file) throws IOException {
 		Stream<String> testTyp;
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
 					.map(Objects::toString)
-					//JUnit 5 Testfaelle beinhalten immer folgenden import
+					//JUnit 5
 					.filter(type -> type.contains("import org.junit.jupiter"));
 			return testTyp.count() > 0 ? 5 : 4;
 		}
 	}
-	
 	
 	/**
 	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
@@ -225,10 +213,9 @@ public class DataCTCI {
 	 * @return Liste der Testmethoden
 	 * @exception ClassNotFoundException
 	 */
-	static List<String> getTestMethoden2 (URI file) {
+	static List<String> testMethoden (URI file) {
 		//nicht elegant (anfang)
-		String strFile = file.toString();
-		strFile = strFile.substring(file.toString().indexOf("test"));
+		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
 		strFile = strFile.substring(1, strFile.indexOf(".java"));
 		strFile = strFile.replace("/", ".");
@@ -242,14 +229,16 @@ public class DataCTCI {
 				Annotation[] anno = method.getAnnotations();
 
 				for (Annotation s : anno) {
-					String strAnno = "@" + s.annotationType().getSimpleName();
-					if(strAnno.equals(Variables.ANNOTATION_TEST5) 
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
-							|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
-							) {
+					switch("@" + s.annotationType().getSimpleName()) {
+						case Variables.ANNOTATION_TEST5:
+						case Variables.ANNOTATION_TEST5_REPEATED:
+						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
+						case Variables.ANNOTATION_TEST5_FACTORY:
+						case Variables.ANNOTATION_TEST5_TEMPLATE:
 							liste.add(method.getName());
+							break;
+						default:
+					        break;
 					}
 				}
 			}
@@ -259,14 +248,9 @@ public class DataCTCI {
 		return liste;
 	}
 	
-	/**
-	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
-	 * @param file Datei, dessen Methoden gelistet werden sollen.
-	 * @return Liste der Testmethoden
-	 * @exception IOException
-	 */
+	/*
 	@Deprecated
-	static List<String> getTestMethoden (URI file) throws IOException {
+	static List<String> testMethoden (URI file) throws IOException {
 		List<String> liste = null;
 		List<String> methoden = new ArrayList<>();
 		
@@ -304,6 +288,7 @@ public class DataCTCI {
 		}
 		return methoden;
 	}
+	*/
 	
 	/**
 	 * Gibt eine Liste mit jeder Testvariable in der angegebenen Datei zur&uuml;ck.
@@ -311,7 +296,27 @@ public class DataCTCI {
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
-	static List<String> getTestAttribute (URI file) throws IOException {
+	
+	static List<String> testAttribute (URI file) throws ClassNotFoundException {
+		//nicht elegant (anfang)
+		String strFile = file.toString().substring(file.toString().indexOf("test"));
+		strFile = strFile.substring(strFile.indexOf("/"));
+		strFile = strFile.substring(1, strFile.indexOf(".java"));
+		strFile = strFile.replace("/", ".");
+		//nicht elegant (ende)
+		
+		List<String> liste = new ArrayList<>();
+
+		Class<?> c = Class.forName(strFile);
+		for (Field field : c.getDeclaredFields()) {
+			if(field.getName().startsWith("test"))
+				liste.add(field.getName());
+		}
+		return liste;
+	}
+	/*
+    @Deprecated
+	static List<String> testAttribute (URI file) throws IOException {
 		List<String> liste = null;
 		//lies die Datei zeilenweise aus
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
@@ -326,6 +331,7 @@ public class DataCTCI {
 		}
 		return liste;
 	}
+	*/
 
 	//getter and setter
 	public int getTestTyp() {

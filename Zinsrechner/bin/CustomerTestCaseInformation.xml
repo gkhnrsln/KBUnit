@@ -2,14 +2,8 @@
 <root>
   <testcases>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
-      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
-      <testtype>5</testtype>
-      <parameters />
-    </testcase>
-    <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
-      <desc>Beschreibung fehlt</desc>
+      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -27,30 +21,14 @@
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
+      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testFuerAssumptions2_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testFuerAssumptions1_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
-        </parameter>
-      </parameters>
+      <parameters />
     </testcase>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMax</path>
-      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
+      <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -75,6 +53,28 @@
         <parameter>
           <name>testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld</name>
           <desc>vom Wissensträger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissensträger einstellbaren Werten bestimmt werden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
+      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerAssumptions1_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerAssumptions2_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -192,13 +192,13 @@
       <parameters />
     </testcase>
     <testcase>
-      <path>konten.JUnit5KontoTest.testSetKontoZumKunden</path>
+      <path>konten.JUnit5KontoTest.testRechneAlterMal2</path>
       <desc>Test von Multiplikation. Die Formatierung ist absichtlich so gewaehlt, als Test fuer den KBUnit-Runner</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testSetKontoZumKunden_Nachname</name>
-          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+          <name>testRechneAlterMal2_Alter</name>
+          <desc>vom Wissenstraeger einstellbares Alter des Kunden des Kontos</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -225,13 +225,13 @@
       </parameters>
     </testcase>
     <testcase>
-      <path>konten.JUnit5KontoTest.testRechneAlterMal2</path>
+      <path>konten.JUnit5KontoTest.testSetKontoZumKunden</path>
       <desc>Dieser Test ist erfolgreich, falls der Anwender Musterstring eingibt.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testRechneAlterMal2_Alter</name>
-          <desc>vom Wissenstraeger einstellbares Alter des Kunden des Kontos</desc>
+          <name>testSetKontoZumKunden_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -247,13 +247,24 @@
       </parameters>
     </testcase>
     <testcase>
-      <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
+      <path>math.MathDotPowTest.testFactory</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testRaiseToPowerTemplate_Base</name>
-          <desc>Beschreibung fehlt</desc>
+          <name>testFactory_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basis fuer die TestFactory, die potenziert werden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerStandard_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
         </parameter>
       </parameters>
     </testcase>
@@ -264,6 +275,28 @@
       <parameters>
         <parameter>
           <name>testRaiseToPowerRepeated_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerParameterized_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerTemplate_Base</name>
           <desc>Beschreibung fehlt</desc>
         </parameter>
       </parameters>
@@ -288,39 +321,6 @@
         <parameter>
           <name>testRaiseToPowerPerformance_exp_Result</name>
           <desc>vom Wissenstraeger einstellbares Ergebnis, das im Performance-Test zu den entsprechenden Parametern erwartet wird</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testRaiseToPowerParameterized_Base</name>
-          <desc>Beschreibung fehlt</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testRaiseToPowerStandard_Base</name>
-          <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>math.MathDotPowTest.testFactory</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testFactory_Base</name>
-          <desc>vom Wissenstraeger einstellbare Basis fuer die TestFactory, die potenziert werden soll</desc>
         </parameter>
       </parameters>
     </testcase>

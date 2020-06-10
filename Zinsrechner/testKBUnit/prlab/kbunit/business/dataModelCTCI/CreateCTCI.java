@@ -90,8 +90,9 @@ public class CreateCTCI {
 	 * {@link prlab.kbunit.gui.windowMainFrame.MainFrameController
 	 * #javafileComboBox javafileComboBox} an.
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public static void createFile(int index) throws IOException {
+	public static void createFile(int index) throws IOException, ClassNotFoundException {
 		load();
 		elRoot.addContent(elTestCases);
 		
@@ -160,8 +161,9 @@ public class CreateCTCI {
 	/**
 	 * Erstelle CustomerTestCaseInformation fuer alle Klassen.
 	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void createFile() throws IOException {
+	public static void createFile() throws IOException, ClassNotFoundException {
 		load();
 		elRoot.addContent(elTestCases);
 
@@ -176,8 +178,10 @@ public class CreateCTCI {
 		//zaehler fuer Schleifen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
+		
 		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
+		
 		for (int i=0; listeKlassen.size()>i; i++) {
 			String strKlasse = listeKlassen.get(i).toString();
 			strKlasse = strKlasse
@@ -188,6 +192,7 @@ public class CreateCTCI {
 			int testType = testKlasse.getTestTyp();
 			k = 0;
 			boolean isNextClass = true;
+			
 			//Gehe jede Testmethode der Testklasse durch
 			for (String strMeth : testKlasse.getListeTestMethoden()) {
 				j = 0;
@@ -199,6 +204,7 @@ public class CreateCTCI {
 					}
 					strMissingDescs += "\t" + strMeth + "\n";
 				}
+				
 				//Gehe jedes Testattribut der Testklasse durch
 				for (String strAttr : testKlasse.getListeTestAttribute()) {
 					if (strAttr.contains(strMeth)) {

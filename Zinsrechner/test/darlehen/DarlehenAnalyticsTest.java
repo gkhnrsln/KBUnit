@@ -44,7 +44,7 @@ class DarlehenAnalyticsTest {
      * die sie unter den Darlehen befinden soll */
     public static double testGetGesamtschuldenMax_MaxGesamtschuld = Double.MAX_VALUE;
 
-    /** vom Wissenstr[:a]ger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub .
+    /** vom Wissenstr[:a]ger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub.
      * Angabe der Wert erfolgt durch das Trennen mit Komma */
     public static String testGetGesamtschuldMaxUsingMocks_Gesamtschulden = "-1,0,1";
     /** vom Wissenstr[:a]ger einstellbare Anzahl der Methodenaufrufe
