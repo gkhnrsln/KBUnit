@@ -348,7 +348,7 @@ public class BasicFrameView extends JFrame
                 }
             }
             else
-            {            	
+            {
                 this.lblOpenedTest.setText("<html><font size=+1>"
                     + text
                     + " </font><p/><font color=\"#808080\">" + tci.getDesc()+"</font><html>");
