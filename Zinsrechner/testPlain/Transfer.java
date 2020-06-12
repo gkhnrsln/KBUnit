@@ -12,19 +12,18 @@ import prlab.kbunit.enums.Variables;
 
 /**
  * TODO:
- * Transferiere JUnit Test in KBUnit Test.
+ * Transferiere JUnit Test in KBUnit f&auml;higen Test.
  * 
  * @author G&ouml;khan Arslan
  */
 public class Transfer {
-	
 	/**
 	 * Gibt den Namen der Klasse zur&uuml;ck.
 	 * @param file Klasse
 	 * @return Klassenname
 	 * @throws ClassNotFoundException 
 	 */
-	static String getKlasseName (String file) throws ClassNotFoundException {
+	static String getTestKlasseName (String file) throws ClassNotFoundException {
 		Class<?> c = Class.forName(file);
 		return c.getSimpleName();
 	}
@@ -40,9 +39,8 @@ public class Transfer {
 		try {
 			Class<?> c = Class.forName(file);
 			for (Field field : c.getDeclaredFields()) {
-				if(field.getName().startsWith("test")) {
+				if(field.getName().startsWith("test"))
 					liste.add(field.getName());
-				}
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -64,15 +62,17 @@ public class Transfer {
 				Annotation[] anon = method.getAnnotations();
 
 				for (Annotation s : anon) {
-					String strAnno = "@" + s.annotationType().getSimpleName();
-					if(strAnno.equals(Variables.ANNOTATION_TEST5) 
-						|| strAnno.equals(Variables.ANNOTATION_TEST5_REPEATED)
-						|| strAnno.equals(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-						|| strAnno.equals(Variables.ANNOTATION_TEST5_FACTORY)
-						|| strAnno.equals(Variables.ANNOTATION_TEST5_TEMPLATE)
-						) {
-						Class<?> returnType = method.getReturnType();
-						liste.add(returnType + " " + method.getName());
+					switch ("@" + s.annotationType().getSimpleName()) {
+						case Variables.ANNOTATION_TEST5:
+						case Variables.ANNOTATION_TEST5_REPEATED:
+						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
+						case Variables.ANNOTATION_TEST5_FACTORY:
+						case Variables.ANNOTATION_TEST5_TEMPLATE:
+							Class<?> returnType = method.getReturnType();
+							liste.add(returnType + " " + method.getName());
+							break;
+						default:
+							break;
 					}
 				}
 			}
@@ -101,7 +101,7 @@ public class Transfer {
 			do {
 				zeile = in.readLine();
 				
-				if (zeile.contains(getKlasseName(strPath))) {
+				if (zeile.contains(getTestKlasseName(strPath))) {
 					zeile = zeile.replace("Plain", "");
 					System.err.println(zeile);
 					break;
@@ -155,14 +155,14 @@ public class Transfer {
 	public static void main(String[] args) {
 		//for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain")) System.err.println(methode);
 		
-		
+
 		File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
 		try {
 			magic(file);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		//getKlasseName("darlehen.TilgungsdarlehenTestPlain");
 
 	}

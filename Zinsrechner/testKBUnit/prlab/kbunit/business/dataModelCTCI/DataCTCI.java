@@ -13,14 +13,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import prlab.kbunit.enums.Variables;
 
 /**
  * Diese Klasse bereitet alle Informationen f&uuml;r die
- * {@code CustomerTestcaseInformation.xml} Datei vor.
+ * {@code CustomerTestCaseInformation.xml} Datei vor.
  * @author G&ouml;khan Arslan
  */
 public class DataCTCI {
@@ -50,17 +49,19 @@ public class DataCTCI {
 	}
 	
 	/**
-	 * Gibt eine Liste der JavaDoc Beschreibungen zur&uuml;ck.
-	 * @param file Pfad der Testklasse
-	 * @return Liste der Beschreibungen zu den Testmethoden.
+	 * Gibt eine Liste der JavaDoc Beschreibungen zu den Testmethoden der angegebenen Java
+	 * Datei zur&uuml;ck.
+	 * @param file Dateipfad der Testklasse
+	 * @return Liste der Beschreibungen zu den Testmethoden
 	 * @exception IOException
 	 */
 	static List<String> descTestMethoden (URI file) {
-		//temporaere Liste fuer zeileninhalte
+		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
 		List<String> liste = new ArrayList<String>();
-		//Lese file zeilenweise aus und fuege zeile in eine Liste
+		
+		//Lese file zeilenweise aus und fuege Zeile in eine Liste
 		BufferedReader in;
 		try {
 			File f = new File(file);
@@ -77,7 +78,7 @@ public class DataCTCI {
 			e.printStackTrace();
 		}
 		
-		int i = 0; //zaehler fuer Zeilen abwaerts
+		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
 		// gehe jede Zeile abwaerts durch
 		while (i<tmp.size()) {
@@ -89,14 +90,14 @@ public class DataCTCI {
 				|| tmp.get(i).contains(Variables.DYNAMIC_TEST)
 				|| tmp.get(i).contains(Variables.DYNAMIC_CONTAINER)
 				) {
-				//Zaehler fuer Zeilen aufwaerts
+				//Zaehler fuer Zeilen (aufwaerts)
 				int j = 1;
-				//pruefe bis in vorherige Zeile "/**" vorkommt
+				//pruefe bis in vorheriger Zeile "/**" vorkommt
 				while (!tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
 					//wenn vorherige Zeile mit "}" oder ";" endet 
 					//-> kein JavaDoc vorhanden
-					if (prevLine.endsWith("}")|| prevLine.endsWith(";")){
+					if (prevLine.endsWith("}")|| prevLine.endsWith(";")) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
 					//Zeile ueberspringen wenn bestimmte Zeichen vorkommen 
@@ -110,10 +111,12 @@ public class DataCTCI {
 						j++; //naechste Zeile (aufwaerts)
 					}
 				}
+				//letzte Formatierungen
 				strDesc = strDesc.replace("*", "").replace("[:ss]", "ß")
 						.replace("[:A]", "Ä").replace("[:O]", "Ö")
 						.replace("[:U]", "Ü").replace("[:a]", "ä")
 						.replace("[:o]", "ö").replace("[:u]", "ü");
+				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
 			i++;//naechste Zeile (abwaerts)
@@ -121,18 +124,19 @@ public class DataCTCI {
 		return liste;
 	}
 	/**
-	 * Gibt eine Liste der JavaDoc Beschreibungen zur&uuml;ck.
-	 * Falls Deutsche Umlaute vorkommen, werden diese vorher formatiert.
+	 * Gibt eine Liste der JavaDoc Beschreibungen zu den Testattributen der angegebenen Java
+	 * Datei zur&uuml;ck.
 	 * @param file Pfad der Testklasse
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	static List<String> descTestAttribute (URI file)  {
+	static List<String> descTestAttribute (URI file) {
 		//temporaere Liste fuer Abgleich
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
 		List<String> liste = new ArrayList<String>();
 		
+		//Lese file zeilenweise aus und fuege Zeile in eine Liste
 		BufferedReader in;
 		try {
 			File f = new File(file);
@@ -149,23 +153,23 @@ public class DataCTCI {
 			e.printStackTrace();
 		}
 		
-		int i = 0; //zaehler fuer Zeilen (abwaerts)
+		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
 		//gehe jede Zeile durch (abwaerts)
 		while (i<tmp.size()) {
 			//JavaDoc Beschreibung der Testattribute
 			String strDesc = "";
 			
-			if(tmp.get(i).startsWith("public static")){
-				int j = 1; //zaehler fuer Zeilen (aufwaerts)
+			if(tmp.get(i).startsWith("public static")) {
+				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
 
 				//pruefe ob Beschreibung vorhanden
 				do {
-					String prevLine = tmp.get(i-j); //vorherhige Zeileninhalt
+					String prevLine = tmp.get(i-j); //vorherhiger Zeileninhalt
 					if (prevLine.startsWith("/**")) {
 						strDesc = prevLine + strDesc; break;
 					}
-					else if (prevLine.endsWith(";")){
+					else if (prevLine.endsWith(";")) {
 						strDesc = "Beschreibung fehlt"; break;
 					}
 					strDesc = prevLine + strDesc;
@@ -201,25 +205,24 @@ public class DataCTCI {
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
 					.map(Objects::toString)
-					//JUnit 5
+					//JUnit 5 enthaelt immer folgendes import
 					.filter(type -> type.contains("import org.junit.jupiter"));
 			return testTyp.count() > 0 ? 5 : 4;
 		}
 	}
 	
 	/**
-	 * Gibt eine Liste mit jeder Testmethode in der angegebenen Datei zur&uuml;ck.
+	 * Gibt eine Liste mit jeder Testmethode der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Methoden gelistet werden sollen.
 	 * @return Liste der Testmethoden
 	 * @exception ClassNotFoundException
 	 */
 	static List<String> testMethoden (URI file) {
-		//nicht elegant (anfang)
+		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
 		strFile = strFile.substring(1, strFile.indexOf(".java"));
 		strFile = strFile.replace("/", ".");
-		//nicht elegant (ende)
 		
 		List<String> liste = new ArrayList<>();
 		try {
@@ -248,62 +251,18 @@ public class DataCTCI {
 		return liste;
 	}
 	
-	/*
-	@Deprecated
-	static List<String> testMethoden (URI file) throws IOException {
-		List<String> liste = null;
-		List<String> methoden = new ArrayList<>();
-		
-		//lies die Datei zeilenweise aus
-		try (Stream<String> stream = Files.lines(Paths.get(file))) {
-			liste = stream
-					.map(Objects::toString)
-					//filtere Zeilen, welche Testmethoden sind
-					.filter(m -> m.contains(Variables.METHOD_START_VOID)
-							|| m.contains(Variables.DYNAMIC_NODE)
-							|| m.contains(Variables.DYNAMIC_CONTAINER)
-							|| m.contains(Variables.DYNAMIC_TEST)
-							|| m.endsWith(Variables.ANNOTATION_TEST5) 
-							|| m.contains(Variables.ANNOTATION_TEST5_REPEATED) 
-							|| m.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-							|| m.contains(Variables.ANNOTATION_TEST5_FACTORY)
-							|| m.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
-							)
-					.collect(Collectors.toList());
-		}
-		
-		for (int i = 0; i<liste.size(); i++) {
-			String line = liste.get(i);
-			
-			if (line.contains(Variables.ANNOTATION_TEST4)
-					|| line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-					|| line.contains(Variables.ANNOTATION_TEST5_REPEATED)
-					|| line.contains(Variables.ANNOTATION_TEST5_FACTORY)
-					|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
-					) 
-			{
-				String methode = liste.get(i+1).substring(liste.get(i+1).indexOf("test"));
-				methoden.add(methode.substring(0, methode.indexOf('(')));
-			}
-		}
-		return methoden;
-	}
-	*/
-	
 	/**
 	 * Gibt eine Liste mit jeder Testvariable in der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Variablen gelistet werden sollen
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
-	
 	static List<String> testAttribute (URI file) throws ClassNotFoundException {
-		//nicht elegant (anfang)
+		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
 		strFile = strFile.substring(1, strFile.indexOf(".java"));
 		strFile = strFile.replace("/", ".");
-		//nicht elegant (ende)
 		
 		List<String> liste = new ArrayList<>();
 
@@ -314,24 +273,6 @@ public class DataCTCI {
 		}
 		return liste;
 	}
-	/*
-    @Deprecated
-	static List<String> testAttribute (URI file) throws IOException {
-		List<String> liste = null;
-		//lies die Datei zeilenweise aus
-		try (Stream<String> stream = Files.lines(Paths.get(file))) {
-			liste = stream
-					.map(Objects::toString)
-					.filter(m -> m.contains("public static") && !m.contains("{"))
-					//beginne neuen String erst, wenn "test" vorkommt
-					.map(m -> m.substring(m.indexOf("test")))
-					//beende neuen String erst, wenn "=" vorkommt
-					.map(m -> m.substring(0, m.indexOf('=')))
-					.collect(Collectors.toList()); 		
-		}
-		return liste;
-	}
-	*/
 
 	//getter and setter
 	public int getTestTyp() {

@@ -99,14 +99,12 @@ public class CreateCTCI {
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
 		FolderScanner.scanFolder(
-				new File(Variables.TEST_SOURCE),
-				listeKlassen,
-				Variables.EXTENSION_TEST_JAVA
-				);
+				new File(Variables.TEST_SOURCE), listeKlassen, Variables.EXTENSION_TEST_JAVA);
 		
-		//zaehler fuer Schleifen
+		//Zaehler fuer Schleifen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
+		
 		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
 		
@@ -117,6 +115,7 @@ public class CreateCTCI {
 		
 		DataCTCI testKlasse = new DataCTCI(listeKlassen.get(index).toURI());
 		int testType = testKlasse.getTestTyp();
+		
 		//Gehe jede Testmethode der Testklasse durch
 		for (String strMeth : testKlasse.getListeTestMethoden()) {
 			j = 0;
@@ -170,12 +169,9 @@ public class CreateCTCI {
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
 		FolderScanner.scanFolder(
-				new File(Variables.TEST_SOURCE),
-				listeKlassen,
-				Variables.EXTENSION_TEST_JAVA
-				);
+				new File(Variables.TEST_SOURCE), listeKlassen, Variables.EXTENSION_TEST_JAVA);
 		
-		//zaehler fuer Schleifen
+		//Zaehler fuer Schleifen
 		int j = 0; //testAttribute
 		int k = 0; //testMethoden
 		
@@ -240,6 +236,7 @@ public class CreateCTCI {
 		createXML();
 	}
 
+	//getter and setter
 	public static String getStrMissingDescs() {
 		return strMissingDescs;
 	}
