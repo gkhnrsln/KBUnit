@@ -4,15 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import prlab.kbunit.enums.Variables;
@@ -181,7 +180,7 @@ public class DataCTCI {
 						//Javadoc tags
 						.replace("{@link ", "").replace("{@code", "")
 						.replace("}", "")
-						//umlaute
+						//Umlaute
 						.replace("[:ss]", "ß").replace("[:A]", "Ä")
 						.replace("[:O]", "Ö").replace("[:U]", "Ü")
 						.replace("[:a]", "ä").replace("[:o]", "ö")
@@ -217,6 +216,51 @@ public class DataCTCI {
 	 * @return Liste der Testmethoden
 	 * @exception ClassNotFoundException
 	 */
+	static List<String> testMethoden (URI file) throws IOException {
+		List<String> liste = null;
+		List<String> methoden = new ArrayList<>();
+		
+		//lies die Datei zeilenweise aus
+		try (Stream<String> stream = Files.lines(Paths.get(file))) {
+			liste = stream
+					.map(Objects::toString)
+					//filtere Zeilen, welche Testmethoden sind
+					.filter(m -> m.contains(Variables.METHOD_START_VOID)
+						|| m.contains(Variables.DYNAMIC_NODE)
+						|| m.contains(Variables.DYNAMIC_CONTAINER)
+						|| m.contains(Variables.DYNAMIC_TEST)
+						|| m.endsWith(Variables.ANNOTATION_TEST5) 
+						|| m.contains(Variables.ANNOTATION_TEST5_REPEATED) 
+						|| m.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+						|| m.contains(Variables.ANNOTATION_TEST5_FACTORY)
+						|| m.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
+						)
+					.collect(Collectors.toList());
+		}
+		
+		for (int i = 0; i<liste.size(); i++) {
+			String line = liste.get(i);
+			if (line.contains(Variables.ANNOTATION_TEST5)
+				|| line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+				|| line.contains(Variables.ANNOTATION_TEST5_REPEATED)
+				|| line.contains(Variables.ANNOTATION_TEST5_FACTORY)
+				|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
+				) {
+				String methode = liste.get(i+1).substring(liste.get(i+1).indexOf("test"));
+				methoden.add(methode.substring(0, methode.indexOf('(')));
+			}
+		}
+		return methoden;
+	}
+	
+	/*
+	 * Mit Java Reflection:
+	 * 
+	 * Methoden werden in zufaelliger Reihenfolge abgespeichert. 
+	 * Dies fuehrt zu Problemen in der CreateCTCI Klasse, da hier der Reihe nach
+	 * abgeaerbeitet wird.
+	*/
+	/*
 	static List<String> testMethoden (URI file) {
 		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
@@ -238,8 +282,7 @@ public class DataCTCI {
 						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
 						case Variables.ANNOTATION_TEST5_FACTORY:
 						case Variables.ANNOTATION_TEST5_TEMPLATE:
-							liste.add(method.getName());
-							break;
+							liste.add(method.getName()); break;
 						default:
 					        break;
 					}
@@ -250,6 +293,7 @@ public class DataCTCI {
 		}
 		return liste;
 	}
+	*/
 	
 	/**
 	 * Gibt eine Liste mit jeder Testvariable in der angegebenen Datei zur&uuml;ck.

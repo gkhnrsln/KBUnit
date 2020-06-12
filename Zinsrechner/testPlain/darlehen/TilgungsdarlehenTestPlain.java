@@ -1,13 +1,8 @@
 package darlehen;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.RepeatedTest;
 
 /**
  * Die Klasse enthaelt JUnit Tests der Version 5 zur Klasse
@@ -19,7 +14,6 @@ import org.junit.jupiter.api.RepeatedTest;
 class TilgungsdarlehenTestPlain {
 	// das zu testende Tilgungsdarlehen-Objekt
 	private Tilgungsdarlehen t;
-	private int testWert = 10000000; 
 
 	/**
 	 * Test zur Methode berechneGesamtschuld aus der Klasse
@@ -37,16 +31,4 @@ class TilgungsdarlehenTestPlain {
 				"Die berechnete Gesamtschuld entspricht nicht der " 
 			        + "erwarteten.");
 		}
-
-	//problem, wenn string gleich anfangen
-	void testNix2() {}
-
-	void testNik() {}
-	
-	@Test
-	void testNix() {}
-
-
-
-
 }

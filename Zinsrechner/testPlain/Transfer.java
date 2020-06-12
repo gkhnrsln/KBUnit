@@ -111,6 +111,7 @@ public class Transfer {
 			
 			while (zeile != null){
 				zeile = in.readLine();
+				
 				/* TODO: parameter
 				 * - werden in der Maske definiert
 				 * Format:
@@ -121,7 +122,6 @@ public class Transfer {
 				//methode, welche Werte sollen parametrisiert werden
 				//...
 				for (String methode : getTestMethode(strPath)) {
-
 					if (zeile.contains(methode)) {
 						System.err.println("TESTMETHODE GEFUNDEN: [" +methode  +"]");
 						//naechste Zeile pruefen

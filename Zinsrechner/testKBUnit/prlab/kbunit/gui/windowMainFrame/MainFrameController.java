@@ -87,9 +87,9 @@ public class MainFrameController implements Initializable {
 
 	// Combobox mit allen Testklassen
 	@FXML
-	private ComboBox<File> javaFileComboBox;
+	private ComboBox<File> javafileComboBox;
 	@FXML 
-	private Button javaFileButton;
+	private Button javafileButton;
 
 	@FXML
 	private ComboBox<File> javaFilePlainComboBox;
@@ -124,8 +124,6 @@ public class MainFrameController implements Initializable {
 	private Button newTestcaseButton;
 
 	private MainFrameModel mainFrameModel;
-
-
 
 	/**
 	 * Konstruktor MainFrameControll
@@ -169,7 +167,7 @@ public class MainFrameController implements Initializable {
 		selectionComboBox.getSelectionModel().select(0);
 
 		try {
-			javaFileComboBox.setItems(mainFrameModel
+			javafileComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_SOURCE));
 			javaFilePlainComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
@@ -188,7 +186,7 @@ public class MainFrameController implements Initializable {
 
 		ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 
-		javaFileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
+		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
 		javaFilePlainComboBox.getSelectionModel().select(-1);
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
@@ -275,11 +273,11 @@ public class MainFrameController implements Initializable {
 			if(newResult.getParameters() != null) {
 				TestResultInfo tri = createTestResultInfo(newResult);
 				Run runner;
-				runner = new Run(javaFileComboBox.getSelectionModel().getSelectedItem());
+				runner = new Run(javafileComboBox.getSelectionModel().getSelectedItem());
 				int testSuccess;
 				String testMessage;
 				if(mainFrameModel.getOpenedTestClass().getTesttype() != TestClassInfo.TESTTYPE_JUNIT_5){
-					TestResult testResultJunit = runner.runJUnit4Test(javaFileComboBox.getSelectionModel()
+					TestResult testResultJunit = runner.runJUnit4Test(javafileComboBox.getSelectionModel()
 						.getSelectedItem(), tri);
 					if (testResultJunit.errorCount() > 0){
 						testSuccess = TestResultInfo.TESTABORTED;
@@ -297,7 +295,7 @@ public class MainFrameController implements Initializable {
 					}
 				}
 				else{
-					TestExecutionSummary testExecutionSummary = runner.runJUnit5Test(javaFileComboBox.getSelectionModel()
+					TestExecutionSummary testExecutionSummary = runner.runJUnit5Test(javafileComboBox.getSelectionModel()
 						.getSelectedItem(), tri);
 					if(testExecutionSummary.getTestsFailedCount() > 0
 						&& (testExecutionSummary.getFailures().stream().anyMatch(failure ->
@@ -382,8 +380,8 @@ public class MainFrameController implements Initializable {
 	    if(! activeResults.isEmpty()) {
 	    	int i = 0;
 	      	while(i < activeResults.size() && ! result) {
-	       	    int laenge = javaFileComboBox.getValue().toString().length();
-	      		String help = javaFileComboBox.getValue().toString().substring(5, laenge-5)
+	       	    int laenge = javafileComboBox.getValue().toString().length();
+	      		String help = javafileComboBox.getValue().toString().substring(5, laenge-5)
 	      			.replace('\\', '.') + ".";
 	       		if(activeResults.get(i++).getPath().equals(help + newTestcaseComboBox.getValue())){
 	    			result = true;
@@ -461,9 +459,9 @@ public class MainFrameController implements Initializable {
 	 */
 	@FXML
 	private void javaFileChoose(ActionEvent event) {
-		if (javaFileComboBox.getSelectionModel().selectedItemProperty() != null) {
+		if (javafileComboBox.getSelectionModel().selectedItemProperty() != null) {
 			startGenerateCTCIButton.setDisable(false);
-			if (ctciFile.exists()) javaFileButton.setDisable(false);
+			if (ctciFile.exists()) javafileButton.setDisable(false);
 		}
 	}
 	
@@ -500,7 +498,7 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI.createFile(javaFileComboBox.getSelectionModel().getSelectedIndex());
+				CreateCTCI.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
 				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
@@ -619,9 +617,9 @@ public class MainFrameController implements Initializable {
 				System.out.println("ID_"+selectedID);
 				System.out.println();
 	
-				Run runner2 = new Run(javaFileComboBox.getValue());
+				Run runner2 = new Run(javafileComboBox.getValue());
 				runner2.reRun(selectedID, 
-					new File[] {javaFileComboBox.getSelectionModel().getSelectedItem()});
+					new File[] {javafileComboBox.getSelectionModel().getSelectedItem()});
 			}
 		}
 		else {
@@ -645,9 +643,9 @@ public class MainFrameController implements Initializable {
 				int selectedInactiveId = inactiveResultTable.getSelectionModel()
 					.getSelectedItem().getId();
 				inactiveResultTable.getItems().remove(selectedInactiveIndex);
-				Run runner = new Run(javaFileComboBox.getValue());
+				Run runner = new Run(javafileComboBox.getValue());
 				runner.reRun(selectedInactiveId, 
-					new File[] {javaFileComboBox.getSelectionModel().getSelectedItem()});
+					new File[] {javafileComboBox.getSelectionModel().getSelectedItem()});
 			}
 		} catch (Exception e) {
 			showMessage(AlertType.WARNING, "Warnung", 
@@ -670,7 +668,7 @@ public class MainFrameController implements Initializable {
 	@FXML
 	private void runLogger(ActionEvent event)  {
 		Selection selection = selectionComboBox.getSelectionModel().getSelectedItem();
-	    Run run = new Run(javaFileComboBox.getValue());
+	    Run run = new Run(javafileComboBox.getValue());
 	    run.startLogger(selection);
 		showMessage(AlertType.INFORMATION, "Information", 
 			"Das Logging ist beendet!", 
@@ -683,7 +681,7 @@ public class MainFrameController implements Initializable {
 	@FXML
 	private void runLoggerAllTestclasses(ActionEvent event)  {
 		Selection selection = selectionComboBox.getSelectionModel().getSelectedItem();
-		ObservableList<File> files = javaFileComboBox.getItems();
+		ObservableList<File> files = javafileComboBox.getItems();
 		Run run = new Run(files);
 		run.startLogger(selection);
 		showMessage(AlertType.INFORMATION, "Information",
@@ -702,9 +700,9 @@ public class MainFrameController implements Initializable {
 			alert.setHeaderText("Runner wirklich starten?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if(result.get() == ButtonType.OK) {
-				Run run = new Run(javaFileComboBox.getValue());
+				Run run = new Run(javafileComboBox.getValue());
 				run.startRunner();
-				mainFrameModel.loadData(javaFileComboBox.getValue());
+				mainFrameModel.loadData(javafileComboBox.getValue());
 			} 
 			showMessage(AlertType.INFORMATION, "Information", 
 				"Der Runner ist beendet!", 
@@ -728,7 +726,7 @@ public class MainFrameController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == ButtonType.OK) {
 			Run runner = null;
-			ObservableList<File> files = javaFileComboBox.getItems();
+			ObservableList<File> files = javafileComboBox.getItems();
 			if(files.size() != 0) {
 				runner = new Run(files.get(0));
 				runner.startRunner();
@@ -752,7 +750,7 @@ public class MainFrameController implements Initializable {
 	private void scan(ActionEvent event)  {
         try {
 			//Laden der Testklasse
-			mainFrameModel.loadData(javaFileComboBox.getValue());
+			mainFrameModel.loadData(javafileComboBox.getValue());
 	        if(mainFrameModel.getOpenedTestClass() != null) {
 				//************ FILL NEW TESTCASE COMBO BOX*********//
 				newTestcaseComboBox.setItems(mainFrameModel.getOpenedTestClass()
@@ -765,7 +763,7 @@ public class MainFrameController implements Initializable {
 				newTestcaseButton.setDisable(false);
 		
 				// Erneutes Laden der Testfaelle durch die Inaktiven Testfaelle 
-			mainFrameModel.loadData(javaFileComboBox.getValue());
+			mainFrameModel.loadData(javafileComboBox.getValue());
 	        }
 	        else {
 	    		showMessage(AlertType.INFORMATION, "KBUnit_Entwickler", 
