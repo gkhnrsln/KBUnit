@@ -2,90 +2,87 @@
 <root>
   <testcases>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
-      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinDarlehen</name>
-          <desc>vom Wissensträger einstellbare Mindestdarlehen</desc>
+          <name>testBerechneGesamtschuld_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
         </parameter>
         <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MaxLaufzeit</name>
-          <desc>vom Wissensträger einstellbare maximale Laufzeit</desc>
+          <name>testBerechneGesamtschuld_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
         </parameter>
         <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinJahreszahl</name>
-          <desc>vom Wissensträger einstellbare minimale Jahreszahl</desc>
+          <name>testBerechneGesamtschuld_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters />
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMin</path>
-      <desc>Beschreibung fehlt</desc>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneAnnuitaetFuerPeriode</path>
+      <desc>Test zur Methode berechneAnnuitaetFuerPeriode aus der Klasse Tilgungsdarlehen</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+          <name>testBerechneAnnuitaetFuerPeriode_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbare Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Periode</name>
+          <desc>vom Wissenstraeger einstellbare Periode des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_exp_ErwarteteAnnuitaet</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Annuitaets</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMax</path>
-      <desc>Beschreibung fehlt</desc>
+      <path>darlehen.TilgungsdarlehenTest.testBerechnungGesamtschuldMitInflation</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen mit dem Setzen der Inflationsrate. Durch die randomisierte Ermittlung der Inflationsrate ist die Testausfuehrung zufallsbehaftet, was ein Grund fuer den Einsatz von RepeatedTests sein kann.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testGetGesamtschuldenMax_MaxGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare maximale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldMaxUsingMocks</path>
-      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benoetigt.</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_Gesamtschulden</name>
-          <desc>vom Wissensträger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub. Angabe der Wert erfolgt durch das Trennen mit Komma</desc>
+          <name>testBerechnungGesamtschuldMitInflation_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
         </parameter>
         <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_NumOfGetGesamtschuldenCallsForEach</name>
-          <desc>vom Wissensträger einstellbare Anzahl der Methodenaufrufe von darlehen.Tilgungsdarlehen#getGesamtschuld, die fuer jedes Tilgungsdarlehen durchgefuehrt werden, um das Maximum zu bestimmen</desc>
+          <name>testBerechnungGesamtschuldMitInflation_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
         </parameter>
         <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissensträger einstellbaren Werten bestimmt werden soll</desc>
+          <name>testBerechnungGesamtschuldMitInflation_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
         </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
         <parameter>
-          <name>testFuerAssumptions1_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+          <name>testBerechnungGesamtschuldMitInflation_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
         </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters>
         <parameter>
-          <name>testFuerAssumptions2_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist</desc>
+          <name>testBerechnungGesamtschuldMitInflation_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Bias</name>
+          <desc>vom Wissenstraeger tolerierte Abweichung zwischen erwarteter und berechneter Gesamtschuld</desc>
         </parameter>
       </parameters>
     </testcase>

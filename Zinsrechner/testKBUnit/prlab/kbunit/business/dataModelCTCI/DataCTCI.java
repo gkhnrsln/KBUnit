@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import prlab.kbunit.enums.Variables;
 
 /**
@@ -48,8 +47,8 @@ public class DataCTCI {
 	}
 	
 	/**
-	 * Gibt eine Liste der JavaDoc Beschreibungen zu den Testmethoden der angegebenen Java
-	 * Datei zur&uuml;ck.
+	 * Gibt eine Liste der Javadoc Beschreibungen zu den Testmethoden der
+	 * angegebenen Java Datei zur&uuml;ck.
 	 * @param file Dateipfad der Testklasse
 	 * @return Liste der Beschreibungen zu den Testmethoden
 	 * @exception IOException
@@ -67,7 +66,7 @@ public class DataCTCI {
 			in = new BufferedReader(new FileReader(f));
 			String s = in.readLine();
 			tmp.add(s);
-			while(s != null){
+			while(s != null) {
 				s = s.trim();
 				tmp.add(s); 
 				s = in.readLine();
@@ -81,13 +80,14 @@ public class DataCTCI {
 		
 		// gehe jede Zeile abwaerts durch
 		while (i<tmp.size()) {
-			//JavaDoc Beschreibung der TestMethoden
+			//Javadoc Beschreibung der TestMethoden
 			String strDesc = "";
+			String line = tmp.get(i); //aktuelle Zeile
 			//falls aktuelle Zeile eine Testmethode ist
-			if(tmp.get(i).contains("void test") 
-				|| tmp.get(i).contains(Variables.DYNAMIC_NODE) 
-				|| tmp.get(i).contains(Variables.DYNAMIC_TEST)
-				|| tmp.get(i).contains(Variables.DYNAMIC_CONTAINER)
+			if(line.contains("void test") 
+				|| line.contains(Variables.DYNAMIC_NODE) 
+				|| line.contains(Variables.DYNAMIC_TEST)
+				|| line.contains(Variables.DYNAMIC_CONTAINER)
 				) {
 				//Zaehler fuer Zeilen (aufwaerts)
 				int j = 1;
@@ -95,8 +95,8 @@ public class DataCTCI {
 				while (!tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
 					//wenn vorherige Zeile mit "}" oder ";" endet 
-					//-> kein JavaDoc vorhanden
-					if (prevLine.endsWith("}")|| prevLine.endsWith(";")) {
+					//-> kein Javadoc vorhanden
+					if (prevLine.endsWith("}") || prevLine.endsWith(";")) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
 					//Zeile ueberspringen wenn bestimmte Zeichen vorkommen 
@@ -123,14 +123,14 @@ public class DataCTCI {
 		return liste;
 	}
 	/**
-	 * Gibt eine Liste der JavaDoc Beschreibungen zu den Testattributen der angegebenen Java
-	 * Datei zur&uuml;ck.
+	 * Gibt eine Liste der Javadoc Beschreibungen zu den Testattributen der 
+	 * angegebenen Java Datei zur&uuml;ck.
 	 * @param file Pfad der Testklasse
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
 	static List<String> descTestAttribute (URI file) {
-		//temporaere Liste fuer Abgleich
+		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
 		List<String> liste = new ArrayList<String>();
@@ -142,7 +142,7 @@ public class DataCTCI {
 			in = new BufferedReader(new FileReader(f));
 			String s = in.readLine();
 			tmp.add(s);
-			while(s != null){
+			while(s != null) {
 				s = s.trim();
 				tmp.add(s); 
 				s = in.readLine();
@@ -156,7 +156,7 @@ public class DataCTCI {
 		
 		//gehe jede Zeile durch (abwaerts)
 		while (i<tmp.size()) {
-			//JavaDoc Beschreibung der Testattribute
+			//Javadoc Beschreibung der Testattribute
 			String strDesc = "";
 			
 			if(tmp.get(i).startsWith("public static")) {
@@ -224,7 +224,6 @@ public class DataCTCI {
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			liste = stream
 					.map(Objects::toString)
-					//filtere Zeilen, welche Testmethoden sind
 					.filter(m -> m.contains(Variables.METHOD_START_VOID)
 						|| m.contains(Variables.DYNAMIC_NODE)
 						|| m.contains(Variables.DYNAMIC_CONTAINER)
@@ -246,7 +245,8 @@ public class DataCTCI {
 				|| line.contains(Variables.ANNOTATION_TEST5_FACTORY)
 				|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
 				) {
-				String methode = liste.get(i+1).substring(liste.get(i+1).indexOf("test"));
+				String methode = liste.get(i+1)
+						.substring(liste.get(i+1).indexOf("test"));
 				methoden.add(methode.substring(0, methode.indexOf('(')));
 			}
 		}
@@ -254,11 +254,11 @@ public class DataCTCI {
 	}
 	
 	/*
-	 * Mit Java Reflection:
+	 * Besser mit Reflection:
 	 * 
 	 * Methoden werden in zufaelliger Reihenfolge abgespeichert. 
 	 * Dies fuehrt zu Problemen in der CreateCTCI Klasse, da hier der Reihe nach
-	 * abgeaerbeitet wird.
+	 * abgearbeitet wird.
 	*/
 	/*
 	static List<String> testMethoden (URI file) {
@@ -270,9 +270,9 @@ public class DataCTCI {
 		
 		List<String> liste = new ArrayList<>();
 		try {
-			Class<?> c = Class.forName(strFile);
+			Class<?> clazz = Class.forName(strFile);
 
-			for (Method method : c.getDeclaredMethods()) {
+			for (Method method : clazz.getDeclaredMethods()) {
 				Annotation[] anno = method.getAnnotations();
 
 				for (Annotation s : anno) {
@@ -296,8 +296,8 @@ public class DataCTCI {
 	*/
 	
 	/**
-	 * Gibt eine Liste mit jeder Testvariable in der angegebenen Datei zur&uuml;ck.
-	 * @param file Datei, dessen Variablen gelistet werden sollen
+	 * Gibt eine Liste mit jedem Testattribut in der angegebenen Datei zur&uuml;ck.
+	 * @param file Datei, dessen Attribute gelistet werden sollen
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
@@ -310,8 +310,8 @@ public class DataCTCI {
 		
 		List<String> liste = new ArrayList<>();
 
-		Class<?> c = Class.forName(strFile);
-		for (Field field : c.getDeclaredFields()) {
+		Class<?> clazz = Class.forName(strFile);
+		for (Field field : clazz.getDeclaredFields()) {
 			if(field.getName().startsWith("test"))
 				liste.add(field.getName());
 		}

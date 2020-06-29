@@ -1,4 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <testcases />
+  <testcases>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechneGesamtschuld_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneAnnuitaetFuerPeriode</path>
+      <desc>Test zur Methode berechneAnnuitaetFuerPeriode aus der Klasse Tilgungsdarlehen</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbare Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Periode</name>
+          <desc>vom Wissenstraeger einstellbare Periode des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_exp_ErwarteteAnnuitaet</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Annuitaets</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechnungGesamtschuldMitInflation</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen mit dem Setzen der Inflationsrate. Durch die randomisierte Ermittlung der Inflationsrate ist die Testausfuehrung zufallsbehaftet, was ein Grund fuer den Einsatz von RepeatedTests sein kann.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Bias</name>
+          <desc>vom Wissenstraeger tolerierte Abweichung zwischen erwarteter und berechneter Gesamtschuld</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+  </testcases>
 </root>

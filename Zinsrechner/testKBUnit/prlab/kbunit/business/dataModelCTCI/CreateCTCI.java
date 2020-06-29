@@ -51,20 +51,22 @@ public class CreateCTCI {
 	 */
 	private static void load() {
 		doc = new Document();
-		elRoot = new Element("root");
-		elTestCases = new Element(Variables.CTCI_NODE_TESTCASES);
-		elTestCase = new Element(Variables.CTCI_NODE_TESTCASE);
-		elPath = new Element(Variables.CTCI_NODE_PATH);
-		elDescMethode = new Element(Variables.CTCI_NODE_DESC);
+		elRoot = new Element("root"); 
+		elTestCases = new Element(Variables.CTCI_NODE_TESTCASES); 
+		elTestCase = new Element(Variables.CTCI_NODE_TESTCASE); 
+		elPath = new Element(Variables.CTCI_NODE_PATH); 
+		elDescMethode = new Element(Variables.CTCI_NODE_DESC); 
 		elDescAttribut = new Element(Variables.CTCI_NODE_DESC);
 		elTestType = new Element(Variables.CTCI_NODE_TESTTYPE);
 		elParameters = new Element(Variables.CTCI_NODE_PARAMETERS);
 		elParameter = new Element(Variables.CTCI_NODE_PARAMETER);
 		elName = new Element(Variables.CTCI_NODE_NAME);
 	}
+	
 	/**
 	 * Erstellt im Source Verzeichnis {@link prlab.kbunit.enums.Variables#
-	 * CUSTOMER_TEST_CASE_INFO_FILE_PATH Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
+	 * CUSTOMER_TEST_CASE_INFO_FILE_PATH
+	 * Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
 	 * eine {@code CustomerTestCaseInformation.xml}-Datei.
 	 * @throws IOException
 	 */
@@ -79,13 +81,13 @@ public class CreateCTCI {
 			writer = new OutputStreamWriter(fileStream, "UTF-8");
 			outputter.output(doc, writer);
 		} finally {
-			//ersetze vorhandenen Text
-			doc.removeContent();
+			doc.removeContent(); //ersetze vorhandenen Text
 		}
 	}
 	
 	/**
-	 * Erstelle CustomerTestCaseInformation fuer eine Klasse.
+	 * Erstellt die CustomerTestCaseInformation f&uuml;r eine bestimmte Testklasse,
+	 * die vom Anwender in KBUnit-Entwickler ausgew&auml;hlt wurde.
 	 * @param index gibt die Position des ausgew&auml;hlten Elements der 
 	 * {@link prlab.kbunit.gui.windowMainFrame.MainFrameController
 	 * #javafileComboBox javafileComboBox} an.
@@ -95,16 +97,12 @@ public class CreateCTCI {
 	public static void createFile(int index) throws IOException, ClassNotFoundException {
 		load();
 		elRoot.addContent(elTestCases);
-		
+
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
-		FolderScanner.scanFolder(
-				new File(Variables.TEST_SOURCE), listeKlassen, Variables.EXTENSION_TEST_JAVA);
-		
-		//Zaehler fuer Schleifen
-		int j = 0; //testAttribute
-		int k = 0; //testMethoden
-		
+		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
+				Variables.EXTENSION_TEST_JAVA);
+
 		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
 		
@@ -115,21 +113,22 @@ public class CreateCTCI {
 		
 		DataCTCI testKlasse = new DataCTCI(listeKlassen.get(index).toURI());
 		int testType = testKlasse.getTestTyp();
+		int k = 0; //Zaehler fuer testMethoden
 		
 		//Gehe jede Testmethode der Testklasse durch
 		for (String strMeth : testKlasse.getListeTestMethoden()) {
-			j = 0;
+			int j = 0; //Zaehler fuer testAttribute
 			String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
-			if (strDescMeth == "Beschreibung fehlt") {
+			if (strDescMeth == "Beschreibung fehlt")
 				strMissingDescs += strMeth + "\n";
-			}
-			//Gehe jede Testattribute der Testklasse durch
+			
+			//Gehe jedes Testattribut der Testklasse durch
 			for (String strAttr : testKlasse.getListeTestAttribute()) {
 				if (strAttr.contains(strMeth)) {
-					String strDescAttr = testKlasse.getListeDescTestAttribute().get(j);
-					if (strDescAttr == "Beschreibung fehlt") {
+					String strDescAttr = 
+							testKlasse.getListeDescTestAttribute().get(j);
+					if (strDescAttr == "Beschreibung fehlt") 
 			   			strMissingDescs += "\t\t" + strAttr + "\n";
-			   		}
 			   		
 			   		listeElParameters.add(elParameter.clone()
 			   			.addContent(elName.clone().setText(strAttr))
@@ -142,11 +141,11 @@ public class CreateCTCI {
 			elParameters.setContent(listeElParameters);
 			//entferne alle Elemente der Liste fuer naechsten Durchlauf
 			listeElParameters.clear();
- 
-		   elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
-				.addContent(elDescMethode.clone().setText(strDescMeth))
-				.addContent(elTestType.clone().setText(""+testType))
-				.addContent(elParameters.clone()
+			
+			elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
+			   	.addContent(elDescMethode.clone().setText(strDescMeth))
+			   	.addContent(elTestType.clone().setText("" + testType))
+			   	.addContent(elParameters.clone()
 			);
 				
 			elTestCases.addContent(elTestCase.clone());
@@ -158,7 +157,7 @@ public class CreateCTCI {
 	}
 	
 	/**
-	 * Erstelle CustomerTestCaseInformation fuer alle Klassen.
+	 * Erstellt die CustomerTestCaseInformation f&uuml;r alle Testklassen.
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
@@ -168,12 +167,8 @@ public class CreateCTCI {
 
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
-		FolderScanner.scanFolder(
-				new File(Variables.TEST_SOURCE), listeKlassen, Variables.EXTENSION_TEST_JAVA);
-		
-		//Zaehler fuer Schleifen
-		int j = 0; //testAttribute
-		int k = 0; //testMethoden
+		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
+				Variables.EXTENSION_TEST_JAVA);
 		
 		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
@@ -186,12 +181,12 @@ public class CreateCTCI {
 			
 			DataCTCI testKlasse = new DataCTCI(listeKlassen.get(i).toURI());
 			int testType = testKlasse.getTestTyp();
-			k = 0;
+			int k = 0; //Zaehler fuer testMethoden
 			boolean isNextClass = true;
 			
 			//Gehe jede Testmethode der Testklasse durch
 			for (String strMeth : testKlasse.getListeTestMethoden()) {
-				j = 0;
+				int j = 0; //Zaehler fuer testAttribute
 				String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
 				if (strDescMeth == "Beschreibung fehlt") {
 					if(isNextClass) {
@@ -204,10 +199,10 @@ public class CreateCTCI {
 				//Gehe jedes Testattribut der Testklasse durch
 				for (String strAttr : testKlasse.getListeTestAttribute()) {
 					if (strAttr.contains(strMeth)) {
-						String strDescAttr = testKlasse.getListeDescTestAttribute().get(j);
-						if (strDescAttr == "Beschreibung fehlt") {
+						String strDescAttr = 
+								testKlasse.getListeDescTestAttribute().get(j);
+						if (strDescAttr == "Beschreibung fehlt") 
 							strMissingDescs += "\t\t" + strAttr + "\n";
-						}
 						
 						listeElParameters.add(elParameter.clone()
 							.addContent(elName.clone().setText(strAttr))
