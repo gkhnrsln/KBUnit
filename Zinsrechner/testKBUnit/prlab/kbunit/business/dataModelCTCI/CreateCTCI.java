@@ -119,15 +119,15 @@ public class CreateCTCI {
 		for (String strMeth : testKlasse.getListeTestMethoden()) {
 			int j = 0; //Zaehler fuer testAttribute
 			String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
-			if (strDescMeth == "Beschreibung fehlt")
+			if (strDescMeth.equals("Beschreibung fehlt"))
 				strMissingDescs += strMeth + "\n";
-			
+
 			//Gehe jedes Testattribut der Testklasse durch
 			for (String strAttr : testKlasse.getListeTestAttribute()) {
 				if (strAttr.contains(strMeth)) {
 					String strDescAttr = 
 							testKlasse.getListeDescTestAttribute().get(j);
-					if (strDescAttr == "Beschreibung fehlt") 
+					if (strDescAttr.equals("Beschreibung fehlt"))
 			   			strMissingDescs += "\t\t" + strAttr + "\n";
 			   		
 			   		listeElParameters.add(elParameter.clone()
@@ -188,7 +188,7 @@ public class CreateCTCI {
 			for (String strMeth : testKlasse.getListeTestMethoden()) {
 				int j = 0; //Zaehler fuer testAttribute
 				String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
-				if (strDescMeth == "Beschreibung fehlt") {
+				if (strDescMeth.equals("Beschreibung fehlt")) {
 					if(isNextClass) {
 						strMissingDescs += strKlasse + "\n";
 						isNextClass = false;
@@ -201,7 +201,7 @@ public class CreateCTCI {
 					if (strAttr.contains(strMeth)) {
 						String strDescAttr = 
 								testKlasse.getListeDescTestAttribute().get(j);
-						if (strDescAttr == "Beschreibung fehlt") 
+						if (strDescAttr.equals("Beschreibung fehlt"))  
 							strMissingDescs += "\t\t" + strAttr + "\n";
 						
 						listeElParameters.add(elParameter.clone()

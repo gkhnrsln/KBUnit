@@ -47,7 +47,7 @@ public class DataCTCI {
 	}
 	
 	/**
-	 * Gibt eine Liste der Javadoc Beschreibungen zu den Testmethoden der
+	 * Gibt eine Liste der Javadoc-Kommentare zu den Testmethoden der
 	 * angegebenen Java Datei zur&uuml;ck.
 	 * @param file Dateipfad der Testklasse
 	 * @return Liste der Beschreibungen zu den Testmethoden
@@ -79,8 +79,8 @@ public class DataCTCI {
 		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
 		// gehe jede Zeile abwaerts durch
-		while (i<tmp.size()) {
-			//Javadoc Beschreibung der TestMethoden
+		while (i < tmp.size()) {
+			//Javadoc-Kommentare der TestMethoden
 			String strDesc = "";
 			String line = tmp.get(i); //aktuelle Zeile
 			//falls aktuelle Zeile eine Testmethode ist
@@ -95,8 +95,9 @@ public class DataCTCI {
 				while (!tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
 					//wenn vorherige Zeile mit "}" oder ";" endet 
-					//-> kein Javadoc vorhanden
-					if (prevLine.endsWith("}") || prevLine.endsWith(";")) {
+					//-> kein Javadoc-Kommentar vorhanden
+					if (prevLine.endsWith("}") || (prevLine.endsWith(";") 
+							&& ! prevLine.startsWith("*"))) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
 					//Zeile ueberspringen wenn bestimmte Zeichen vorkommen 
@@ -123,7 +124,7 @@ public class DataCTCI {
 		return liste;
 	}
 	/**
-	 * Gibt eine Liste der Javadoc Beschreibungen zu den Testattributen der 
+	 * Gibt eine Liste der Javadoc-Kommentare zu den Testattributen der 
 	 * angegebenen Java Datei zur&uuml;ck.
 	 * @param file Pfad der Testklasse
 	 * @return Liste der Beschreibungen zu den Testattributen
@@ -155,11 +156,11 @@ public class DataCTCI {
 		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
 		//gehe jede Zeile durch (abwaerts)
-		while (i<tmp.size()) {
-			//Javadoc Beschreibung der Testattribute
+		while (i < tmp.size()) {
+			//Javadoc-Kommentar der Testattribute
 			String strDesc = "";
-			
-			if(tmp.get(i).startsWith("public static")) {
+			String line = tmp.get(i); //aktuelle Zeile
+			if(line.startsWith("public static") && line.contains("test")) {
 				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
 
 				//pruefe ob Beschreibung vorhanden
@@ -177,7 +178,7 @@ public class DataCTCI {
 				//letzte Formatierungen
 				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
-						//Javadoc tags
+						//Javadoc-Tags entfernen
 						.replace("{@link ", "").replace("{@code", "")
 						.replace("}", "")
 						//Umlaute
@@ -311,7 +312,7 @@ public class DataCTCI {
 		List<String> liste = new ArrayList<>();
 
 		Class<?> clazz = Class.forName(strFile);
-		for (Field field : clazz.getDeclaredFields()) {
+		for (Field field : clazz.getFields()) {
 			if(field.getName().startsWith("test"))
 				liste.add(field.getName());
 		}
