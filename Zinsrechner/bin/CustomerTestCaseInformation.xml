@@ -3,7 +3,7 @@
   <testcases>
     <testcase>
       <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
-      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob; die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
+      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden koennen.</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
@@ -91,7 +91,7 @@
     </testcase>
     <testcase>
       <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
-      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen HAAAAAA</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>

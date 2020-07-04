@@ -44,21 +44,21 @@ class DarlehenAnalyticsTest {
      * die sie unter den Darlehen befinden soll */
     public static double testGetGesamtschuldenMax_MaxGesamtschuld = Double.MAX_VALUE;
 
-    /** vom Wissenstr[:a]ger einstellbare Gesamtschulden fuer Tilgungsdarlehen Stub.
+    /** vom Wissenstr[:a]ger einstellbare Gesamtschulden f[:u]r Tilgungsdarlehen Stub.
      * Angabe der Wert erfolgt durch das Trennen mit Komma */
     public static String testGetGesamtschuldMaxUsingMocks_Gesamtschulden = "-1,0,1";
     /** vom Wissenstr[:a]ger einstellbare Anzahl der Methodenaufrufe
-     * von {@link darlehen.Tilgungsdarlehen#getGesamtschuld}, die fuer jedes Tilgungsdarlehen
-     * durchgefuehrt werden, um das Maximum zu bestimmen */
+     * von {@link darlehen.Tilgungsdarlehen#getGesamtschuld}, die f[:u]r jedes Tilgungsdarlehen
+     * durchgef[:u]hrt werden, um das Maximum zu bestimmen */
     public static int testGetGesamtschuldMaxUsingMocks_NumOfGetGesamtschuldenCallsForEach = 1;
     /** vom Wissenstr[:a]ger einstellbare erwartete maximale Gesamtschuld die aus den
      * beiden vom Wissenstr[:a]ger einstellbaren Werten bestimmt werden soll */
     public static double testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld = 1;
     
-    /** vom Wissenstr[:a]ger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist */
+    /** vom Wissenstr[:a]ger einstellbare Zahl. Test wird ausgef[:u]hrt, falls Zahl gleich 1 ist */
     public static int testFuerAssumptions1_Zahl = 0; 
     
-    /** vom Wissenstr[:a]ger einstellbare Zahl. Test wird ausgefuehrt, falls Zahl gleich 1 ist */
+    /** vom Wissenstr[:a]ger einstellbare Zahl. Test wird ausgef[:u]hrt, falls Zahl gleich 1 ist */
     public static int testFuerAssumptions2_Zahl = 0; 
 
     // das zu testende DarlehenAnalytics-Objekt
@@ -67,9 +67,9 @@ class DarlehenAnalyticsTest {
 
     /**
      * Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein,
-     * die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstellelt worden sind.
+     * die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstelllt worden sind.
      * Danach wird anhand der vom Wissenstr[:a]ger definierten Werte kontrolliert, ob
-     * die Werte vom Tilgungsdarlehen akzeptiert werden koennen.
+     * die Werte vom Tilgungsdarlehen akzeptiert werden k[:o]nnen.
      */
     @DisplayName("Soll Tilgungsdarlehen akzeptiert werden")
     @ParameterizedTest(name = "Darlehen={0}, Laufzeit={1}, Zinssatz={2}, Inflationsrate={3}, Gesamtschuld={4}, Zeitstempel={5}")
@@ -116,7 +116,7 @@ class DarlehenAnalyticsTest {
     /**
      * Bestimmt das Maximum aus einer vom Wissenstr[:a]ger definierten
      * Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt:
-     * Es werden jeweils nur die Gesamtschulden benoetigt.
+     * Es werden jeweils nur die Gesamtschulden ben[:o]tigt.
      */
     @Test
     void testGetGesamtschuldMaxUsingMocks(){

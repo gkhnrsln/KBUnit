@@ -32,6 +32,7 @@ import prlab.kbunit.enums.Selection;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.gui.util.TooltipTableRow;
 import prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController;
+import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
 import prlab.kbunit.test.TestParameterInfo;
 import prlab.kbunit.test.TestResultInfo;
 
@@ -468,10 +469,28 @@ public class MainFrameController implements Initializable {
 	/**
 	 * 
 	 * @param event
+	 * @throws IOException 
 	 */
+	
 	@FXML
-	private void parameterizeTestclass(ActionEvent event)  {
+	private void parameterizeTestclass(ActionEvent event) throws IOException  {
+		//Maske ParametrisierungScene.fxml oeffnen
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource(
+			"/prlab/kbunit/resources/view/ParametrisierungScene.fxml"));
 		
+		AnchorPane resultsDialog = (AnchorPane) loader.load();
+		Stage dialogStage = new Stage();
+		dialogStage.setResizable(true);
+		dialogStage.setTitle("Parameter eingeben");
+		dialogStage.initModality(Modality.APPLICATION_MODAL); //?
+		Scene scene = new Scene(resultsDialog);
+		dialogStage.setScene(scene);
+		ParametrisierungController parametrisierungController = loader.getController();
+		parametrisierungController.setDialogStage(dialogStage);
+		//parametrisierungController.initModel(activeResult);
+		dialogStage.showAndWait();
+		//return parametrisierungController.getActiveResult();
 	}
 	
 	/**

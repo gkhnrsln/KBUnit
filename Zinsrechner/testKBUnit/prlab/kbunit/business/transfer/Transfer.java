@@ -1,3 +1,4 @@
+package prlab.kbunit.business.transfer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,8 +38,8 @@ public class Transfer {
 		List<String> liste = new ArrayList<>();
 		
 		try {
-			Class<?> c = Class.forName(file);
-			for (Field field : c.getDeclaredFields()) {
+			Class<?> clazz = Class.forName(file);
+			for (Field field : clazz.getDeclaredFields()) {
 				if(field.getName().startsWith("test"))
 					liste.add(field.getName());
 			}
@@ -59,9 +60,7 @@ public class Transfer {
 		try {
 			Class<?> c = Class.forName(file);
 			for (Method method : c.getDeclaredMethods()) {
-				Annotation[] anon = method.getAnnotations();
-
-				for (Annotation s : anon) {
+				for (Annotation s : method.getAnnotations()) {
 					switch ("@" + s.annotationType().getSimpleName()) {
 						case Variables.ANNOTATION_TEST5:
 						case Variables.ANNOTATION_TEST5_REPEATED:
@@ -90,44 +89,57 @@ public class Transfer {
 	static void magic (File file) throws ClassNotFoundException {
 		String strKlasseName = file.getName();
 		String strPackage = file.getParent();
-		String strPath = strPackage.replace("testPlain\\", "") + "." + strKlasseName.replace(Variables.EXTENSION_JAVA, "");
+		String strPath = strPackage.replace(Variables.TEST_PLAIN_SOURCE + "\\", "") + "." + strKlasseName.replace(Variables.EXTENSION_JAVA, "");
 
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(file));
 			String zeile;
 			
-			//Klassename
+			//Klassename aendern
 			do {
 				zeile = in.readLine();
-				
+				//Klassenname gefunden
 				if (zeile.contains(getTestKlasseName(strPath))) {
-					zeile = zeile.replace("Plain", "");
+					//entferne Plain 
+					zeile = zeile.replace("Plain", "");		
 					System.err.println(zeile);
+					break;
+				} else {
+					System.out.println(zeile);
+				}
+			} while(true);
+			
+			/* 
+			 * ab hier to do   
+			 */
+			
+			while (true) {
+				zeile = in.readLine();
+				//Dateiende erreicht, abbrechen
+				if (zeile == null) {
 					break;
 				}
 				System.out.println(zeile);
-			} while(zeile != null);
-			
-			while (zeile != null){
-				zeile = in.readLine();
-				
 				/* TODO: parameter
 				 * - werden in der Maske definiert
 				 * Format:
-				 *  pubilc static "TYP" testMethodenName_ParameterName = "WERT";
-				 *  pubilc static "TYP" testMethodenName_exp_ParameterName = "WERT";
+				 *  public static "DATENTYP" testMethode_"PARAMETER" = "WERT";
+				 *  public static "DATENTYP" testMethode_exp_"PARAMETER" = "WERT";
 				 */
 				//...
 				//methode, welche Werte sollen parametrisiert werden
 				//...
+				
+				
 				for (String methode : getTestMethode(strPath)) {
 					if (zeile.contains(methode)) {
 						System.err.println("TESTMETHODE GEFUNDEN: [" +methode  +"]");
 						//naechste Zeile pruefen
-						
 					}
 				}
+				
+				
 				/*
 				while(true) {
 					String val = JOptionPane.showInputDialog("Geben Sie das zu parametrisierte Wert ein");
@@ -142,7 +154,7 @@ public class Transfer {
 					}
 				}*/
 				
-				System.out.println(zeile);
+				//System.out.println(zeile);
 			}
 
 			in.close();
@@ -155,10 +167,8 @@ public class Transfer {
 	public static void main(String[] args) {
 		//for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain")) System.err.println(methode);
 		
-
-		File file = new File("testPlain/darlehen/TilgungsdarlehenTestPlain.java");
 		try {
-			magic(file);
+			magic(new File(Variables.TEST_PLAIN_SOURCE + "/darlehen/Tilgungsdarlehen" + Variables.EXTENSION_TEST_PLAIN_JAVA));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

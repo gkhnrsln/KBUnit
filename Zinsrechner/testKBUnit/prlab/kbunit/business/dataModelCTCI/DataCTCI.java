@@ -100,10 +100,15 @@ public class DataCTCI {
 							&& ! prevLine.startsWith("*"))) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
-					//Zeile ueberspringen wenn bestimmte Zeichen vorkommen 
-					else if(prevLine.startsWith("@") || prevLine.contains("*/") 
-						|| prevLine.contains("* @")) {
-						j++;//naechste Zeile (aufwaerts)
+					//Zeile ueberspringen wenn Annotation / Javadoc Ende vorhanden ist
+					else if(prevLine.startsWith("@") || prevLine.contains("*/")) {
+						j++; //naechste Zeile (aufwaerts)
+						continue;
+					}
+					//wenn Javadoc-Tag vorhanden
+					else if(prevLine.contains("* @")) {
+						strDesc = ""; //vorherigen Inhalt entfernen
+						j++; //naechste Zeile (aufwaerts)
 						continue;
 					}
 					else {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,13 +14,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TableView layoutY="42.0" prefHeight="358.0" prefWidth="700.0">
+      <TableView fx:id="parameterTableView" layoutY="42.0" prefHeight="358.0" prefWidth="700.0">
         <columns>
-          <TableColumn editable="false" prefWidth="456.0" sortable="false" text="Parameter" />
-          <TableColumn minWidth="0.0" prefWidth="243.0" sortable="false" text="Wert" />
+          <TableColumn fx:id="parameterColumn" editable="false" prefWidth="456.0" sortable="false" text="Parameter" />
+          <TableColumn fx:id="valueColumn"  minWidth="0.0" prefWidth="243.0" sortable="false" text="Wert" />
         </columns>
       </TableView>
-      <Button layoutX="601.0" layoutY="410.0" mnemonicParsing="false"text="Hinzufügen" />
-      <CheckBox layoutX="464.0" layoutY="414.0" mnemonicParsing="false" text="Exception erwartet" />
+      <Button layoutX="601.0" layoutY="410.0" mnemonicParsing="false" text="Hinzufügen" />
    </children>
 </AnchorPane>
