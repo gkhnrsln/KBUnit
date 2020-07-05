@@ -21,6 +21,7 @@ import prlab.kbunit.enums.Variables;
  * @author G&ouml;khan Arslan
  */
 public class DataCTCI {
+	private static URI file;
 	/** JUnit Testtyp der Testklasse */
 	private int testTyp;
 	/** Liste der TestMethoden der Testklasse */
@@ -39,11 +40,12 @@ public class DataCTCI {
 	 * @throws ClassNotFoundException 
 	 */
 	public DataCTCI(URI file) throws IOException, ClassNotFoundException {
-		setTestTyp(testType(file));
-		setListeTestMethoden(testMethoden(file));
-		setListeDescTestMethoden(descTestMethoden(file));
-		setListeTestAttribute(testAttribute(file));
-		setListeDescTestAttribute(descTestAttribute(file));
+		this.file = file;
+		this.testTyp = testType();
+		this.listeTestMethoden = testMethoden();
+		this.listeTestAttribute = testAttribute();
+		this.listeDescTestMethoden = descTestMethoden();
+		this.listeDescTestAttribute = descTestAttribute();
 	}
 	
 	/**
@@ -53,7 +55,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testmethoden
 	 * @exception IOException
 	 */
-	static List<String> descTestMethoden (URI file) {
+	static List<String> descTestMethoden() {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
@@ -135,7 +137,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	static List<String> descTestAttribute (URI file) {
+	static List<String> descTestAttribute() {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
@@ -205,7 +207,7 @@ public class DataCTCI {
 	 * @return Entweder {@code 5} oder {@code 4}.
 	 * @exception IOException
 	 */
-	static int testType (URI file) throws IOException {
+	static int testType() throws IOException {
 		Stream<String> testTyp;
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
@@ -222,7 +224,7 @@ public class DataCTCI {
 	 * @return Liste der Testmethoden
 	 * @exception ClassNotFoundException
 	 */
-	static List<String> testMethoden (URI file) throws IOException {
+	static List<String> testMethoden() throws IOException {
 		List<String> liste = null;
 		List<String> methoden = new ArrayList<>();
 		
@@ -267,7 +269,7 @@ public class DataCTCI {
 	 * abgearbeitet wird.
 	*/
 	/*
-	static List<String> testMethoden (URI file) {
+	static List<String> testMethoden () {
 		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
@@ -307,7 +309,7 @@ public class DataCTCI {
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
-	static List<String> testAttribute (URI file) throws ClassNotFoundException {
+	static List<String> testAttribute() throws ClassNotFoundException {
 		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
@@ -324,44 +326,24 @@ public class DataCTCI {
 		return liste;
 	}
 
-	//getter and setter
+	//getter
 	public int getTestTyp() {
 		return testTyp;
-	}
-
-	public void setTestTyp(int testTyp) {
-		this.testTyp = testTyp;
 	}
 
 	public List<String> getListeTestMethoden() {
 		return listeTestMethoden;
 	}
 
-	public void setListeTestMethoden(List<String> listeTestMethoden) {
-		this.listeTestMethoden = listeTestMethoden;
-	}
-
 	public List<String> getListeDescTestMethoden() {
 		return listeDescTestMethoden;
-	}
-
-	public void setListeDescTestMethoden(List<String> listeDescTestMethoden) {
-		this.listeDescTestMethoden = listeDescTestMethoden;
 	}
 
 	public List<String> getListeTestAttribute() {
 		return listeTestAttribute;
 	}
 
-	public void setListeTestAttribute(List<String> listeTestAttribute) {
-		this.listeTestAttribute = listeTestAttribute;
-	}
-
 	public List<String> getListeDescTestAttribute() {
 		return listeDescTestAttribute;
-	}
-
-	public void setListeDescTestAttribute(List<String> listeDescTestAttribute) {
-		this.listeDescTestAttribute = listeDescTestAttribute;
 	}
 }

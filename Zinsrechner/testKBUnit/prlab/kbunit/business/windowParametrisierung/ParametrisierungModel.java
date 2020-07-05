@@ -1,6 +1,9 @@
 package prlab.kbunit.business.windowParametrisierung;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import prlab.kbunit.gui.windowMainFrame.MainFrameController;
@@ -12,14 +15,15 @@ import prlab.kbunit.gui.windowMainFrame.MainFrameController;
  */
 public class ParametrisierungModel {
 
-	private SimpleStringProperty typ;
-	private SimpleStringProperty methode;
-	private SimpleStringProperty parameter;
-	private SimpleStringProperty wert;
-	private SimpleStringProperty desc;
+	private StringProperty typ;
+	private StringProperty methode;
+	private StringProperty parameter;
+	private StringProperty wert;
+	private StringProperty desc;
 	
-	//MainFrameController mainFrameController;
+	public static MainFrameController mainFrameController;
 	
+	// Konstruktor
 	public ParametrisierungModel(String typ, String methode, String parameter, String wert, String desc) {
 		this.typ = new SimpleStringProperty(typ);
 		this.methode = new SimpleStringProperty(methode);
@@ -28,22 +32,31 @@ public class ParametrisierungModel {
 		this.desc = new SimpleStringProperty(desc);
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public static ObservableList<String> datentypen() {
-		ObservableList<String> types = FXCollections.observableArrayList("String", "int", "double", "float", "boolean");
-		return types;
+	public static ObservableList<String> datenTypen() {
+		return FXCollections.observableArrayList("String", "int", "double", "float", "boolean");
 	}
-	/**
-	 * 
-	 * @return
-	 */
+
 	/* TODO: Methoden sollen aus einer Liste ubernommen werden (je nach ausgewaehlter Testklasse) */
 	public static ObservableList<String> methoden() {
-		ObservableList<String> methoden = FXCollections.observableArrayList("testMethode1", "testMethode2");
-		return methoden;
+		
+		/*
+		List<String> tmp = new ArrayList<String>();
+		tmp.add("testMethode1");
+		tmp.add("testMethode2");
+		return FXCollections.observableArrayList(tmp);
+		*/
+		mainFrameController = new MainFrameController();
+		
+		//mainFrameController.getJavaFilePlainComboBox().getSelectionModel().getSelectedItem().getClass();
+		//String s = mainFrameController.getJavaFilePlainComboBox().getSelectionModel().getSelectedItem().toString();
+		
+		//System.out.println("TEST" + mainFrameController.getJavaFilePlainComboBox());
+		
+		return FXCollections.observableArrayList("testMethode1", "testMethode2");
+
+		//MainFrameController.getJavaFilePlainComboBox().getSelectionModel().getSelectedItem().getClass();
+		//String s = MainFrameController.javaFilePlainComboBox.getSelectionModel().getSelectedItem().getClass().toString();
+		//return FXCollections.observableArrayList(MainFrameController.javaFilePlainComboBox);
 	}
 	
 	//getter setter

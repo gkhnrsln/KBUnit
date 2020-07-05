@@ -65,13 +65,14 @@ public class ParametrisierungController implements Initializable {
 		parameterTableView.setItems(getParametrisierungModel());
 		
 		//***************fill Selection ComboBox************************************//
-		typComboBox.setItems(ParametrisierungModel.datentypen());
+		typComboBox.setItems(ParametrisierungModel.datenTypen());
 		methodeComboBox.setItems(ParametrisierungModel.methoden());
 		
 		//button erst aktiv, wenn "Formular" ausgefuellt ist
 		addButton.setDisable(true);
 	}
 	
+	//muss wahrscheinlich in einen modell
 	@FXML
 	public ObservableList<ParametrisierungModel> getParametrisierungModel() {
 		//die Parameter sollen von dem "Formular" uebernommen werden
@@ -89,6 +90,8 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private void addToParamList(ActionEvent e) {
 		//Formulareintrag soll der Liste hinzugefuegt werden
+		ParametrisierungModel zeile3 = 
+				new ParametrisierungModel("String","testBerechneGesamtschuld","Laufzeit","10","vom Wissenstr[:a]ger einstellbare Laufzeit des Darlehens");
 	}
 	
 	@FXML

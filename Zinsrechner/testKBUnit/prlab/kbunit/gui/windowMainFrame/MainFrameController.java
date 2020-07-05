@@ -170,7 +170,7 @@ public class MainFrameController implements Initializable {
 		try {
 			javafileComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_SOURCE));
-			javaFilePlainComboBox.setItems(mainFrameModel
+			getJavaFilePlainComboBox().setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
 						Variables.EXTENSION_TEST_PLAIN_JAVA));
 			//falls Testklassen vorhanden, sind Buttons aktiv
@@ -188,7 +188,7 @@ public class MainFrameController implements Initializable {
 		ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 
 		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
-		javaFilePlainComboBox.getSelectionModel().select(-1);
+		getJavaFilePlainComboBox().getSelectionModel().select(-1);
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
 
@@ -449,7 +449,7 @@ public class MainFrameController implements Initializable {
 	 */
 	@FXML
 	private void javaFilePlainChoose(ActionEvent event) {
-		if (javaFilePlainComboBox.getSelectionModel().selectedItemProperty() != null) {
+		if (getJavaFilePlainComboBox().getSelectionModel().selectedItemProperty() != null) {
 			javaFilePlainButton.setDisable(false);
 		}
 	}
@@ -835,5 +835,9 @@ public class MainFrameController implements Initializable {
 		// TODO Auto-generated method stub
 		this.hostServices = hostServices ;
 
+	}
+
+	public ComboBox<File> getJavaFilePlainComboBox() {
+		return javaFilePlainComboBox;
 	}
 }
