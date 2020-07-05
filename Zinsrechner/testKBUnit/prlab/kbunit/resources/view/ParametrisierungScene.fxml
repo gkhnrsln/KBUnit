@@ -29,12 +29,12 @@
                         <TextField fx:id="txtMethode" layoutX="390.0" layoutY="35.0" prefHeight="25.0" prefWidth="210.0" />
                         <Label layoutX="611.0" layoutY="8.0" text="Wert" />
                         <TextField fx:id="txtWert" layoutX="610.0" layoutY="35.0" />
-                        <Button fx:id="addButton" disable="true" layoutX="625.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="In Tabelle hinzufügen" />
+                        <Button fx:id="addButton" disable="true" layoutX="625.0" layoutY="99.0" mnemonicParsing="false" onAction="#addToParamList" prefHeight="25.0" prefWidth="132.0" text="In Tabelle hinzufügen" />
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="775.0">
                      <children>
-                        <Button fx:id="saveButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" text="Speichern" />
+                        <Button fx:id="saveButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveParamList" text="Speichern" />
                      </children>
                   </AnchorPane>
               </items>

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,6 +43,7 @@ public class ParametrisierungController implements Initializable {
 	private TextField txtMethode;
 	@FXML
 	private TextField txtWert;
+	
 	@FXML
 	private Button saveButton;
 	
@@ -84,5 +86,15 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	
+	@FXML
+	private void addToParamList(ActionEvent e) {
+		//Formulareintrag soll der Liste hinzugefuegt werden
+	}
 	
+	@FXML
+	private void saveParamList(ActionEvent e) {
+		//Tabelle soll gespeichert werden 
+		//es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
+		//und Fenster schlieﬂt sich
+	}
 }

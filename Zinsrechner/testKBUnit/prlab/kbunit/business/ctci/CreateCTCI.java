@@ -1,4 +1,4 @@
-package prlab.kbunit.business.dataModelCTCI;
+package prlab.kbunit.business.ctci;
 
 import java.io.File;
 import java.io.FileOutputStream;
