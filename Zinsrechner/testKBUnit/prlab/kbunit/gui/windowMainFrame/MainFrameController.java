@@ -53,7 +53,6 @@ import java.util.stream.Collectors;
  * @author Patrick Pete
  */
 public class MainFrameController implements Initializable {
-
 	// HostService zum oeffnen einer Datei
 	private HostServices hostServices ;
 
@@ -123,7 +122,7 @@ public class MainFrameController implements Initializable {
 	private ComboBox<String> newTestcaseComboBox;
 	@FXML
 	private Button newTestcaseButton;
-
+    
 	private MainFrameModel mainFrameModel;
 
 	/**
@@ -170,7 +169,7 @@ public class MainFrameController implements Initializable {
 		try {
 			javafileComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_SOURCE));
-			getJavaFilePlainComboBox().setItems(mainFrameModel
+			javaFilePlainComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
 						Variables.EXTENSION_TEST_PLAIN_JAVA));
 			//falls Testklassen vorhanden, sind Buttons aktiv
@@ -188,7 +187,7 @@ public class MainFrameController implements Initializable {
 		ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 
 		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
-		getJavaFilePlainComboBox().getSelectionModel().select(-1);
+		javaFilePlainComboBox.getSelectionModel().select(-1);
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
 
@@ -443,13 +442,14 @@ public class MainFrameController implements Initializable {
 		tri.setParameters(params);
 		return tri;
 	}
+	
 	/**
 	 * method for the "javaFilePlain" Combobox.
 	 * @param event
 	 */
 	@FXML
 	private void javaFilePlainChoose(ActionEvent event) {
-		if (getJavaFilePlainComboBox().getSelectionModel().selectedItemProperty() != null) {
+		if (javaFilePlainComboBox.getSelectionModel().selectedItemProperty() != null) {
 			javaFilePlainButton.setDisable(false);
 		}
 	}
@@ -466,6 +466,7 @@ public class MainFrameController implements Initializable {
 		}
 	}
 	
+
 	/**
 	 * method for the "konvertieren" button.
 	 * @param event
@@ -482,9 +483,14 @@ public class MainFrameController implements Initializable {
 		Stage dialogStage = new Stage();
 		dialogStage.setResizable(false);
 		dialogStage.setTitle("Parameter eingeben");
-		dialogStage.initModality(Modality.APPLICATION_MODAL); //?
+		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		Scene scene = new Scene(resultsDialog);
 		dialogStage.setScene(scene);
+		
+		
+		ParametrisierungController parametrisierungController = loader.getController();
+		parametrisierungController.setKlassePfad(javaFilePlainComboBox.getSelectionModel().getSelectedItem().toString());
+		parametrisierungController.initModel();
 		dialogStage.showAndWait();
 	}
 	
@@ -835,9 +841,5 @@ public class MainFrameController implements Initializable {
 		// TODO Auto-generated method stub
 		this.hostServices = hostServices ;
 
-	}
-
-	public ComboBox<File> getJavaFilePlainComboBox() {
-		return javaFilePlainComboBox;
 	}
 }

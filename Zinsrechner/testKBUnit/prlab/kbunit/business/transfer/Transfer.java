@@ -54,7 +54,7 @@ public class Transfer {
 	 * @param file
 	 * @return Liste der Testmethoden
 	 */
-	static List<String> getTestMethode (String file) {
+	public static List<String> getTestMethode (String file) {
 		List<String> liste = new ArrayList<>();
 
 		try {
@@ -165,7 +165,7 @@ public class Transfer {
 	
 	
 	public static void main(String[] args) {
-		//for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain")) System.err.println(methode);
+		for (String methode : getTestMethode("darlehen.TilgungsdarlehenTestPlain")) System.err.println(methode);
 		
 		try {
 			magic(new File(Variables.TEST_PLAIN_SOURCE + "/darlehen/Tilgungsdarlehen" + Variables.EXTENSION_TEST_PLAIN_JAVA));

@@ -44,7 +44,7 @@
                 <children>
                  <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Folgende Testklasse transferieren:" wrappingWidth="238.13671875" />
                  <ComboBox fx:id="javaFilePlainComboBox" layoutX="14.0" layoutY="33.0" onAction="#javaFilePlainChoose" prefHeight="25.0" prefWidth="282.0" />
-                 <Button fx:id="javaFilePlainButton" disable="true" layoutX="14.0" layoutY="76.0" mnemonicParsing="false" onAction="#parameterizeTestclass" text="Konfigurieren" />
+                 <Button fx:id="javaFilePlainButton" disable="true" layoutX="14.0" layoutY="76.0" mnemonicParsing="false" onAction="#parameterizeTestclass" text="Parametrisieren" />
                 </children>
                </AnchorPane>
               </content>
