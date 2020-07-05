@@ -168,12 +168,13 @@ public class MainFrameController implements Initializable {
 
 		try {
 			javafileComboBox.setItems(mainFrameModel
-				.scanSourceFolder(Variables.TEST_SOURCE));
+				.scanSourceFolder(Variables.TEST_SOURCE, Variables.EXTENSION_TEST_JAVA));
 			javaFilePlainComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
 						Variables.EXTENSION_TEST_PLAIN_JAVA));
 			//falls Testklassen vorhanden, sind Buttons aktiv
-			if (mainFrameModel.scanSourceFolder(Variables.TEST_SOURCE) != null) {
+			if (mainFrameModel.scanSourceFolder(Variables.TEST_SOURCE,
+					Variables.EXTENSION_TEST_JAVA) != null) {
 				startGenerateCTCIButtonAllTestclasses.setDisable(false);
 				startLoggerButtonAllTestclasses.setDisable(false);
 				startRunnerButtonAllTestclasses.setDisable(false);
