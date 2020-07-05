@@ -311,7 +311,7 @@ public class DataCTCI {
 		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
-		strFile = strFile.substring(1, strFile.indexOf(".java"));
+		strFile = strFile.substring(1, strFile.indexOf(Variables.EXTENSION_JAVA));
 		strFile = strFile.replace("/", ".");
 		
 		List<String> liste = new ArrayList<>();

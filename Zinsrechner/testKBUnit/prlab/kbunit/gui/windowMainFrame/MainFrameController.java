@@ -467,11 +467,10 @@ public class MainFrameController implements Initializable {
 	}
 	
 	/**
-	 * 
+	 * method for the "konvertieren" button.
 	 * @param event
 	 * @throws IOException 
 	 */
-	
 	@FXML
 	private void parameterizeTestclass(ActionEvent event) throws IOException  {
 		//Maske ParametrisierungScene.fxml oeffnen
@@ -481,16 +480,12 @@ public class MainFrameController implements Initializable {
 		
 		AnchorPane resultsDialog = (AnchorPane) loader.load();
 		Stage dialogStage = new Stage();
-		dialogStage.setResizable(true);
+		dialogStage.setResizable(false);
 		dialogStage.setTitle("Parameter eingeben");
 		dialogStage.initModality(Modality.APPLICATION_MODAL); //?
 		Scene scene = new Scene(resultsDialog);
 		dialogStage.setScene(scene);
-		ParametrisierungController parametrisierungController = loader.getController();
-		parametrisierungController.setDialogStage(dialogStage);
-		//parametrisierungController.initModel(activeResult);
 		dialogStage.showAndWait();
-		//return parametrisierungController.getActiveResult();
 	}
 	
 	/**
@@ -792,7 +787,7 @@ public class MainFrameController implements Initializable {
         }
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestCaseInformation.xml konnte nicht geöffnet werden.");
 		}
 	}
 

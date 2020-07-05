@@ -103,7 +103,7 @@ public class Transfer {
 				if (zeile.contains(getTestKlasseName(strPath))) {
 					//entferne Plain 
 					zeile = zeile.replace("Plain", "");		
-					System.err.println(zeile);
+					System.out.println(zeile);
 					break;
 				} else {
 					System.out.println(zeile);
@@ -134,7 +134,7 @@ public class Transfer {
 				
 				for (String methode : getTestMethode(strPath)) {
 					if (zeile.contains(methode)) {
-						System.err.println("TESTMETHODE GEFUNDEN: [" +methode  +"]");
+						//System.err.println("TESTMETHODE GEFUNDEN: [" +methode  +"]");
 						//naechste Zeile pruefen
 					}
 				}
