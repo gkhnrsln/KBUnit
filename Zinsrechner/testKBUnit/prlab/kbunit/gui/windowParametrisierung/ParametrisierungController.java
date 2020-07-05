@@ -48,8 +48,6 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private Button addButton;
 	
-	private ParametrisierungModel parametrisierungModel;
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Tabelle sollte eigentlich beim starten leer sein
@@ -65,8 +63,8 @@ public class ParametrisierungController implements Initializable {
 		parameterTableView.setItems(getParametrisierungModel());
 		
 		//***************fill Selection ComboBox************************************//
-		typComboBox.setItems(parametrisierungModel.datentypen());
-		methodeComboBox.setItems(parametrisierungModel.methoden());
+		typComboBox.setItems(ParametrisierungModel.datentypen());
+		methodeComboBox.setItems(ParametrisierungModel.methoden());
 		
 		//button erst aktiv, wenn "Formular" ausgefuellt ist
 		addButton.setDisable(true);

@@ -18,7 +18,7 @@ public class ParametrisierungModel {
 	private SimpleStringProperty wert;
 	private SimpleStringProperty desc;
 	
-	MainFrameController mainFrameController;
+	//MainFrameController mainFrameController;
 	
 	public ParametrisierungModel(String typ, String methode, String parameter, String wert, String desc) {
 		this.typ = new SimpleStringProperty(typ);
@@ -32,7 +32,7 @@ public class ParametrisierungModel {
 	 * 
 	 * @return
 	 */
-	public ObservableList<String> datentypen() {
+	public static ObservableList<String> datentypen() {
 		ObservableList<String> types = FXCollections.observableArrayList("String", "int", "double", "float", "boolean");
 		return types;
 	}
@@ -41,7 +41,7 @@ public class ParametrisierungModel {
 	 * @return
 	 */
 	/* TODO: Methoden sollen aus einer Liste ubernommen werden (je nach ausgewaehlter Testklasse) */
-	public ObservableList<String> methoden() {
+	public static ObservableList<String> methoden() {
 		ObservableList<String> methoden = FXCollections.observableArrayList("testMethode1", "testMethode2");
 		return methoden;
 	}

@@ -19,7 +19,7 @@
               <items>
                 <AnchorPane prefHeight="158.0" prefWidth="795.0">
                      <children>
-                        <Label layoutX="15.0" layoutY="9.0" text="Datentyp" />
+                        <Label layoutX="15.0" layoutY="9.0" text="Typ" />
                         <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="121.0" />
                         <ComboBox fx:id="methodeComboBox" layoutX="145.0" layoutY="35.0" prefHeight="25.0" prefWidth="235.0" />
                         <Label layoutX="146.0" layoutY="9.0" text="Methode" />
@@ -43,11 +43,11 @@
          <center>
             <TableView fx:id="parameterTableView" prefHeight="358.0" prefWidth="767.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="typColumn" minWidth="0.0" prefWidth="73.71432387828827" sortable="false" text="Datentyp" />
-                <TableColumn fx:id="methodeColumn" minWidth="0.0" prefWidth="215.99996185302734" sortable="false" text="Methode" />
-                <TableColumn fx:id="parameterColumn" editable="false" prefWidth="128.0" sortable="false" text="Parameter" />
-                <TableColumn fx:id="wertColumn" minWidth="0.0" prefWidth="128.0" sortable="false" text="Wert" />
-                <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="255.4285888671875" sortable="false" text="Beschreibung" />
+                <TableColumn fx:id="typColumn" minWidth="0.0" prefWidth="73.71432387828827" sortable="false" text="Typ" />
+                <TableColumn fx:id="methodeColumn" minWidth="0.0" prefWidth="191.0" sortable="false" text="Methode" />
+                <TableColumn fx:id="parameterColumn" editable="false" prefWidth="127.0" sortable="false" text="Parameter" />
+                <TableColumn fx:id="wertColumn" minWidth="0.0" prefWidth="106.0" sortable="false" text="Wert" />
+                <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="304.0" sortable="false" text="Beschreibung" />
               </columns>
             </TableView>
          </center>
