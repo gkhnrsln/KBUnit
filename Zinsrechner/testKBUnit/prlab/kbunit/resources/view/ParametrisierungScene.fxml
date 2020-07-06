@@ -6,7 +6,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -15,27 +14,27 @@
   <children>
       <BorderPane prefHeight="526.0" prefWidth="777.0">
          <bottom>
-            <SplitPane dividerPositions="0.8016528925619835" orientation="VERTICAL" prefHeight="244.0" prefWidth="790.0" BorderPane.alignment="CENTER">
+            <SplitPane dividerPositions="0.743801652892562" orientation="VERTICAL" prefHeight="244.0" prefWidth="790.0" BorderPane.alignment="CENTER">
               <items>
                 <AnchorPane prefHeight="158.0" prefWidth="795.0">
                      <children>
                         <Label layoutX="15.0" layoutY="9.0" text="Typ" />
-                        <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="121.0" />
-                        <ComboBox fx:id="methodeComboBox" layoutX="145.0" layoutY="35.0" prefHeight="25.0" prefWidth="235.0" />
-                        <Label layoutX="146.0" layoutY="9.0" text="Methode" />
-                        <Label layoutX="15.0" layoutY="73.0" text="Beschreibung" />
-                        <TextArea fx:id="descTextArea" layoutX="14.0" layoutY="99.0" prefHeight="75.0" prefWidth="601.0" />
-                        <Label layoutX="391.0" layoutY="9.0" text="Parameter" />
-                        <TextField fx:id="parameterTextField" layoutX="390.0" layoutY="35.0" prefHeight="25.0" prefWidth="210.0" />
+                        <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="76.0" />
+                        <ComboBox fx:id="methodeComboBox" layoutX="100.0" layoutY="35.0" prefHeight="25.0" prefWidth="268.0" />
+                        <Label layoutX="101.0" layoutY="9.0" text="Methode" />
+                        <Label layoutX="15.0" layoutY="70.0" text="Beschreibung" />
+                        <Label layoutX="379.0" layoutY="9.0" text="Parameter" />
+                        <TextField fx:id="parameterTextField" layoutX="378.0" layoutY="35.0" prefHeight="25.0" prefWidth="223.0" />
                         <Label layoutX="611.0" layoutY="8.0" text="Wert" />
                         <TextField fx:id="wertTextField" layoutX="610.0" layoutY="35.0" />
-                        <Button fx:id="addButton" layoutX="625.0" layoutY="99.0" mnemonicParsing="false" onAction="#addToParamList" prefHeight="25.0" prefWidth="132.0" text="Eintrag hinzufügen" />
-                        <Button fx:id="deleteButton" layoutX="625.0" layoutY="137.0" mnemonicParsing="false" onAction="#deleteFromParamList" prefHeight="25.0" prefWidth="130.0" text="Eintrag löschen" />
+                        <Button fx:id="addButton" layoutX="15.0" layoutY="129.0" mnemonicParsing="false" onAction="#addToParamList" prefHeight="25.0" prefWidth="132.0" text="Eintrag hinzufügen" />
+                        <Button fx:id="deleteButton" layoutX="157.0" layoutY="129.0" mnemonicParsing="false" onAction="#deleteFromParamList" prefHeight="25.0" prefWidth="130.0" text="Eintrag löschen" />
+                        <TextField fx:id="descTextField" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="745.0" />
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="775.0">
                      <children>
-                        <Button fx:id="saveButton" layoutX="338.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveParamList" text="Transferieren" />
+                        <Button fx:id="saveButton" layoutX="338.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveParamList" text="Transferieren" />
                      </children>
                   </AnchorPane>
               </items>

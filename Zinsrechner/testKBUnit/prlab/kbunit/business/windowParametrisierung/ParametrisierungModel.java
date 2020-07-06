@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import prlab.kbunit.business.transfer.Transfer;
-import prlab.kbunit.gui.windowMainFrame.MainFrameController;
+
 /**
  * ParametrisierungModel ist die Model-Klasse vom Parametrisierungsfenster und 
  * verwaltet Daten-Objekte.

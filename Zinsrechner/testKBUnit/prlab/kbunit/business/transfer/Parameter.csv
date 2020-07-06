@@ -1,0 +1,4 @@
+/** Ich bin ein Killa */
+public static String testBerechneGesamtschuld_User = "Hannes";
+/** Ich bin so alllt */
+public static double testBerechneGesamtschuld_Alter = 45;

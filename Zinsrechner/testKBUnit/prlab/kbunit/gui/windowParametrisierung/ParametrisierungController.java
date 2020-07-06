@@ -1,10 +1,11 @@
 package prlab.kbunit.gui.windowParametrisierung;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +40,7 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private ComboBox<String> methodeComboBox;
 	@FXML
-	private TextArea descTextArea;
+	private TextField descTextField;
 	@FXML
 	private TextField parameterTextField;
 	@FXML
@@ -91,14 +92,14 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private void addToParamList(ActionEvent e) {
 		//pruefe, ob andere Formular Eintrage ausgefuellt sind
-		if (! parameterTextField.getText().equals("") && ! wertTextField.getText().equals("") && ! descTextArea.getText().equals("")) {
+		if (! parameterTextField.getText().equals("") && ! wertTextField.getText().equals("") && ! descTextField.getText().equals("")) {
 			//Formulareintrag soll der Liste hinzugefuegt werden
 			parameterTableView.getItems().add(new ParametrisierungModel(
 					typComboBox.getSelectionModel().getSelectedItem().toString(),
 					methodeComboBox.getSelectionModel().getSelectedItem().toString(),
 					parameterTextField.getText(),
 					wertTextField.getText(),
-					descTextArea.getText())
+					descTextField.getText())
 			);
 		}
 	}
@@ -116,25 +117,59 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/*
-	 * TODO: Tabelle soll gespeichert werden 
+	 * Tabelle wird in "Parameter.csv"  gespeichert.
+	 * 
+	 * TODO: 
 	 * es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
-	 * und Fenster schlieﬂt sich
+	 * und Fenster schliesst sich
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
+		String typ;
+		String methode;
+		String parameter;
+		String wert;
+		String desc;
+		StringBuilder sb;
 		
-		String typ = parameterTableView.getItems().get(0).getTyp().getValue();
-		String methode = parameterTableView.getItems().get(0).getMethode().getValue();
-		String parameter = parameterTableView.getItems().get(0).getParameter().getValue();
-		String wert = parameterTableView.getItems().get(0).getWert().getValue();
-		String desc = parameterTableView.getItems().get(0).getDesc().getValue();
-		System.out.println("TYP: " + typ + "\nMETHODE: " + methode + "\nPARAMETER: " + parameter + "\nWERT: " + wert
-				+ "\nDESC: " + desc);
-		
+		BufferedWriter out;
+		try {
+			//Speicherort der Parameter
+			out = new BufferedWriter(new FileWriter(".\\testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.csv"));
+			for (ParametrisierungModel s : parameterTableView.getItems()) {
+				typ = s.getTyp().getValue();
+				methode = s.getMethode().getValue();
+				parameter = s.getParameter().getValue();
+				wert = s.getWert().getValue();
+				desc = s.getDesc().getValue();
+				
+				//Zeilenumbruch, bei laengeren Kommentaren
+				sb = new StringBuilder(desc);
+				int i = 0;
+				while ((i = sb.indexOf(" ", i + 75)) != -1) {
+				    sb.replace(i, i + 1, "\n * ");
+				}
+				//setze beim Datentyp String den Wert in hochkomma
+				if (typ.equals("String")) wert = "\"" + wert + "\"";
+				
+				//Formatierung
+				out.write("/** " + sb + " */\npublic static " + typ + " " + methode + "_" + parameter + " = " + wert + ";\n");
+			}
+			out.close();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		//close window
-		
+
 	}
 
+	//TODO
+	void schreibeParameterInDatei() {
+		//ParametrisierungModel.schreibeParameterInCsvDatei();
+		//meldungsfenster aus view
+		
+	}
 	
 	//getter setter
 	public String getKlassePfad() {
