@@ -41,7 +41,7 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private TextArea descTextArea;
 	@FXML
-	private TextField methodeTextField;
+	private TextField parameterTextField;
 	@FXML
 	private TextField wertTextField;
 	
@@ -54,7 +54,7 @@ public class ParametrisierungController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//button erst aktiv, wenn "Formular" ausgefuellt ist
-		addButton.setDisable(true);
+		//addButton.setDisable(true);
 	}
 	
 	public void initModel() {
@@ -76,10 +76,9 @@ public class ParametrisierungController implements Initializable {
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
 		
 		parameterTableView.setItems(getParametrisierungModel());
-		parameterTableView.setEditable(true);
 	}
 	
-	//TODO: muss eher in Modell-Klasse
+	//TODO: muss eher vom User im Formular eingegeben werden
 	@FXML
 	public ObservableList<ParametrisierungModel> getParametrisierungModel() {
 		//die Parameter sollen von dem "Formular" uebernommen werden
@@ -91,12 +90,22 @@ public class ParametrisierungController implements Initializable {
 		return FXCollections.observableArrayList(zeile1, zeile2);
 	}
 	
-	
+	/**
+	 * 
+	 * @param e
+	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
-		//Formulareintrag soll der Liste hinzugefuegt werden
-		ParametrisierungModel zeile3 = 
-				new ParametrisierungModel("String","testBerechneGesamtschuld","Laufzeit","10","vom Wissenstr[:a]ger einstellbare Laufzeit des Darlehens");
+		//pruefe, ob andere Formular Eintrage ausgefuellt sind
+		if (! parameterTextField.getText().equals("") && ! wertTextField.getText().equals("") && ! descTextArea.getText().equals("")) {
+			//Formulareintrag soll der Liste hinzugefuegt werden
+			parameterTableView.getItems().add(new ParametrisierungModel(
+					typComboBox.getSelectionModel().getSelectedItem().toString(),
+					methodeComboBox.getSelectionModel().getSelectedItem().toString(),
+					parameterTextField.getText(),
+					wertTextField.getText(),
+					descTextArea.getText()));
+		}
 	}
 	
 	@FXML
@@ -106,6 +115,9 @@ public class ParametrisierungController implements Initializable {
 		//und Fenster schlieﬂt sich
 	}
 
+	
+	//getter setter
+	
 	public String getKlassePfad() {
 		return klassePfad;
 	}
