@@ -82,7 +82,7 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * Der Tabelle wird eine neue Zeile hinzugefuegt.
+	 * method for the add Button
 	 * @param e
 	 */
 	@FXML
@@ -100,10 +100,15 @@ public class ParametrisierungController implements Initializable {
 		}
 	}
 	
+	/**
+	 * method for the delete Button
+	 * @param e
+	 */
 	@FXML
 	private void deleteFromParamList(ActionEvent e) {
-		if (parameterTableView.getSelectionModel().getSelectedIndex() >= 0) {
-			//parameterisierungModel.deleteParameter(selectedID);
+		int index = parameterTableView.getSelectionModel().getSelectedIndex();
+		if (index >= 0) {
+			parameterTableView.getItems().remove(index);
 		}
 	}
 	
