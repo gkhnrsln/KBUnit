@@ -44,15 +44,14 @@ public class ParametrisierungController implements Initializable {
 	private TextField parameterTextField;
 	@FXML
 	private TextField wertTextField;
-	
 	@FXML
-	private Button saveButton;
-	
+	private Button addButton;
 	@FXML
 	private Button deleteButton;
 	
+	
 	@FXML
-	private Button addButton;
+	private Button saveButton;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +73,11 @@ public class ParametrisierungController implements Initializable {
 		descColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getDesc());
 		
-		klassePfad = klassePfad.replace(Variables.TEST_PLAIN_SOURCE + "\\", "").replace("\\", ".").replace(".java", "");
+		klassePfad = klassePfad
+				.replace(Variables.TEST_PLAIN_SOURCE + "\\", "")
+				.replace("\\", ".")
+				.replace(".java", "");
+		
 		//***************fill Selection ComboBox************************************//
 		typComboBox.setItems(ParametrisierungModel.datenTypen());
 		//methodeComboBox.setItems(ParametrisierungModel.methoden());
@@ -112,11 +115,24 @@ public class ParametrisierungController implements Initializable {
 		}
 	}
 	
+	/*
+	 * TODO: Tabelle soll gespeichert werden 
+	 * es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
+	 * und Fenster schlieﬂt sich
+	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		//Tabelle soll gespeichert werden 
-		//es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
-		//und Fenster schlieﬂt sich
+		
+		String typ = parameterTableView.getItems().get(0).getTyp().getValue();
+		String methode = parameterTableView.getItems().get(0).getMethode().getValue();
+		String parameter = parameterTableView.getItems().get(0).getParameter().getValue();
+		String wert = parameterTableView.getItems().get(0).getWert().getValue();
+		String desc = parameterTableView.getItems().get(0).getDesc().getValue();
+		System.out.println("TYP: " + typ + "\nMETHODE: " + methode + "\nPARAMETER: " + parameter + "\nWERT: " + wert
+				+ "\nDESC: " + desc);
+		
+		//close window
+		
 	}
 
 	

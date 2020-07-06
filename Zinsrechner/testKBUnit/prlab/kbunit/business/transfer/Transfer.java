@@ -59,6 +59,7 @@ public class Transfer {
 
 		try {
 			Class<?> c = Class.forName(file);
+			//nur oeffentliche Methoden
 			for (Method method : c.getDeclaredMethods()) {
 				for (Annotation s : method.getAnnotations()) {
 					switch ("@" + s.annotationType().getSimpleName()) {
@@ -67,8 +68,9 @@ public class Transfer {
 						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
 						case Variables.ANNOTATION_TEST5_FACTORY:
 						case Variables.ANNOTATION_TEST5_TEMPLATE:
-							Class<?> returnType = method.getReturnType();
-							liste.add(returnType + " " + method.getName());
+							//Class<?> returnType = method.getReturnType();
+							//liste.add(returnType + " " + method.getName());
+							liste.add(method.getName());
 							break;
 						default:
 							break;

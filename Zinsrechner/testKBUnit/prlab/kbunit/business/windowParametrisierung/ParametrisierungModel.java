@@ -10,7 +10,7 @@ import prlab.kbunit.gui.windowMainFrame.MainFrameController;
 /**
  * ParametrisierungModel ist die Model-Klasse vom Parametrisierungsfenster und 
  * verwaltet Daten-Objekte.
- * @author Goekhan Arslan
+ * @author G&ouml;khan Arslan
  *
  */
 public class ParametrisierungModel {
