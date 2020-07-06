@@ -49,12 +49,17 @@ public class ParametrisierungController implements Initializable {
 	private Button saveButton;
 	
 	@FXML
+	private Button deleteButton;
+	
+	@FXML
 	private Button addButton;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//button erst aktiv, wenn "Formular" ausgefuellt ist
 		//addButton.setDisable(true);
+		//button erst aktiv, wenn zeile ausgewaehlt ist
+		//deleteButton.setDisable(true);
 	}
 	
 	public void initModel() {
@@ -74,24 +79,10 @@ public class ParametrisierungController implements Initializable {
 		typComboBox.setItems(ParametrisierungModel.datenTypen());
 		//methodeComboBox.setItems(ParametrisierungModel.methoden());
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
-		
-		parameterTableView.setItems(getParametrisierungModel());
-	}
-	
-	//TODO: muss eher vom User im Formular eingegeben werden
-	@FXML
-	public ObservableList<ParametrisierungModel> getParametrisierungModel() {
-		//die Parameter sollen von dem "Formular" uebernommen werden
-		ParametrisierungModel zeile1 =
-				new ParametrisierungModel("String","testBerechneGesamtschuld","User","Musterperson","vom Wissenstr[:a]ger einstellbarer Name des Benutzers des Darlehens");
-		ParametrisierungModel zeile2 = 
-				new ParametrisierungModel("String","testBerechneGesamtschuld","Darlehen","100000000","vom Wissenstr[:a]ger einstellbarer H[:o]he des Darlehens");
-		
-		return FXCollections.observableArrayList(zeile1, zeile2);
 	}
 	
 	/**
-	 * 
+	 * Der Tabelle wird eine neue Zeile hinzugefuegt.
 	 * @param e
 	 */
 	@FXML
@@ -104,7 +95,15 @@ public class ParametrisierungController implements Initializable {
 					methodeComboBox.getSelectionModel().getSelectedItem().toString(),
 					parameterTextField.getText(),
 					wertTextField.getText(),
-					descTextArea.getText()));
+					descTextArea.getText())
+			);
+		}
+	}
+	
+	@FXML
+	private void deleteFromParamList(ActionEvent e) {
+		if (parameterTableView.getSelectionModel().getSelectedIndex() >= 0) {
+			//parameterisierungModel.deleteParameter(selectedID);
 		}
 	}
 	
@@ -117,7 +116,6 @@ public class ParametrisierungController implements Initializable {
 
 	
 	//getter setter
-	
 	public String getKlassePfad() {
 		return klassePfad;
 	}
