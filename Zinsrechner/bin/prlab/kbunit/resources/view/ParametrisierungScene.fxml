@@ -44,8 +44,7 @@
             <TableView fx:id="parameterTableView" prefHeight="358.0" prefWidth="767.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="typColumn" minWidth="0.0" prefWidth="73.71432387828827" sortable="false" text="Typ" />
-                <TableColumn fx:id="methodeColumn" minWidth="0.0" prefWidth="191.0" sortable="false" text="Methode" />
-                <TableColumn fx:id="parameterColumn" editable="false" prefWidth="127.0" sortable="false" text="Parameter" />
+                <TableColumn fx:id="attributColumn" minWidth="0.0" prefWidth="191.0" sortable="false" text="Attribut" />
                 <TableColumn fx:id="wertColumn" minWidth="0.0" prefWidth="106.0" sortable="false" text="Wert" />
                 <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="304.0" sortable="false" text="Beschreibung" />
               </columns>

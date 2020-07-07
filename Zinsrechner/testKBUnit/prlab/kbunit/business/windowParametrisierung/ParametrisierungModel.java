@@ -16,15 +16,13 @@ import prlab.kbunit.business.transfer.Transfer;
 public class ParametrisierungModel {
 	
 	private final StringProperty typ;
-	private final StringProperty methode;
-	private final StringProperty parameter;
+	private final StringProperty attribut;
 	private final StringProperty wert;
 	private final StringProperty desc;
 	
-	public ParametrisierungModel(String typ, String methode, String parameter, String wert, String desc) {
+	public ParametrisierungModel(String typ, String attribut, String wert, String desc) {
 		this.typ = new SimpleStringProperty(typ);
-		this.methode = new SimpleStringProperty(methode);
-		this.parameter = new SimpleStringProperty(parameter);
+		this.attribut = new SimpleStringProperty(attribut);
 		this.wert = new SimpleStringProperty(wert);
 		this.desc = new SimpleStringProperty(desc);
 	}
@@ -54,22 +52,14 @@ public class ParametrisierungModel {
 		typ.set(txt);
 	}
 
-	public StringProperty getMethode() {
-		return methode;
+	public StringProperty getAttribut() {
+		return attribut;
 	}
 
-	public void setMethode(String txt) {
-		methode.set(txt);
-	}
-	
-	public StringProperty getParameter() {
-		return parameter;
+	public void setAttribut(String txt) {
+		attribut.set(txt);
 	}
 
-	public void setParameter(String txt) {
-		parameter.set(txt);
-	}
-	
 	public StringProperty getWert() {
 		return wert;
 	}

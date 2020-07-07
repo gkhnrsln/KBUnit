@@ -25,9 +25,7 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private TableColumn<ParametrisierungModel, String> typColumn;
 	@FXML
-	private TableColumn<ParametrisierungModel, String> methodeColumn;
-	@FXML
-	private TableColumn<ParametrisierungModel, String> parameterColumn;
+	private TableColumn<ParametrisierungModel, String> attributColumn;
 	@FXML
 	private TableColumn<ParametrisierungModel, String> wertColumn;
 	@FXML
@@ -60,10 +58,8 @@ public class ParametrisierungController implements Initializable {
 	public void initModel() {
 		typColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getTyp());
-		methodeColumn.setCellValueFactory(cellData
-				-> cellData.getValue().getMethode());
-		parameterColumn.setCellValueFactory(cellData
-				-> cellData.getValue().getParameter());
+		attributColumn.setCellValueFactory(cellData
+				-> cellData.getValue().getAttribut());
 		wertColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getWert());
 		descColumn.setCellValueFactory(cellData
@@ -125,8 +121,7 @@ public class ParametrisierungController implements Initializable {
 		if (isInputCorrect()) {
 			parameterTableView.getItems().add(new ParametrisierungModel(
 					typComboBox.getSelectionModel().getSelectedItem().toString(),
-					methodeComboBox.getSelectionModel().getSelectedItem().toString(),
-					parameterTextField.getText().trim(),
+					methodeComboBox.getSelectionModel().getSelectedItem().toString() + "_" + parameterTextField.getText().trim(),
 					wertTextField.getText().trim(),
 					descTextField.getText().trim())
 			);
@@ -155,8 +150,7 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private void saveParamList(ActionEvent e) {
 		String typ;
-		String methode;
-		String parameter;
+		String attribut;
 		String wert;
 		String desc;
 		StringBuilder sb;
@@ -167,8 +161,7 @@ public class ParametrisierungController implements Initializable {
 			out = new BufferedWriter(new FileWriter(".\\testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.csv"));
 			for (ParametrisierungModel s : parameterTableView.getItems()) {
 				typ = s.getTyp().getValue();
-				methode = s.getMethode().getValue();
-				parameter = s.getParameter().getValue();
+				attribut = s.getAttribut().getValue();
 				wert = s.getWert().getValue();
 				desc = s.getDesc().getValue();
 				
@@ -182,7 +175,7 @@ public class ParametrisierungController implements Initializable {
 				if (typ.equals("String")) wert = "\"" + wert + "\"";
 				
 				//Formatierung
-				out.write("/** " + sb + " */\npublic static " + typ + " " + methode + "_" + parameter + " = " + wert + ";\n");
+				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
 			out.close();
 		} catch (IOException e2) {
