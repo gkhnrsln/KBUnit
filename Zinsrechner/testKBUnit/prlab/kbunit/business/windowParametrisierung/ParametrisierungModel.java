@@ -38,12 +38,11 @@ public class ParametrisierungModel {
 	}
 
 	/**
-	 * 
 	 * @param pfad
 	 * @return
 	 */
 	public static ObservableList<String> methoden(String pfad) {
-		return FXCollections.observableArrayList(Transfer.getTestMethode(pfad));
+		return FXCollections.observableArrayList(Transfer.getTestMethode(pfad, false));
 	}
 	
 	//getter setter

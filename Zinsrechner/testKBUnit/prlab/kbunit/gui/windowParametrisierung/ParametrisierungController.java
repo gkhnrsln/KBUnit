@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,10 +55,6 @@ public class ParametrisierungController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//button erst aktiv, wenn "Formular" ausgefuellt ist
-		//addButton.setDisable(true);
-		//button erst aktiv, wenn zeile ausgewaehlt ist
-		//deleteButton.setDisable(true);
 	}
 	
 	public void initModel() {
@@ -82,12 +76,12 @@ public class ParametrisierungController implements Initializable {
 		
 		//***************fill Selection ComboBox************************************//
 		typComboBox.setItems(ParametrisierungModel.datenTypen());
-		//methodeComboBox.setItems(ParametrisierungModel.methoden());
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
 	}
 	
-	boolean isInputCorrect() {
-		//pruefe, ob andere Formular Eintraege ausgefuellt sind
+	
+	private boolean isInputCorrect() {
+		//pruefe, ob Formular ausgefuellt ist
 		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() && ! descTextField.getText().isBlank()) {
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
