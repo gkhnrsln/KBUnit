@@ -114,10 +114,14 @@ public class ParametrisierungController implements Initializable {
 	
 	/**
 	 * Fuege der Tabelle eine neue Zeile hinzu.
+	 * 
+	 * TODO: Es sollen keine Duplikate (Methode + Parameter) in der Tabelle vorkommen
+	 * 
 	 * @param e
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
+		
 		if (isInputCorrect()) {
 			parameterTableView.getItems().add(new ParametrisierungModel(
 					typComboBox.getSelectionModel().getSelectedItem().toString(),

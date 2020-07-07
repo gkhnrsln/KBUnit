@@ -12,15 +12,18 @@ public class BeispielTestPlain {
 	void testMethode1() {
 		System.out.println("Musterstring");
 	}
+	
 	@Test
 	void testMethode2() {
 		System.out.println(5);
 	}
+	
 	@Test
 	void testMethode3() {
 		System.out.println("Musterstring");
 		System.out.println(5);
 	}
+	
 	@Test
 	void testMethode4657() {
 		

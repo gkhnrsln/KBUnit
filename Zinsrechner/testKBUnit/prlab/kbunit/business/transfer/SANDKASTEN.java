@@ -10,18 +10,18 @@ import java.io.IOException;
 import prlab.kbunit.enums.Variables;
 
 public class SANDKASTEN {
-	static String klasse;
-	
+
 	static void saveKlasse() {
+		
 		BufferedReader in;
 		BufferedReader csv;
 		BufferedWriter out;
 		try {
-			
 			String zeile;
 			String csvLine;
 			in = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + "/darlehen/Beispiel" + Variables.EXTENSION_TEST_PLAIN_JAVA));
 			csv = new BufferedReader(new FileReader("testKBUnit/prlab/kbunit/business/transfer/Parameter.csv"));
+			
 			out = new BufferedWriter(new FileWriter("BAUKASTEN.java"));
 			
 			while (true) {
