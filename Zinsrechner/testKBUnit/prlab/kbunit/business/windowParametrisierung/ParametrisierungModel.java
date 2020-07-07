@@ -34,7 +34,7 @@ public class ParametrisierungModel {
 	 * @return Datentypen
 	 */
 	public static ObservableList<String> datenTypen() {
-		return FXCollections.observableArrayList("String", "int", "double", "float", "boolean");
+		return FXCollections.observableArrayList("String", "int", "long", "float", "double", "boolean");
 	}
 
 	/**

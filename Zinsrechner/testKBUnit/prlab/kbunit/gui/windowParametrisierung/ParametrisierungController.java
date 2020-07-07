@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -85,21 +86,51 @@ public class ParametrisierungController implements Initializable {
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
 	}
 	
+	boolean isInputCorrect() {
+		//pruefe, ob andere Formular Eintraege ausgefuellt sind
+		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() && ! descTextField.getText().isBlank()) {
+			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
+			String wert = wertTextField.getText();
+			parameterTextField.setText(parameterTextField.getText().replace(" ",""));
+			//wenn Datentyp boolean, pruefe, ob werte true/false
+			if (datentyp.equals("boolean")) {
+				if(wert.equals("true") || wert.equals("false")) return true;
+				else return false;
+			} else {
+				if (! datentyp.equals("String")) {
+					//entferne leerzeichen bei Zahlen
+					wertTextField.setText(wert.replace(" ",""));
+					//nur Ziffern und bestimmte Zeichen erlaubt
+					if (datentyp.equals("int") || datentyp.equals("long")) {
+						if (wert.matches("[0-9]+")) return true;
+						else return false;
+					} else if (datentyp.equals("float")) {
+						if (wert.matches("[Ff.0-9]+")) return true;
+						else return false;
+					} else if (datentyp.equals("double")) {
+						if (wert.matches("[.0-9]+")) return true;
+						else return false;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	/**
-	 * method for the add Button
+	 * Fuege der Tabelle eine neue Zeile hinzu.
 	 * @param e
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
-		//pruefe, ob andere Formular Eintrage ausgefuellt sind
-		if (! parameterTextField.getText().equals("") && ! wertTextField.getText().equals("") && ! descTextField.getText().equals("")) {
-			//Formulareintrag soll der Liste hinzugefuegt werden
+		if (isInputCorrect()) {
 			parameterTableView.getItems().add(new ParametrisierungModel(
 					typComboBox.getSelectionModel().getSelectedItem().toString(),
 					methodeComboBox.getSelectionModel().getSelectedItem().toString(),
-					parameterTextField.getText(),
-					wertTextField.getText(),
-					descTextField.getText())
+					parameterTextField.getText().trim(),
+					wertTextField.getText().trim(),
+					descTextField.getText().trim())
 			);
 		}
 	}

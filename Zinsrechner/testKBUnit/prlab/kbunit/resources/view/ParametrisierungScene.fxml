@@ -19,14 +19,14 @@
                 <AnchorPane prefHeight="158.0" prefWidth="795.0">
                      <children>
                         <Label layoutX="15.0" layoutY="9.0" text="Typ" />
-                        <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="76.0" />
-                        <ComboBox fx:id="methodeComboBox" layoutX="100.0" layoutY="35.0" prefHeight="25.0" prefWidth="268.0" />
-                        <Label layoutX="101.0" layoutY="9.0" text="Methode" />
+                        <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="91.0" />
+                        <ComboBox fx:id="methodeComboBox" layoutX="115.0" layoutY="35.0" prefHeight="25.0" prefWidth="258.0" />
+                        <Label layoutX="116.0" layoutY="9.0" text="Methode" />
                         <Label layoutX="15.0" layoutY="70.0" text="Beschreibung" />
-                        <Label layoutX="379.0" layoutY="9.0" text="Parameter" />
-                        <TextField fx:id="parameterTextField" layoutX="378.0" layoutY="35.0" prefHeight="25.0" prefWidth="223.0" />
-                        <Label layoutX="611.0" layoutY="8.0" text="Wert" />
-                        <TextField fx:id="wertTextField" layoutX="610.0" layoutY="35.0" />
+                        <Label layoutX="385.0" layoutY="9.0" text="Parameter" />
+                        <TextField fx:id="parameterTextField" layoutX="383.0" layoutY="35.0" prefHeight="25.0" prefWidth="189.0" />
+                        <Label layoutX="583.0" layoutY="8.0" text="Wert" />
+                        <TextField fx:id="wertTextField" layoutX="581.0" layoutY="35.0" prefHeight="25.0" prefWidth="178.0" />
                         <Button fx:id="addButton" layoutX="15.0" layoutY="129.0" mnemonicParsing="false" onAction="#addToParamList" prefHeight="25.0" prefWidth="132.0" text="Eintrag hinzufügen" />
                         <Button fx:id="deleteButton" layoutX="157.0" layoutY="129.0" mnemonicParsing="false" onAction="#deleteFromParamList" prefHeight="25.0" prefWidth="130.0" text="Eintrag löschen" />
                         <TextField fx:id="descTextField" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="745.0" />
