@@ -20,15 +20,6 @@ import prlab.kbunit.enums.Variables;
  */
 public class Transfer {
 
-	private String testKlasse;
-	private List<String> testAttribute;
-	private List<String> testMethoden;
-	
-	public Transfer(String file) {
-		this.testKlasse = getTestKlasseName(file);
-		this.testAttribute = getTestAttribut(file);
-		//this.testMethoden = getTestMethode(file);
-	}
 	/**
 	 * Gibt den Namen der Klasse zur&uuml;ck.
 	 * @param file Klasse
@@ -168,10 +159,7 @@ public class Transfer {
 						//naechste Zeile pruefen
 					}
 				}
-				
-		
 			}
-
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -180,20 +168,12 @@ public class Transfer {
 	
 	
 	public static void main(String[] args) {
-		
-		//for (String methode : getTestMethode("darlehen.BeispielTestPlain", false)) System.err.println(methode);
-		
-		//for (String attr : getTestAttribut("darlehen.BeispielTestPlain")) System.err.println(attr);
-		
-		
 		try {
 			magic(new File(Variables.TEST_PLAIN_SOURCE + "/darlehen/Beispiel" + Variables.EXTENSION_TEST_PLAIN_JAVA));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		//getKlasseName("darlehen.TilgungsdarlehenTestPlain");
-
 	}
 
 }

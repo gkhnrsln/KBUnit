@@ -1,2 +1,2 @@
-/** ghjgh */
-public static int testMethode1_hjgh = 55;
+/** f */
+public static String testMethode4657_f = "f";

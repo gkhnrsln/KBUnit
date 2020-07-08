@@ -6,15 +6,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.util.Callback;
+import javafx.scene.control.Alert.AlertType;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
+
 /**
  * @author G&ouml;khan Arslan
  */
@@ -79,17 +78,26 @@ public class ParametrisierungController implements Initializable {
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
 	}
 	
-	//pruefe, ob Formular korrekt ausgefuellt ist
+	/**
+	 * Pr&uuml;ft, ob das Formular korrekt ausgef&uuml;llt ist.
+	 * @return true, wenn Eingaben korrekt 
+	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
-		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() && ! descTextField.getText().isBlank()) {
+		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() 
+				&& ! descTextField.getText().isBlank()) {
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
 			parameterTextField.setText(parameterTextField.getText().replace(" ",""));
 			//wenn Datentyp boolean, pruefe, ob werte true/false
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
-				else return false;
+				else {
+					showMessage(AlertType.WARNING, "Problem!",
+							"Falsche Eingabe erkannt!",
+							"Geben Sie entweder \"true\" oder \"false\" ein!");
+					return false;
+				}
 			} else {
 				if (! datentyp.equals("String")) {
 					//entferne leerzeichen bei Zahlen
@@ -98,27 +106,46 @@ public class ParametrisierungController implements Initializable {
 					if (datentyp.equals("int") || datentyp.equals("long")) {
 						//Vorzeichen (+/-) und nur Ziffern (0-9) erlaubt
 						if (wert.matches("^[-+]?([1-9][0-9]*)")) return true;
-						else return false;
+						else {
+							showMessage(AlertType.WARNING, "Problem!",
+									"Falsche Eingabe erkannt!",
+									"Geben Sie einen korrekten Wert ein!");
+							return false;
+						}
 					} else if (datentyp.equals("float")) {
 						//Vorzeichen (+/-), Ziffern 0-9, Einmalig (.) und am Ende ein (f/F) erlaubt
 						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?[fF]$")) return true;
-						else return false;
+						else {
+							showMessage(AlertType.WARNING, "Problem!",
+									"Falsche Eingabe erkannt!",
+									"Geben Sie einen korrekten float Wert ein (mit der Endung f)!");
+							return false;
+						}
 					} else if (datentyp.equals("double")) {
 						//Vorzeichen (+/-), Ziffern (0-9) und Einmalig (.) erlaubt
 						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?$")) return true;
-						else return false;
+						else {
+							showMessage(AlertType.WARNING, "Problem!",
+									"Falsche Eingabe erkannt!",
+									"Geben Sie einen korrekten double Wert ein!");
+							return false;
+						}
 					}
 				}
 			}
 			return true;
 		}
+		showMessage(AlertType.WARNING, "Problem!",
+				"Formular unvollständig!",
+				"Füllen Sie das Formular erst aus, bevor Sie die Werte hinzufügen wollen!");
 		return false;
 	}
 	
 	/**
-	 * Fuege der Tabelle eine neue Zeile hinzu. Es wird weiterhin darauf geachtet
+	 * method for the add Button
+	 * 
+	 * F&uuml;ge der Tabelle eine neue Zeile hinzu. Es wird weiterhin darauf geachtet,
 	 * dass keine Duplikate zu den Attributen existieren.
-	 * @param e
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
@@ -130,7 +157,8 @@ public class ParametrisierungController implements Initializable {
 
 		if (isInputCorrect()) {
 			typ = typComboBox.getSelectionModel().getSelectedItem().toString();
-			attr = methodeComboBox.getSelectionModel().getSelectedItem().toString() + "_" + parameterTextField.getText().trim();
+			attr = methodeComboBox.getSelectionModel().getSelectedItem().toString()
+					+ "_" + parameterTextField.getText().trim();
 			wert = wertTextField.getText().trim();
 			desc = descTextField.getText().trim();
 			//Gehe jeden Eintrag der Tabelle durch
@@ -138,11 +166,15 @@ public class ParametrisierungController implements Initializable {
 				//pruefe, ob aktuelle Zeile Duplikat
 				if (attributColumn.getCellData(i).equals(attr)) {
 					isDuplicate = true;
+					showMessage(AlertType.WARNING, "Problem!",
+							"Duplikat erkannt!",
+							"Geben Sie eine andere Bezeichnung für das Attribut ein!");
 					break;
 				}
 			}
 			if (!isDuplicate) {
-				parameterTableView.getItems().add(new ParametrisierungModel(typ,attr,wert,desc));
+				parameterTableView.getItems().add(
+						new ParametrisierungModel(typ,attr,wert,desc));
 			}
 		}
 	}
@@ -200,8 +232,10 @@ public class ParametrisierungController implements Initializable {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		//close window
-
+		//Meldung, das erfolgreich erstellt wurde
+		showMessage(AlertType.INFORMATION, "kkk",
+				"Parameter wurdern in Parameter.txt gespeichert.", null);
+		
 	}
 
 	//TODO
@@ -210,6 +244,15 @@ public class ParametrisierungController implements Initializable {
 		//meldungsfenster aus view
 		
 	}
+	
+	private void showMessage(AlertType alertType, String title, 
+			String header, String message) {
+			Alert alert = new Alert(alertType);
+			alert.setTitle(title);
+			alert.setHeaderText(header);
+			alert.setContentText(message);
+			alert.showAndWait();
+		}
 	
 	//getter setter
 	public String getKlassePfad() {
