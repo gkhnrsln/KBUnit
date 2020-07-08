@@ -75,7 +75,7 @@ public class ParametrisierungController implements Initializable {
 		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
 	}
 	
-	
+	//pruefe, ob Formular korrekt ausgefuellt ist
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
 		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() && ! descTextField.getText().isBlank()) {
@@ -141,11 +141,10 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/*
-	 * Tabelle wird in "Parameter.csv"  gespeichert.
+	 * Tabelleninhalt wird in "Parameter.csv"  gespeichert.
 	 * 
 	 * TODO: 
 	 * es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
-	 * und Fenster schliesst sich
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
