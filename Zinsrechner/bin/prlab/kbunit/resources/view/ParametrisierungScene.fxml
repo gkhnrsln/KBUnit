@@ -46,7 +46,7 @@
                 <TableColumn fx:id="typColumn" minWidth="0.0" prefWidth="73.71432387828827" sortable="false" text="Typ" />
                 <TableColumn fx:id="attributColumn" minWidth="0.0" prefWidth="191.0" sortable="false" text="Attribut" />
                 <TableColumn fx:id="wertColumn" minWidth="0.0" prefWidth="106.0" sortable="false" text="Wert" />
-                <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="304.0" sortable="false" text="Beschreibung" />
+                <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="405.0" sortable="false" text="Beschreibung" />
               </columns>
             </TableView>
          </center>

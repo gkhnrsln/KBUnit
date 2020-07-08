@@ -20,7 +20,7 @@ public class SANDKASTEN {
 			String zeile;
 			String csvLine;
 			in = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + "/darlehen/Beispiel" + Variables.EXTENSION_TEST_PLAIN_JAVA));
-			csv = new BufferedReader(new FileReader("testKBUnit/prlab/kbunit/business/transfer/Parameter.csv"));
+			csv = new BufferedReader(new FileReader("testKBUnit/prlab/kbunit/business/transfer/Parameter.txt"));
 			
 			out = new BufferedWriter(new FileWriter("BAUKASTEN.java"));
 			

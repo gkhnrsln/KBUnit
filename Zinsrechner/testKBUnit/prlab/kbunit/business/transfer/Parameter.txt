@@ -1,0 +1,2 @@
+/** ghjgh */
+public static int testMethode1_hjgh = 55;

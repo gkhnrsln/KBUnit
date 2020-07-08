@@ -132,9 +132,8 @@ public class ParametrisierungController implements Initializable {
 			desc = descTextField.getText().trim();
 			//Gehe jeden Eintrag der Tabelle durch
 			for (int i = 0;  i < parameterTableView.getItems().size(); i++) {
-				String s = attributColumn.getCellData(i);
 				//pruefe, ob aktuelle Zeile Duplikat
-				if (s.equals(attr)) {
+				if (attributColumn.getCellData(i).equals(attr)) {
 					isDuplicate = true;
 					break;
 				}
@@ -174,7 +173,7 @@ public class ParametrisierungController implements Initializable {
 		BufferedWriter out;
 		try {
 			//Speicherort der Parameter
-			out = new BufferedWriter(new FileWriter(".\\testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.csv"));
+			out = new BufferedWriter(new FileWriter(".\\testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.txt"));
 			for (ParametrisierungModel s : parameterTableView.getItems()) {
 				typ = s.getTyp().getValue();
 				attribut = s.getAttribut().getValue();
