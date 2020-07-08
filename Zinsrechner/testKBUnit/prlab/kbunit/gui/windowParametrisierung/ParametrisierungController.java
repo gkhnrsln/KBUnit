@@ -5,10 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.util.Callback;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
 /**
@@ -109,22 +113,35 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * Fuege der Tabelle eine neue Zeile hinzu.
-	 * 
-	 * TODO: Es sollen keine Duplikate (Methode + Parameter) in der Tabelle vorkommen
-	 * 
+	 * Fuege der Tabelle eine neue Zeile hinzu. Es wird weiterhin darauf geachtet
+	 * dass keine Duplikate zu den Attributen existieren.
 	 * @param e
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
-		
+		String typ;
+		String attr;
+		String wert;
+		String desc;
+		boolean isDuplicate = false;
+
 		if (isInputCorrect()) {
-			parameterTableView.getItems().add(new ParametrisierungModel(
-					typComboBox.getSelectionModel().getSelectedItem().toString(),
-					methodeComboBox.getSelectionModel().getSelectedItem().toString() + "_" + parameterTextField.getText().trim(),
-					wertTextField.getText().trim(),
-					descTextField.getText().trim())
-			);
+			typ = typComboBox.getSelectionModel().getSelectedItem().toString();
+			attr = methodeComboBox.getSelectionModel().getSelectedItem().toString() + "_" + parameterTextField.getText().trim();
+			wert = wertTextField.getText().trim();
+			desc = descTextField.getText().trim();
+			//Gehe jeden Eintrag der Tabelle durch
+			for (int i = 0;  i < parameterTableView.getItems().size(); i++) {
+				String s = attributColumn.getCellData(i);
+				//pruefe, ob aktuelle Zeile Duplikat
+				if (s.equals(attr)) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				parameterTableView.getItems().add(new ParametrisierungModel(typ,attr,wert,desc));
+			}
 		}
 	}
 	
