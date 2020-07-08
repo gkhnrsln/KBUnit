@@ -3,18 +3,8 @@ package darlehen;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
-	/** 98 */
-	public static String testBerechneGesamtschuld_8 = "9";
+	/** ghjgh */
+	public static int testMethode1_hjgh = 55;
 	/** fgfg */
 	public static String testMethode1_Name = "Musterstring";
 	/** fgfg */

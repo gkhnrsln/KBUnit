@@ -96,13 +96,16 @@ public class ParametrisierungController implements Initializable {
 					wertTextField.setText(wert.replace(" ",""));
 					//nur Ziffern und bestimmte Zeichen erlaubt
 					if (datentyp.equals("int") || datentyp.equals("long")) {
-						if (wert.matches("[0-9]+")) return true;
+						//Vorzeichen (+/-) und nur Ziffern (0-9) erlaubt
+						if (wert.matches("^[-+]?([1-9][0-9]*)")) return true;
 						else return false;
 					} else if (datentyp.equals("float")) {
-						if (wert.matches("[Ff.0-9]+")) return true;
+						//Vorzeichen (+/-), Ziffern 0-9, Einmalig (.) und am Ende ein (f/F) erlaubt
+						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?[fF]$")) return true;
 						else return false;
 					} else if (datentyp.equals("double")) {
-						if (wert.matches("[.0-9]+")) return true;
+						//Vorzeichen (+/-), Ziffern (0-9) und Einmalig (.) erlaubt
+						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?$")) return true;
 						else return false;
 					}
 				}

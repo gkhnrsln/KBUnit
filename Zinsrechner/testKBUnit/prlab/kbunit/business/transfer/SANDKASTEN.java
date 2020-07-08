@@ -10,9 +10,8 @@ import java.io.IOException;
 import prlab.kbunit.enums.Variables;
 
 public class SANDKASTEN {
-
 	static void saveKlasse() {
-		
+
 		BufferedReader in;
 		BufferedReader csv;
 		BufferedWriter out;
@@ -32,13 +31,13 @@ public class SANDKASTEN {
 				}
 				//falls Klassenname, eine zeile drunter die attribute hinzufügen
 				if (zeile.contains("class")) {
-					//kopiere Inhalt von csv Datei
 					out.write(zeile.replace("Plain", "") + "\n");
 					while (true) {
 						csvLine = csv.readLine();
 						if (csvLine == null) {
 							break;
 						}
+						//kopiere Inhalt von txt Datei
 						out.write("\t" + csvLine + "\n");
 					}
 					csv.close();
