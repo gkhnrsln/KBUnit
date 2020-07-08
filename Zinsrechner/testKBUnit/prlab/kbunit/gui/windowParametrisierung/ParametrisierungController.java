@@ -233,8 +233,8 @@ public class ParametrisierungController implements Initializable {
 			e2.printStackTrace();
 		}
 		//Meldung, das erfolgreich erstellt wurde
-		showMessage(AlertType.INFORMATION, "kkk",
-				"Parameter wurdern in Parameter.txt gespeichert.", null);
+		showMessage(AlertType.INFORMATION, "Information",
+				"Parameter wurdern erfolgreich gespeichert.", "Siehe Parameter.txt");
 		
 	}
 
