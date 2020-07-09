@@ -1,2 +1,2 @@
-/** f */
-public static String testMethode4657_f = "f";
+/** hh */
+public static String testMethode2_gfh = "h";

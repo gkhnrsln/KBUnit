@@ -1,4 +1,4 @@
-package prlab.kbunit.business.ctci;
+package prlab.kbunit.file;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +12,7 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import prlab.kbunit.business.ctci.DataCTCI;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
 /**

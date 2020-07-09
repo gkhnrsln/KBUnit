@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
+import prlab.kbunit.file.Generate;
 
 /**
  * @author G&ouml;khan Arslan
@@ -232,16 +233,14 @@ public class ParametrisierungController implements Initializable {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		
+		//
+		String s = klassePfad.replace(".", "/");
+		System.out.println(s);
+		Generate.saveKlasse("\\" + s + ".java");
 		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
 				"Parameter wurdern erfolgreich gespeichert.", "Siehe Parameter.txt");
-		
-	}
-
-	//TODO
-	void schreibeParameterInDatei() {
-		//ParametrisierungModel.schreibeParameterInCsvDatei();
-		//meldungsfenster aus view
 		
 	}
 	
