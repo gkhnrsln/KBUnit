@@ -89,7 +89,7 @@ public class Generate {
 		BufferedWriter ausgabe;
 		String zeile, txtLine;
 		List<String> temp = new ArrayList<>();
-		
+		String strPath = path.replace("\\","").replace("/", ".").replace(".java", "");
 		try {
 			//JUnit Testklasse
 			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
@@ -123,7 +123,7 @@ public class Generate {
 				}
 				ausgabe.write(zeile + "\n");
 			}
-			String strPath = path.replace("\\","").replace("/", ".").replace(".java", "");
+			
 			//ab letzte Testattribut Zeile
 			while (true) {
 				zeile = quelle.readLine();
@@ -131,17 +131,13 @@ public class Generate {
 				
 				for (String methodeName : getTestMethode(strPath, false)) {
 					//method gefunden
-	
 					if(zeile.contains(methodeName + "(")) {
 						temp.clear(); //leere Liste fuer neue Inhalte
-						System.out.println("13");
 						//pruefe, ob attribute zur methode passt
 						for (String attr : listeTestAttribute) {
 							//String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
-							System.out.println("14\t[" + methodeName + "] [" + strAttrName +"]");
 							if(methodeName.equals(strAttrName)) {
-								System.out.println("15");
 								temp.add(attr);
 							}
 						}
@@ -149,9 +145,7 @@ public class Generate {
 					}
 				}
 				for (String attr : temp) {
-					System.out.println(attr);
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
-					//String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
 					if (zeile.contains(strAttrVal)) {
@@ -163,13 +157,12 @@ public class Generate {
 			}
 			quelle.close();
 			ausgabe.close();
-			//methoden
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	//Info Fenster
 	private static void showMessage(AlertType alertType, String title, 
 			String header, String message) {
