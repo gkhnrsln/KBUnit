@@ -1,4 +1,10 @@
-/** j */
-public static String testMethode2_Zahl = "5";
-/** j */
-public static int testMethode2_Zahlj = 5;
+/** ... */
+public static int testBerechneGesamtschuld_Zahl = 10000000;
+/** ... */
+public static int testBerechneGesamtschuld_Zehn = 10;
+/** ... */
+public static int testBerechneGesamtschuld_Zwei = 2;
+/** ... */
+public static String testBerechneGesamtschuld_Name = "Musterperson";
+/** ... */
+public static int testBerechneGesamtschuld_Schulden = 11100000;

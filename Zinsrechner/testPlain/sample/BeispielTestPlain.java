@@ -11,6 +11,7 @@ public class BeispielTestPlain {
 		String Musterstring = "kk";
 		System.out.println("Musterstring");
 		System.out.println("Musterstrin");
+		System.out.println("Musterstring" + "Musterstring");
 	}
 	
 	@Test

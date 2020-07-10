@@ -148,6 +148,34 @@ public class Generate {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
+					/*
+					 * TODO: Problem
+					 * 
+					 * Wenn Wert des Testattributes (als Zeichenkette) in einer
+					 * Testmethode in einem anderen Wert eines Attributes vorkommt,
+					 * wird diese faelschlicherweise ersetzt.
+					 * 
+					 * Beispiel:
+					 * 
+					 * public static int testMethode1_1 = 10;
+					 * public static int testMethode1_2 = 11100000;
+					 * 
+					 *  > TestPlain
+					 * ---------------------------------------------
+					 * @Test
+					 * void testMethode1() {
+					 * 		System.out.print(11100000);
+					 * }
+					 *  > Test
+					 * ---------------------------------------------
+					 * @Test
+					 * void testMethode1() {
+					 * 		System.out.print(11testMethode1_10000);
+					 * 						   ^^^^^^^^^^^^^^
+					 * }
+					 * 
+					 * contains ist nicht optimal, andere Loesung?
+					 */
 					if (zeile.contains(strAttrVal)) {
 						//showMessage(AlertType.CONFIRMATION, "Bestätigung","Zu ersetzenden Wert gefunden", "Ersetzen?");
 						zeile = zeile.replace(strAttrVal, strAttrNameFull);
