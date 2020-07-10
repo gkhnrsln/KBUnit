@@ -178,7 +178,7 @@ public class Generate {
 					 */
 					if (zeile.contains(strAttrVal)) {
 						//showMessage(AlertType.CONFIRMATION, "Bestätigung","Zu ersetzenden Wert gefunden", "Ersetzen?");
-						zeile = zeile.replace(strAttrVal, strAttrNameFull);
+						zeile = zeile.replaceAll("\\b" + strAttrVal + "\\b", strAttrNameFull);
 					}
 				}
 				ausgabe.write(zeile + "\n");
