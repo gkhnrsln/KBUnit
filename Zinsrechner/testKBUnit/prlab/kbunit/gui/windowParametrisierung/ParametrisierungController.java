@@ -51,7 +51,6 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private Button deleteButton;
 	
-	
 	@FXML
 	private Button saveButton;
 	
@@ -59,6 +58,9 @@ public class ParametrisierungController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 	
+	/**
+	 * init Nodes
+	 */
 	public void initModel() {
 		typColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getTyp());
@@ -192,11 +194,9 @@ public class ParametrisierungController implements Initializable {
 		}
 	}
 	
-	/*
-	 * Tabelleninhalt wird in "Parameter.csv"  gespeichert.
+	/**
 	 * 
-	 * TODO: 
-	 * es wird nach vorkommen gesucht und anwender gefragt ob ersetzt werden soll
+	 * @param e
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
@@ -234,16 +234,16 @@ public class ParametrisierungController implements Initializable {
 			e2.printStackTrace();
 		}
 		
-		//
-		String s = klassePfad.replace(".", "/");
-		System.out.println(s);
-		Generate.saveKlasse("\\" + s + ".java");
+		//parametrisiere und speichere Datei
+		Generate.insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
+		
 		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
-				"Parameter wurdern erfolgreich gespeichert.", "Siehe Parameter.txt");
+				"Generierte Testklasse wurde erfolgreich gespeichert!", "Siehe im Sourceverzeichnis \"testPlain\"!");
 		
 	}
 	
+	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 
 			String header, String message) {
 			Alert alert = new Alert(alertType);

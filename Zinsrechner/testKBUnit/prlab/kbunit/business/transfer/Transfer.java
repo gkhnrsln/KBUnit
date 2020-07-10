@@ -165,15 +165,5 @@ public class Transfer {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-		try {
-			magic(new File(Variables.TEST_PLAIN_SOURCE + "/darlehen/Beispiel" + Variables.EXTENSION_TEST_PLAIN_JAVA));
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 }

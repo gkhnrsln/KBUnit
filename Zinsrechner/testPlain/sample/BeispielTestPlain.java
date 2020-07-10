@@ -3,19 +3,21 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTestPlain {
-	/** fgfg */
-	public static String testMethode1_Name = "Musterstring";
-	/** fgfg */
-	public static int testMethode2_Alter = 5;
-
 	@Test
 	void testMethode1() {
 		System.out.println("Musterstring");
+		System.out.println(5);
+		String s = "Musterstring";
+		String Musterstring = "kk";
+		System.out.println("Musterstring");
+		System.out.println("Musterstrin");
 	}
 	
 	@Test
 	void testMethode2() {
+		int i = 5;
 		System.out.println(5);
+		System.out.println(i);
 	}
 	
 	@Test
@@ -24,7 +26,6 @@ public class BeispielTestPlain {
 		System.out.println(5);
 	}
 	
-	@Test
 	void testMethode4657() {
 		
 	}

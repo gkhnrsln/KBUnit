@@ -1,2 +1,6 @@
-/** hh */
-public static String testMethode2_gfh = "h";
+/** dfsdf */
+public static String testMethode1_Name = "Musterstring";
+/** dfsdf */
+public static int testMethode1_Alter = 5;
+/** dfsdf */
+public static String testMethode3_Vorname = "Musterstring";
