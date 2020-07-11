@@ -3,22 +3,19 @@ package prlab.kbunit.file;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import prlab.kbunit.enums.Variables;
-import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
+
 /**
  * Generiert eine neue KBUnit-f6auml;hige JUnit Testklasse.
  * @author G&ouml;khan Arslan
@@ -62,34 +59,7 @@ public class Generate {
 		}
 		return liste;
 	}
-	/*
-	@Deprecated
-	static List<String> getTestAttribut (String file) {
-		List<String> liste = new ArrayList<>();
-		
-		try {
-			Class<?> clazz = Class.forName(file);
-			for (Field field : clazz.getDeclaredFields()) {
-				if(field.getName().startsWith("test")) {
-					// get value of the fields 
-					
-					try {
-						System.err.println("\tATTR: " + field.getName() + " \tWERT: " + field.get(clazz));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-					
-					liste.add(field.getName());
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return liste;
-	}
-	*/
-	
+
 	/**
 	 * @param path
 	 */
@@ -106,10 +76,10 @@ public class Generate {
 			//JUnit Testklasse
 			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
 			//zu hinzufuegende Testattribute
-			txt = new BufferedReader(new FileReader("testKBUnit/prlab/kbunit/business/transfer/Parameter.txt"));
+			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
-			File newFile = new File("transferierteKlassen/" + path.replace("Plain", ""));
-			//File newFile = new File("test/" + path.replace("Plain", ""));
+			File newFile = new File("transferierteKlassen/" + path.replace("Plain", "")); //TODO: ersetze mit untere Zeile
+			//File newFile = new File(Variables.TEST_SOURCE + "/" + path.replace("Plain", ""));
 			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {

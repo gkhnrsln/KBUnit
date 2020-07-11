@@ -1,8 +1,2 @@
-/** d */
-public static int testBerechneGesamtschuld_a = 10000000;
-/** d */
-public static int testBerechneGesamtschuld_ab = 10;
-/** d */
-public static int testBerechneGesamtschuld_abc = 2;
-/** d */
-public static String testBerechneGesamtschuld_abcd = "Musterperson";
+/** f */
+public static String testMethode2_f = "f";

@@ -1,12 +1,7 @@
 package prlab.kbunit.business.transfer;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,64 +101,4 @@ public class Transfer {
 		}
 		return liste;
 	}
-
-	/**
-	 * TEST
-	 * @param file
-	 * @throws ClassNotFoundException
-	 */
-	static void magic (File file) throws ClassNotFoundException {
-		//Dateipfad formatieren
-		String strKlasseName = file.getName();
-		String strPackage = file.getParent();
-		String strPath = strPackage.replace(Variables.TEST_PLAIN_SOURCE + "\\", "") + "." + strKlasseName.replace(Variables.EXTENSION_JAVA, "");
-		
-		//Datei lesen
-		BufferedReader in;
-		try {
-			in = new BufferedReader(new FileReader(file));
-			String zeile;
-			
-			//Klassename aendern
-			do {
-				zeile = in.readLine();
-				//Klassenname gefunden
-				if (zeile.contains(getTestKlasseName(strPath))) {
-					//entferne Plain 
-					zeile = zeile.replace("Plain", "");		
-					System.out.println(zeile);
-					break;
-				} else {
-					System.out.println(zeile);
-				}
-			} while(true);
-			
-			/* 
-			 * ab hier to do   
-			 */
-			
-			while (true) {
-				zeile = in.readLine();
-				//Dateiende erreicht, abbrechen
-				if (zeile == null) {
-					break;
-				}
-				System.out.println(zeile);
-				
-				/* 
-				 * TODO: parameter
-				 */
-				for (String methode : getTestMethode(strPath, true)) {
-					if (zeile.contains(methode)) {
-						System.out.println("TESTMETHODE GEFUNDEN: [" + methode +"]");
-						//naechste Zeile pruefen
-					}
-				}
-			}
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 }

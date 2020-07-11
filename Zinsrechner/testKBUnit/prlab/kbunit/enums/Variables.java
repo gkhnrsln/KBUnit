@@ -51,6 +51,9 @@ public class Variables {
 	/**{@value #CUSTOMER_TEST_CASE_INFO_FILE_PATH}*/
 	public final static String CUSTOMER_TEST_CASE_INFO_FILE_PATH
 			= "test\\CustomerTestCaseInformation.xml";
+	/**{@value #PARAMETER_FILE_PATH}*/
+	public final static String PARAMETER_FILE_PATH
+	= "testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.txt";
 
 	//-------------------------FILE-SCANNER---------------------------------------------
 	/**{@value #EXTENSION_JAVA}*/

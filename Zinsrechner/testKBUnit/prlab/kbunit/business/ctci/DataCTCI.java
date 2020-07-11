@@ -261,48 +261,6 @@ public class DataCTCI {
 		return methoden;
 	}
 	
-	/*
-	 * Besser mit Reflection:
-	 * 
-	 * Methoden werden in zufaelliger Reihenfolge abgespeichert. 
-	 * Dies fuehrt zu Problemen in der CreateCTCI Klasse, da hier der Reihe nach
-	 * abgearbeitet wird.
-	*/
-	/*
-	static List<String> testMethoden () {
-		//Formatierungen fuer den Pfad
-		String strFile = file.toString().substring(file.toString().indexOf("test"));
-		strFile = strFile.substring(strFile.indexOf("/"));
-		strFile = strFile.substring(1, strFile.indexOf(".java"));
-		strFile = strFile.replace("/", ".");
-		
-		List<String> liste = new ArrayList<>();
-		try {
-			Class<?> clazz = Class.forName(strFile);
-
-			for (Method method : clazz.getDeclaredMethods()) {
-				Annotation[] anno = method.getAnnotations();
-
-				for (Annotation s : anno) {
-					switch("@" + s.annotationType().getSimpleName()) {
-						case Variables.ANNOTATION_TEST5:
-						case Variables.ANNOTATION_TEST5_REPEATED:
-						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
-						case Variables.ANNOTATION_TEST5_FACTORY:
-						case Variables.ANNOTATION_TEST5_TEMPLATE:
-							liste.add(method.getName()); break;
-						default:
-					        break;
-					}
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return liste;
-	}
-	*/
-	
 	/**
 	 * Gibt eine Liste mit jedem Testattribut in der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Attribute gelistet werden sollen
