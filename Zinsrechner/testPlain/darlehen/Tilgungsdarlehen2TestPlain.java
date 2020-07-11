@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Philipp Sprengholz
 */
 
-class TilgungsdarlehenTestPlain {
+class Tilgungsdarlehen2TestPlain {
 	// das zu testende Tilgungsdarlehen-Objekt
 	private Tilgungsdarlehen t;
 

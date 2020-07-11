@@ -12,9 +12,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
 /**
@@ -23,7 +25,12 @@ import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
  */
 public class Generate {
 	static List<String> listeTestAttribute = new ArrayList<>();
-	
+	/**
+	 * Gibt eine Liste mit den Testmethoden zurueck.
+	 * @param file Dateipfad der Testklasse
+	 * @param withReturnType falls der Rueckgabetyp mit angegebn werden soll
+	 * @return Liste mit Testmethoden
+	 */
 	public static List<String> getTestMethode (String file, boolean withReturnType) {
 		List<String> liste = new ArrayList<>();
 
@@ -55,6 +62,7 @@ public class Generate {
 		}
 		return liste;
 	}
+	/*
 	@Deprecated
 	static List<String> getTestAttribut (String file) {
 		List<String> liste = new ArrayList<>();
@@ -64,14 +72,14 @@ public class Generate {
 			for (Field field : clazz.getDeclaredFields()) {
 				if(field.getName().startsWith("test")) {
 					// get value of the fields 
-					/*
+					
 					try {
 						System.err.println("\tATTR: " + field.getName() + " \tWERT: " + field.get(clazz));
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} 
-					*/
+					
 					liste.add(field.getName());
 				}
 			}
@@ -80,6 +88,7 @@ public class Generate {
 		}
 		return liste;
 	}
+	*/
 	
 	/**
 	 * @param path
@@ -89,7 +98,10 @@ public class Generate {
 		BufferedWriter ausgabe;
 		String zeile, txtLine;
 		List<String> temp = new ArrayList<>();
-		String strPath = path.replace("\\","").replace("/", ".").replace(".java", "");
+		String strPath = path
+				.replace("\\","")
+				.replace("/", ".")
+				.replace(".java", "");
 		try {
 			//JUnit Testklasse
 			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
@@ -97,10 +109,10 @@ public class Generate {
 			txt = new BufferedReader(new FileReader("testKBUnit/prlab/kbunit/business/transfer/Parameter.txt"));
 			//Generierte KBUnit-faehige JUnit Testklasse
 			File newFile = new File("transferierteKlassen/" + path.replace("Plain", ""));
+			//File newFile = new File("test/" + path.replace("Plain", ""));
 			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {
-				//lies Zeile
 				zeile = quelle.readLine();
 				//falls Klassenname: zeile drunter attribute hinzufuegen
 				if (zeile.contains("class")) {
@@ -114,9 +126,8 @@ public class Generate {
 						//kopiere Inhalt von txt Datei
 						ausgabe.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
-						if (txtLine.contains("public static") && txtLine.contains("test") && txtLine.contains("=") ) {
+						if (txtLine.contains("public static") && txtLine.contains("test") && txtLine.contains("=")) 
 							listeTestAttribute.add(txtLine);
-						}
 					}
 					txt.close();
 					break;
@@ -135,11 +146,8 @@ public class Generate {
 						temp.clear(); //leere Liste fuer neue Inhalte
 						//pruefe, ob attribute zur methode passt
 						for (String attr : listeTestAttribute) {
-							//String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
-							if(methodeName.equals(strAttrName)) {
-								temp.add(attr);
-							}
+							if(methodeName.equals(strAttrName)) temp.add(attr);
 						}
 						break;
 					}
@@ -177,8 +185,19 @@ public class Generate {
 					 * contains ist nicht optimal, andere Loesung?
 					 */
 					if (zeile.contains(strAttrVal)) {
-						//showMessage(AlertType.CONFIRMATION, "Bestätigung","Zu ersetzenden Wert gefunden", "Ersetzen?");
-						zeile = zeile.replaceAll("\\b" + strAttrVal + "\\b", strAttrNameFull);
+						Alert alert = new Alert(AlertType.CONFIRMATION);
+						alert.setTitle("Bestätigung");
+						alert.setHeaderText(
+								"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
+								+ "\nNachher\n" + zeile.replaceAll(strAttrVal, strAttrNameFull).trim()
+								);
+						alert.setContentText("Sind Sie damit einverstanden?");
+						
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK){
+							//zeile = zeile.replaceAll("\\b" + strAttrVal + "\\b", strAttrNameFull);
+							zeile = zeile.replaceAll(strAttrVal, strAttrNameFull);
+						}
 					}
 				}
 				ausgabe.write(zeile + "\n");
@@ -190,14 +209,4 @@ public class Generate {
 			e.printStackTrace();
 		}
 	}
-
-	//Info Fenster
-	private static void showMessage(AlertType alertType, String title, 
-			String header, String message) {
-			Alert alert = new Alert(alertType);
-			alert.setTitle(title);
-			alert.setHeaderText(header);
-			alert.setContentText(message);
-			alert.showAndWait();
-		}
 }

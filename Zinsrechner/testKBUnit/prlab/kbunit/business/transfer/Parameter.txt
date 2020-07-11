@@ -1,10 +1,8 @@
 /** d */
-public static int testBerechneGesamtschuld_mill = 10000000;
+public static int testBerechneGesamtschuld_a = 10000000;
 /** d */
-public static int testBerechneGesamtschuld_z = 10;
+public static int testBerechneGesamtschuld_ab = 10;
 /** d */
-public static int testBerechneGesamtschuld_d = 2;
+public static int testBerechneGesamtschuld_abc = 2;
 /** d */
-public static int testBerechneGesamtschuld_jjj = 11100000;
-/** d */
-public static String testBerechneGesamtschuld_fghfgh = "Musterperson";
+public static String testBerechneGesamtschuld_abcd = "Musterperson";
