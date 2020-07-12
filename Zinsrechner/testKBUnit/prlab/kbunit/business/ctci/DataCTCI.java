@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import prlab.kbunit.enums.Variables;
+import prlab.kbunit.test.ClassCreator;
 
 /**
  * Diese Klasse bereitet alle Informationen f&uuml;r die
@@ -269,10 +270,8 @@ public class DataCTCI {
 	 */
 	private List<String> testAttribute() throws ClassNotFoundException {
 		//Formatierungen fuer den Pfad
-		String strFile = file.toString().substring(file.toString().indexOf("test"));
-		strFile = strFile.substring(strFile.indexOf("/"));
-		strFile = strFile.substring(1, strFile.indexOf(Variables.EXTENSION_JAVA));
-		strFile = strFile.replace("/", ".");
+		File file = new File(this.file);
+		String strFile = ClassCreator.convertIntoClassName(file, Variables.TEST_SOURCE);
 		
 		List<String> liste = new ArrayList<>();
 

@@ -181,7 +181,7 @@ public class FileCreatorCTCI {
 		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
 		
-		for (int i=0; listeKlassen.size()>i; i++) {
+		for (int i = 0; listeKlassen.size() > i; i++) {
 			String strKlasse = listeKlassen.get(i).toString();
 			strKlasse = strKlasse
 					.replace("\\", ".")
