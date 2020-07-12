@@ -53,7 +53,7 @@ public class Variables {
 			= "test\\CustomerTestCaseInformation.xml";
 	/**{@value #PARAMETER_FILE_PATH}*/
 	public final static String PARAMETER_FILE_PATH
-	= "testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.txt";
+	= "testKBUnit\\Parameter.txt";
 
 	//-------------------------FILE-SCANNER---------------------------------------------
 	/**{@value #EXTENSION_JAVA}*/
