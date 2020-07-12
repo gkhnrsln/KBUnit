@@ -12,10 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 */
 
 class Tilgungsdarlehen2Test {
-	/** ghj */
-	public static String testBerechneGesamtschuld_hjgj = "gjhj";
-	/** ghj */
-	public static String testBerechneGesamtschuld_jjjjjjjjjj = "Musterperson";
+	/** asdasd */
+	public static String testBerechneGesamtschuld_hhjk = "Musterperson";
 	// das zu testende Tilgungsdarlehen-Objekt
 	private Tilgungsdarlehen t;
 
@@ -29,7 +27,7 @@ class Tilgungsdarlehen2Test {
 	@Test
 	void testBerechneGesamtschuld() throws Exception {
 		this.t = new Tilgungsdarlehen(10000000, 10, 2);
-		int berechneteGesamtschuld = t.berechneGesamtschuld(testBerechneGesamtschuld_jjjjjjjjjj);
+		int berechneteGesamtschuld = t.berechneGesamtschuld(testBerechneGesamtschuld_hhjk);
 		int erwarteteGesamtschuld = 11100000;
 		assertEquals(erwarteteGesamtschuld, berechneteGesamtschuld,
 				"Die berechnete Gesamtschuld entspricht nicht der " 
