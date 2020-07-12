@@ -519,17 +519,19 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
-				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+				CreateCTCI ctci = CreateCTCI.getInstance();
+				
+				ctci.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
+				if (ctci.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+				} else if (!ctci.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					TextArea textArea = new TextArea(ctci.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -577,17 +579,18 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI.createFile();
-				if (CreateCTCI.getStrMissingDescs().isEmpty()) {
+				CreateCTCI ctci = CreateCTCI.getInstance();
+				ctci.createFile();
+				if (ctci.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!CreateCTCI.getStrMissingDescs().isEmpty()) {
+				} else if (!ctci.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(CreateCTCI.getStrMissingDescs());
+					TextArea textArea = new TextArea(ctci.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					

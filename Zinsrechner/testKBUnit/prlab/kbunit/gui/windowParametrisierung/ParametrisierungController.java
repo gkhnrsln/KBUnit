@@ -1,9 +1,15 @@
 package prlab.kbunit.gui.windowParametrisierung;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -13,7 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
-import prlab.kbunit.file.Generate;
+import prlab.kbunit.file.FileCreator;
 
 /**
  * @author G&ouml;khan Arslan
@@ -121,7 +127,7 @@ public class ParametrisierungController implements Initializable {
 						else {
 							showMessage(AlertType.WARNING, "Problem!",
 									"Falsche Eingabe erkannt!",
-									"Geben Sie einen korrekten float Wert ein (mit der Endung f)!");
+									"Geben Sie einen korrekten float Wert (z. B. 3.04F) ein!");
 							return false;
 						}
 					} else if (datentyp.equals("double")) {
@@ -207,9 +213,10 @@ public class ParametrisierungController implements Initializable {
 		StringBuilder sb;
 		
 		BufferedWriter out;
+		//Speicherort der Parameter
+		File file = new File(Variables.PARAMETER_FILE_PATH);
 		try {
-			//Speicherort der Parameter
-			out = new BufferedWriter(new FileWriter(".\\testKBUnit\\prlab\\kbunit\\business\\transfer\\Parameter.txt"));
+			out = new BufferedWriter(new FileWriter(file));
 			for (ParametrisierungModel s : parameterTableView.getItems()) {
 				typ = s.getTyp().getValue();
 				attribut = s.getAttribut().getValue();
@@ -235,12 +242,138 @@ public class ParametrisierungController implements Initializable {
 		}
 		
 		//parametrisiere und speichere Datei
-		Generate.insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
+		insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
+		
+		//loesche Parameter.txt
+		file.delete();
 		
 		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
-				"Generierte Testklasse wurde erfolgreich gespeichert!", "Siehe im Sourceverzeichnis \"testPlain\"!");
+				"Generierte Testklasse wurde erfolgreich gespeichert!",
+				"Siehe im Sourceverzeichnis \"testPlain\"!");
 		
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 */
+	public static void insertAttributes(String path) {
+		List<String> listeTestAttribute = new ArrayList<>();
+		BufferedReader quelle, txt;
+		BufferedWriter ausgabe;
+		String zeile, txtLine;
+		List<String> temp = new ArrayList<>();
+		String strPath = path
+				.replace("\\","")
+				.replace("/", ".")
+				.replace(".java", "");
+		try {
+			//JUnit Testklasse
+			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
+			//zu hinzufuegende Testattribute
+			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
+			//Generierte KBUnit-faehige JUnit Testklasse
+			File newFile = new File("transferierteKlassen/" + path.replace("Plain", "")); //TODO: ersetze mit untere Zeile
+			//File newFile = new File(Variables.TEST_SOURCE + "/" + path.replace("Plain", ""));
+			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
+			
+			while (true) {
+				zeile = quelle.readLine();
+				//falls Klassenname: zeile drunter attribute hinzufuegen
+				if (zeile.contains("class")) {
+					//Klassenname anpassen
+					ausgabe.write(zeile.replace("Plain", "") + "\n");
+					while (true) {
+						//inhalt der .txt Datei lesen
+						txtLine = txt.readLine();
+						//brich ab, wenn Dateiende
+						if (txtLine == null) break;
+						//kopiere Inhalt von txt Datei
+						ausgabe.write("\t" + txtLine + "\n");
+						//falls aktuelle Zeile eine testAttribut Deklaration ist
+						if (txtLine.contains("public static") && txtLine.contains("test") && txtLine.contains("=")) 
+							listeTestAttribute.add(txtLine);
+					}
+					txt.close();
+					break;
+				}
+				ausgabe.write(zeile + "\n");
+			}
+			
+			//ab letzte Testattribut Zeile
+			while (true) {
+				zeile = quelle.readLine();
+				if (zeile == null) break; //Dateiende
+				
+				for (String methodeName : ParametrisierungModel.getTestMethode(strPath, false)) {
+					//method gefunden
+					if(zeile.contains(methodeName + "(")) {
+						temp.clear(); //leere Liste fuer neue Inhalte
+						//pruefe, ob attribute zur methode passt
+						for (String attr : listeTestAttribute) {
+							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
+							if(methodeName.equals(strAttrName)) temp.add(attr);
+						}
+						break;
+					}
+				}
+				for (String attr : temp) {
+					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
+					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
+					//wenn wert identisch mit testattributwert
+					/*
+					 * TODO: Problem
+					 * 
+					 * Wenn Wert des Testattributes (als Zeichenkette) in einer
+					 * Testmethode in einem anderen Wert eines Attributes vorkommt,
+					 * wird diese faelschlicherweise ersetzt.
+					 * 
+					 * Beispiel:
+					 * 
+					 * public static int testMethode1_1 = 10;
+					 * public static int testMethode1_2 = 11100000;
+					 * 
+					 *  > TestPlain
+					 * ---------------------------------------------
+					 * @Test
+					 * void testMethode1() {
+					 * 		System.out.print(11100000);
+					 * }
+					 *  > Test
+					 * ---------------------------------------------
+					 * @Test
+					 * void testMethode1() {
+					 * 		System.out.print(11testMethode1_10000);
+					 * 						   ^^^^^^^^^^^^^^
+					 * }
+					 * 
+					 * contains ist nicht optimal, andere Loesung?
+					 */
+					if (zeile.contains(strAttrVal)) {
+						Alert alert = new Alert(AlertType.CONFIRMATION);
+						alert.setTitle("Bestätigung");
+						alert.setHeaderText(
+								"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
+								+ "\nNachher\n" + zeile.replaceAll(strAttrVal, strAttrNameFull).trim()
+								);
+						alert.setContentText("Sind Sie damit einverstanden?");
+						
+						Optional<ButtonType> result = alert.showAndWait();
+						if (result.get() == ButtonType.OK){
+							//zeile = zeile.replaceAll("\\b" + strAttrVal + "\\b", strAttrNameFull);
+							zeile = zeile.replaceAll(strAttrVal, strAttrNameFull);
+						}
+					}
+				}
+				ausgabe.write(zeile + "\n");
+			}
+			quelle.close();
+			ausgabe.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Info Fenster

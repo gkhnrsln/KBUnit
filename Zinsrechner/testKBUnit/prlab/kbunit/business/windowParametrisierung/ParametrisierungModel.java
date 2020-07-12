@@ -1,11 +1,16 @@
 package prlab.kbunit.business.windowParametrisierung;
 
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import prlab.kbunit.business.transfer.Transfer;
+import prlab.kbunit.enums.Variables;
 
 /**
  * ParametrisierungModel ist die Model-Klasse vom Parametrisierungsfenster und 
@@ -40,7 +45,46 @@ public class ParametrisierungModel {
 	 * @return
 	 */
 	public static ObservableList<String> methoden(String pfad) {
-		return FXCollections.observableArrayList(Transfer.getTestMethode(pfad, false));
+		return FXCollections.observableArrayList(getTestMethode(pfad, false));
+	}
+	
+	
+	/**
+	 * Gibt eine Liste mit den Testmethoden zurueck.
+	 * @param file Dateipfad der Testklasse
+	 * @param withReturnType falls der Rueckgabetyp mit angegebn werden soll
+	 * @return Liste mit Testmethoden
+	 */
+	public static List<String> getTestMethode (String file, boolean withReturnType) {
+		List<String> liste = new ArrayList<>();
+
+		try {
+			Class<?> clazz = Class.forName(file);
+			//nur oeffentliche Methoden
+			for (Method method : clazz.getDeclaredMethods()) {
+				for (Annotation s : method.getAnnotations()) {
+					switch ("@" + s.annotationType().getSimpleName()) {
+						case Variables.ANNOTATION_TEST5:
+						case Variables.ANNOTATION_TEST5_REPEATED:
+						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
+						case Variables.ANNOTATION_TEST5_FACTORY:
+						case Variables.ANNOTATION_TEST5_TEMPLATE:
+							if (withReturnType) {
+								Class<?> returnType = method.getReturnType();
+								liste.add(returnType + " " + method.getName());
+							} else {
+								liste.add(method.getName());
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return liste;
 	}
 	
 	//getter setter

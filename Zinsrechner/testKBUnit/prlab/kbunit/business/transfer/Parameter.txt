@@ -1,2 +1,0 @@
-/** f */
-public static String testMethode2_f = "f";

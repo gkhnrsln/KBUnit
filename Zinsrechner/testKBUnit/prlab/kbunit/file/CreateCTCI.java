@@ -22,6 +22,8 @@ import prlab.kbunit.scan.FolderScanner;
  * @author G&ouml;khan Arslan
  */
 public class CreateCTCI {
+	private static CreateCTCI single_instance = null; 
+	
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -46,6 +48,10 @@ public class CreateCTCI {
 	private static Element elName;
 	/** Text zu Klassen mit fehlenden Beschreibungen */
 	private static String strMissingDescs;
+	
+	private CreateCTCI () {
+		System.out.println("Objekt gebildet...");
+	}
 	
 	/**
 	 * init. der Elemente
@@ -95,7 +101,7 @@ public class CreateCTCI {
 	 * @throws IOException
 	 * @throws ClassNotFoundException 
 	 */
-	public static void createFile(int index) throws IOException, ClassNotFoundException {
+	public void createFile(int index) throws IOException, ClassNotFoundException {
 		load();
 		elRoot.addContent(elTestCases);
 
@@ -162,7 +168,7 @@ public class CreateCTCI {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-	public static void createFile() throws IOException, ClassNotFoundException {
+	public void createFile() throws IOException, ClassNotFoundException {
 		load();
 		elRoot.addContent(elTestCases);
 
@@ -232,12 +238,20 @@ public class CreateCTCI {
 		createXML();
 	}
 
+	//instance of Singleton class
+	public static CreateCTCI getInstance() {
+		if(single_instance == null) {
+			single_instance = new CreateCTCI();
+		}
+		return single_instance;
+	}
+	
 	//getter and setter
-	public static String getStrMissingDescs() {
+	public String getStrMissingDescs() {
 		return strMissingDescs;
 	}
 
-	public static void setStrMissingDescs(String strMissingDescs) {
+	public void setStrMissingDescs(String strMissingDescs) {
 		CreateCTCI.strMissingDescs = strMissingDescs;
 	}
 }
