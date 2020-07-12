@@ -29,7 +29,7 @@ import prlab.kbunit.business.testClassInfo.TestClassInfo;
 import prlab.kbunit.business.windowMainFrame.MainFrameModel;
 import prlab.kbunit.enums.Selection;
 import prlab.kbunit.enums.Variables;
-import prlab.kbunit.file.CreateCTCI;
+import prlab.kbunit.file.FileCreatorCTCI;
 import prlab.kbunit.gui.util.TooltipTableRow;
 import prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController;
 import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
@@ -519,7 +519,7 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI ctci = CreateCTCI.getInstance();
+				FileCreatorCTCI ctci = FileCreatorCTCI.getInstance();
 				
 				ctci.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
 				if (ctci.getStrMissingDescs().isEmpty()) {
@@ -579,7 +579,7 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				CreateCTCI ctci = CreateCTCI.getInstance();
+				FileCreatorCTCI ctci = FileCreatorCTCI.getInstance();
 				ctci.createFile();
 				if (ctci.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",

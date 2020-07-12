@@ -21,9 +21,8 @@ import prlab.kbunit.scan.FolderScanner;
  * 
  * @author G&ouml;khan Arslan
  */
-public class CreateCTCI {
-	private static CreateCTCI single_instance = null; 
-	
+public class FileCreatorCTCI {
+	private static FileCreatorCTCI single_instance = null;
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -47,10 +46,12 @@ public class CreateCTCI {
 	/** Tag {@code <name>} f&uuml;r das XML Dokument*/
 	private static Element elName;
 	/** Text zu Klassen mit fehlenden Beschreibungen */
-	private static String strMissingDescs;
+	private String strMissingDescs;
 	
-	private CreateCTCI () {
-		System.out.println("Objekt gebildet...");
+	/**
+	 * Konstruktor
+	 */
+	private FileCreatorCTCI () {
 	}
 	
 	/**
@@ -84,7 +85,7 @@ public class CreateCTCI {
 		try {
 			fileStream = new FileOutputStream(
 					Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
-			//charset wegen Umlaute auf UTF-8 setzen
+			//charset wegen Umlaute auf UTF-8
 			writer = new OutputStreamWriter(fileStream, "UTF-8");
 			outputter.output(doc, writer);
 		} finally {
@@ -239,9 +240,9 @@ public class CreateCTCI {
 	}
 
 	//instance of Singleton class
-	public static CreateCTCI getInstance() {
+	public static FileCreatorCTCI getInstance() {
 		if(single_instance == null) {
-			single_instance = new CreateCTCI();
+			single_instance = new FileCreatorCTCI();
 		}
 		return single_instance;
 	}
@@ -252,6 +253,6 @@ public class CreateCTCI {
 	}
 
 	public void setStrMissingDescs(String strMissingDescs) {
-		CreateCTCI.strMissingDescs = strMissingDescs;
+		this.strMissingDescs = strMissingDescs;
 	}
 }

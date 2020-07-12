@@ -21,7 +21,7 @@ import prlab.kbunit.enums.Variables;
  * @author G&ouml;khan Arslan
  */
 public class DataCTCI {
-	private static URI file;
+	private URI file;
 	/** JUnit Testtyp der Testklasse */
 	private int testTyp;
 	/** Liste der TestMethoden der Testklasse */
@@ -55,7 +55,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testmethoden
 	 * @exception IOException
 	 */
-	static List<String> descTestMethoden() {
+	private List<String> descTestMethoden() {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
@@ -137,7 +137,7 @@ public class DataCTCI {
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	static List<String> descTestAttribute() {
+	private List<String> descTestAttribute() {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
@@ -207,7 +207,7 @@ public class DataCTCI {
 	 * @return Entweder {@code 5} oder {@code 4}.
 	 * @exception IOException
 	 */
-	static int testType() throws IOException {
+	private int testType() throws IOException {
 		Stream<String> testTyp;
 		try (Stream<String> stream = Files.lines(Paths.get(file))) {
 			testTyp = stream
@@ -224,7 +224,7 @@ public class DataCTCI {
 	 * @return Liste der Testmethoden
 	 * @exception ClassNotFoundException
 	 */
-	static List<String> testMethoden() throws IOException {
+	private List<String> testMethoden() throws IOException {
 		List<String> liste = null;
 		List<String> methoden = new ArrayList<>();
 		
@@ -267,7 +267,7 @@ public class DataCTCI {
 	 * @return Liste der Testattribute
 	 * @exception IOException
 	 */
-	static List<String> testAttribute() throws ClassNotFoundException {
+	private List<String> testAttribute() throws ClassNotFoundException {
 		//Formatierungen fuer den Pfad
 		String strFile = file.toString().substring(file.toString().indexOf("test"));
 		strFile = strFile.substring(strFile.indexOf("/"));
