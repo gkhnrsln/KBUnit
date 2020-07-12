@@ -22,7 +22,8 @@ import prlab.kbunit.scan.FolderScanner;
  * @author G&ouml;khan Arslan
  */
 public class FileCreatorCTCI {
-	private static FileCreatorCTCI single_instance = null;
+	// das einzige FileCreatorCTCI- Objekt (singleton - pattern)
+	private static FileCreatorCTCI fcctci;
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -52,6 +53,13 @@ public class FileCreatorCTCI {
 	 * Konstruktor
 	 */
 	private FileCreatorCTCI () {
+	}
+	
+	public static FileCreatorCTCI getInstance() {
+		if(fcctci == null) {
+			fcctci = new FileCreatorCTCI();
+		}
+		return fcctci;
 	}
 	
 	/**
@@ -237,14 +245,6 @@ public class FileCreatorCTCI {
 		doc.setContent(elRoot);
 		//Erstelle die XML-Datei
 		createXML();
-	}
-
-	//instance of Singleton class
-	public static FileCreatorCTCI getInstance() {
-		if(single_instance == null) {
-			single_instance = new FileCreatorCTCI();
-		}
-		return single_instance;
 	}
 	
 	//getter and setter
