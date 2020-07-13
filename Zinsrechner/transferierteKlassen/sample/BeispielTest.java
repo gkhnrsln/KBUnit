@@ -3,8 +3,10 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
-	/** f */
-	public static String testMethode2_f = "f";
+	/** dd */
+	public static char testMethode2_d = 'd';
+	/** dd */
+	public static char testMethode2_dd = 12;
 	@Test
 	void testMethode1() {
 		System.out.println("Musterstring");

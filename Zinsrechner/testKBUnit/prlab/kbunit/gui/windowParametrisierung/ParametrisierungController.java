@@ -91,6 +91,10 @@ public class ParametrisierungController implements Initializable {
 	 * Pr&uuml;ft, ob das Formular korrekt ausgef&uuml;llt ist.
 	 * @return true, wenn Eingaben korrekt 
 	 */
+	/*
+	 * TODO: 
+	 * - Minimum/Maximum Werte bei Zahlen pruefen?
+	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
 		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() 
@@ -101,44 +105,24 @@ public class ParametrisierungController implements Initializable {
 			//wenn Datentyp boolean, pruefe, ob werte true/false
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
-				else {
-					showMessage(AlertType.WARNING, "Problem!",
-							"Falsche Eingabe erkannt!",
-							"Geben Sie entweder \"true\" oder \"false\" ein!");
-					return false;
-				}
+				else falscheEingabe("boolean"); return false;
 			} else {
 				if (! datentyp.equals("String")) {
 					//entferne leerzeichen bei Zahlen
 					wertTextField.setText(wert.replace(" ",""));
 					//nur Ziffern und bestimmte Zeichen erlaubt
-					if (datentyp.equals("int") || datentyp.equals("long")) {
-						//Vorzeichen (+/-) und nur Ziffern (0-9) erlaubt
+					if (datentyp.equals("int") || datentyp.equals("long") || datentyp.equals("short")) {
 						if (wert.matches("^[-+]?([1-9][0-9]*)")) return true;
-						else {
-							showMessage(AlertType.WARNING, "Problem!",
-									"Falsche Eingabe erkannt!",
-									"Geben Sie einen korrekten Wert ein!");
-							return false;
-						}
+						else falscheEingabe("int/long/short"); return false;
+					} else if (datentyp.equals("char")) {
+						if (wert.matches("(^[a-zA-Z]$)|^[-+]?\\b[0-9]+\\b")) return true;
+						else falscheEingabe("char"); return false;
 					} else if (datentyp.equals("float")) {
-						//Vorzeichen (+/-), Ziffern 0-9, Einmalig (.) und am Ende ein (f/F) erlaubt
 						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?[fF]$")) return true;
-						else {
-							showMessage(AlertType.WARNING, "Problem!",
-									"Falsche Eingabe erkannt!",
-									"Geben Sie einen korrekten float Wert (z. B. 3.04F) ein!");
-							return false;
-						}
+						else falscheEingabe("float"); return false;					
 					} else if (datentyp.equals("double")) {
-						//Vorzeichen (+/-), Ziffern (0-9) und Einmalig (.) erlaubt
 						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?$")) return true;
-						else {
-							showMessage(AlertType.WARNING, "Problem!",
-									"Falsche Eingabe erkannt!",
-									"Geben Sie einen korrekten double Wert ein!");
-							return false;
-						}
+						else falscheEingabe("double"); return false;
 					}
 				}
 			}
@@ -229,9 +213,12 @@ public class ParametrisierungController implements Initializable {
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				//setze beim Datentyp String den Wert in hochkomma
-				if (typ.equals("String")) wert = "\"" + wert + "\"";
-				
+				//Formatierungen bei String und char
+				if (typ.equals("String")) {
+					wert = "\"" + wert + "\"";
+				} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
+						wert = "'" + wert + "'";		
+				}
 				//Formatierung
 				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
@@ -300,7 +287,6 @@ public class ParametrisierungController implements Initializable {
 				}
 				ausgabe.write(zeile + "\n");
 			}
-			
 			//ab letzte Testattribut Zeile
 			while (true) {
 				zeile = quelle.readLine();
@@ -310,7 +296,7 @@ public class ParametrisierungController implements Initializable {
 					//method gefunden
 					if(zeile.contains(methodeName + "(")) {
 						temp.clear(); //leere Liste fuer neue Inhalte
-						//pruefe, ob attribute zur methode passt
+						//pruefe, ob Attribute zur Methode passen
 						for (String attr : listeTestAttribute) {
 							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
 							if(methodeName.equals(strAttrName)) temp.add(attr);
@@ -322,34 +308,6 @@ public class ParametrisierungController implements Initializable {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
-					/*
-					 * TODO: Problem
-					 * 
-					 * Wenn Wert des Testattributes (als Zeichenkette) in einer
-					 * Testmethode in einem anderen Wert eines Attributes vorkommt,
-					 * wird diese faelschlicherweise ersetzt.
-					 * 
-					 * Beispiel:
-					 * 
-					 * public static int testMethode1_1 = 10;
-					 * public static int testMethode1_2 = 11100000;
-					 * 
-					 *  > TestPlain
-					 * ---------------------------------------------
-					 * @Test
-					 * void testMethode1() {
-					 * 		System.out.print(11100000);
-					 * }
-					 *  > Test
-					 * ---------------------------------------------
-					 * @Test
-					 * void testMethode1() {
-					 * 		System.out.print(11testMethode1_10000);
-					 * 						   ^^^^^^^^^^^^^^
-					 * }
-					 * 
-					 * contains ist nicht optimal, andere Loesung?
-					 */
 					if (zeile.contains(strAttrVal)) {
 						Alert alert = new Alert(AlertType.CONFIRMATION);
 						alert.setTitle("Bestätigung");
@@ -361,7 +319,6 @@ public class ParametrisierungController implements Initializable {
 						
 						Optional<ButtonType> result = alert.showAndWait();
 						if (result.get() == ButtonType.OK){
-							//zeile = zeile.replaceAll("\\b" + strAttrVal + "\\b", strAttrNameFull);
 							zeile = zeile.replaceAll(strAttrVal, strAttrNameFull);
 						}
 					}
@@ -376,6 +333,11 @@ public class ParametrisierungController implements Initializable {
 		}
 	}
 	
+	private void falscheEingabe(String typ) {
+		showMessage(AlertType.WARNING, "Problem!",
+				"Falsche Eingabe erkannt!",
+				"Geben Sie einen korrekten " + typ + " Wert ein!");
+	}
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 
 			String header, String message) {
