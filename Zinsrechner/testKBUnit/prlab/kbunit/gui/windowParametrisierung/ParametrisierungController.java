@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.file.FileCreator;
+
 
 /**
  * @author G&ouml;khan Arslan
@@ -254,7 +257,7 @@ public class ParametrisierungController implements Initializable {
 		String strPath = path
 				.replace("\\","")
 				.replace("/", ".")
-				.replace(".java", "");
+				.replace(Variables.EXTENSION_JAVA, "");
 		try {
 			//JUnit Testklasse
 			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
@@ -289,10 +292,12 @@ public class ParametrisierungController implements Initializable {
 			}
 			//ab letzte Testattribut Zeile
 			while (true) {
+				String strMethode = null;
 				zeile = quelle.readLine();
 				if (zeile == null) break; //Dateiende
 				
 				for (String methodeName : ParametrisierungModel.getTestMethode(strPath, false)) {
+					strMethode = methodeName;
 					//method gefunden
 					if(zeile.contains(methodeName + "(")) {
 						temp.clear(); //leere Liste fuer neue Inhalte
@@ -309,18 +314,22 @@ public class ParametrisierungController implements Initializable {
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
 					if (zeile.contains(strAttrVal)) {
-						Alert alert = new Alert(AlertType.CONFIRMATION);
-						alert.setTitle("Bestätigung");
-						alert.setHeaderText(
-								"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
-								+ "\nNachher\n" + zeile.replaceAll(strAttrVal, strAttrNameFull).trim()
-								);
-						alert.setContentText("Sind Sie damit einverstanden?");
-						
-						Optional<ButtonType> result = alert.showAndWait();
-						if (result.get() == ButtonType.OK){
-							zeile = zeile.replaceAll(strAttrVal, strAttrNameFull);
-						}
+						//falls in einer Zeile mehrere Faelle vorhanden
+						int count = StringUtils.countMatches(zeile, strAttrVal);
+						for (int i = 0; i < count; i++) {
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
+							alert.setHeaderText(
+									"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
+									+ "\nNachher\n" + zeile.replaceFirst(strAttrVal, strAttrNameFull).trim()
+									);
+							alert.setContentText("Sind Sie damit einverstanden?");
+							
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK){
+								zeile = zeile.replaceFirst(strAttrVal, strAttrNameFull);
+							}
+						}	
 					}
 				}
 				ausgabe.write(zeile + "\n");
@@ -338,6 +347,7 @@ public class ParametrisierungController implements Initializable {
 				"Falsche Eingabe erkannt!",
 				"Geben Sie einen korrekten " + typ + " Wert ein!");
 	}
+	
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 
 			String header, String message) {
