@@ -193,55 +193,62 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		String typ;
-		String attribut;
-		String wert;
-		String desc;
-		StringBuilder sb;
-		
-		BufferedWriter out;
-		//Speicherort der Parameter
-		File file = new File(Variables.PARAMETER_FILE_PATH);
-		try {
-			out = new BufferedWriter(new FileWriter(file));
-			for (ParametrisierungModel s : parameterTableView.getItems()) {
-				typ = s.getTyp().getValue();
-				attribut = s.getAttribut().getValue();
-				wert = s.getWert().getValue();
-				desc = s.getDesc().getValue();
-				
-				//Zeilenumbruch, bei laengeren Kommentaren
-				sb = new StringBuilder(desc);
-				int i = 0;
-				while ((i = sb.indexOf(" ", i + 75)) != -1) {
-				    sb.replace(i, i + 1, "\n * ");
+		//nur wenn Tabelle nicht leer ist
+		if (! parameterTableView.getItems().isEmpty()) {
+			String typ;
+			String attribut;
+			String wert;
+			String desc;
+			StringBuilder sb;
+			
+			BufferedWriter out;
+			//Speicherort der Parameter
+			File file = new File(Variables.PARAMETER_FILE_PATH);
+			try {
+				out = new BufferedWriter(new FileWriter(file));
+				for (ParametrisierungModel s : parameterTableView.getItems()) {
+					typ = s.getTyp().getValue();
+					attribut = s.getAttribut().getValue();
+					wert = s.getWert().getValue();
+					desc = s.getDesc().getValue();
+					
+					//Zeilenumbruch, bei laengeren Kommentaren
+					sb = new StringBuilder(desc);
+					int i = 0;
+					while ((i = sb.indexOf(" ", i + 75)) != -1) {
+					    sb.replace(i, i + 1, "\n * ");
+					}
+					//Formatierungen bei String und char
+					if (typ.equals("String")) {
+						wert = "\"" + wert + "\"";
+					} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
+							wert = "'" + wert + "'";		
+					}
+					//Formatierung
+					out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 				}
-				//Formatierungen bei String und char
-				if (typ.equals("String")) {
-					wert = "\"" + wert + "\"";
-				} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
-						wert = "'" + wert + "'";		
-				}
-				//Formatierung
-				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
+				out.close();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
-			out.close();
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			
+			//parametrisiere und speichere Datei
+			insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
+			
+			//loesche Parameter.txt
+			file.delete();
+			
+			//Meldung, das erfolgreich erstellt wurde
+			showMessage(AlertType.INFORMATION, "Information",
+					"Generierte Testklasse wurde erfolgreich gespeichert!",
+					"Siehe im Sourceverzeichnis \"testPlain\"!");
+		} else {
+			showMessage(AlertType.ERROR, "Fehler!",
+					"Die Tabelle ist leer!",
+					"Für die Generierung einer neuen Testklasse "
+					+ "muss mind. ein Wert in der Tabelle vorhanden sein!");
 		}
-		
-		//parametrisiere und speichere Datei
-		insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
-		
-		//loesche Parameter.txt
-		file.delete();
-		
-		//Meldung, das erfolgreich erstellt wurde
-		showMessage(AlertType.INFORMATION, "Information",
-				"Generierte Testklasse wurde erfolgreich gespeichert!",
-				"Siehe im Sourceverzeichnis \"testPlain\"!");
-		
 	}
 	
 	/**
