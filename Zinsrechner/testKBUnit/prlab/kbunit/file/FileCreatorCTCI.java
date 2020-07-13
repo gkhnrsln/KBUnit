@@ -15,6 +15,15 @@ import org.jdom2.output.XMLOutputter;
 import prlab.kbunit.business.ctci.DataCTCI;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
+
+/*
+ * TODO: Soll Model Klasse werden.
+ * 
+ * Soll Objekte von DataCTCI verwalten.
+ * Nicht auf Methoden des Controllers zugreifen.
+ * Dafür gibt es das Observer-Pattern, falls notwendig.
+ */
+
 /**
  * Diese Klasse stellt Methoden f&uuml;r die Generierung der 
  * {@code CustomerTestcaseInformation.xml} Datei bereit.

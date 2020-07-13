@@ -16,6 +16,16 @@ import java.util.stream.Stream;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.test.ClassCreator;
 
+/*
+ * TODO: Soll Entity Klasse werden.
+ * 
+ * Soll sich zwar selbst verwalten, aber keine Zugriffe auf weitere
+ * Klassen, Schnittstellen, ... haben. Die Model-Klasse (CreateCTCI)
+ * soll Objekte dieser Entity verwalten. 
+ * 
+ * Exceptions an den Controller (MainFrameController) geleitet werden,
+ * der diese verarbeitet.
+ */
 /**
  * Diese Klasse bereitet alle Informationen f&uuml;r die
  * {@code CustomerTestCaseInformation.xml} Datei vor.
