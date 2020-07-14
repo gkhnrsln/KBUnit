@@ -230,7 +230,7 @@ public class ParametrisierungController implements Initializable {
 			}
 			
 			//parametrisiere und speichere Datei
-			insertAttributes("\\" + klassePfad.replace(".", "/") + ".java");
+			saveFile("\\" + klassePfad.replace(".", "/") + ".java");
 			
 			//loesche Parameter.txt
 			file.delete();
@@ -248,14 +248,10 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * 
+	 * setzt Werte und speichert 
 	 * @param path
 	 */
-	/*
-	 * TODO:
-	 * - Wenn in einer Zeile mehrere Werte zu ersetzen sind, wird nur beim überspringen nicht auf das zweite eingegenagen.
-	 */
-	public static void insertAttributes(String path) {
+	public static void saveFile(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
 		BufferedReader quelle, txt;
 		BufferedWriter ausgabe;
