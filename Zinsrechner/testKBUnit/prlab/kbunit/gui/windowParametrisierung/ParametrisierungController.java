@@ -102,9 +102,12 @@ public class ParametrisierungController implements Initializable {
 		//pruefe, ob Formular ausgefuellt ist
 		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() 
 				&& ! descTextField.getText().isBlank()) {
+			
+			parameterTextField.setText(parameterTextField.getText().replace(" ",""));
+			
+			/*
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
-			parameterTextField.setText(parameterTextField.getText().replace(" ",""));
 			//wenn Datentyp boolean, pruefe, ob werte true/false
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
@@ -128,7 +131,7 @@ public class ParametrisierungController implements Initializable {
 						else falscheEingabe("double"); return false;
 					}
 				}
-			}
+			}*/
 			return true;
 		}
 		showMessage(AlertType.WARNING, "Problem!",
@@ -274,7 +277,7 @@ public class ParametrisierungController implements Initializable {
 			while (true) {
 				zeile = quelle.readLine();
 				//falls Klassenname: zeile drunter attribute hinzufuegen
-				if (zeile.contains("class")) {
+				if (zeile.startsWith("class")|| zeile.startsWith("public class")) {
 					//Klassenname anpassen
 					ausgabe.write(zeile.replace("Plain", "") + "\n");
 					while (true) {
