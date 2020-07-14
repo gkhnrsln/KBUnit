@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
 	/** asd */
-	public static String testMethode3_Sda = "ABC";
+	public static String testMethode3_S = "ABC";
 	@Test
 	void testMethode1() {
 		System.out.println("Musterstring");
@@ -25,7 +25,7 @@ public class BeispielTest {
 	
 	@Test
 	void testMethode3() {
-		System.out.println("ABC" + testMethode3_Sda);
+		System.out.println("ABC" + testMethode3_S);
 		System.out.println(5);
 	}
 	

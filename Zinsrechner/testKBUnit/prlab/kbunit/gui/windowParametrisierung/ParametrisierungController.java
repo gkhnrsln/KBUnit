@@ -346,7 +346,6 @@ public class ParametrisierungController implements Initializable {
 								sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
 								zeile = sb.toString();
 								n = 0;
-								//zeile = zeile.replaceFirst(strAttrVal, strAttrNameFull);
 							} else {
 								n++;
 							}
