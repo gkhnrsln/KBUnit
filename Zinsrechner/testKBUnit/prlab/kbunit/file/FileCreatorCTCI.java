@@ -99,15 +99,14 @@ public class FileCreatorCTCI {
 		FileOutputStream fileStream;
 		OutputStreamWriter writer;
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-		try {
-			fileStream = new FileOutputStream(
-					Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
-			//charset wegen Umlaute auf UTF-8
-			writer = new OutputStreamWriter(fileStream, "UTF-8");
-			outputter.output(doc, writer);
-		} finally {
-			doc.removeContent(); //ersetze vorhandenen Text
-		}
+		fileStream = new FileOutputStream(
+				Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
+		//charset wegen Umlaute auf UTF-8
+		writer = new OutputStreamWriter(fileStream, "UTF-8");
+		outputter.output(doc, writer);
+		//ersetze vorhandenen Text
+		doc.removeContent(); 
+		
 	}
 	
 	/**

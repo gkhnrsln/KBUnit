@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import prlab.kbunit.enums.Variables;
@@ -194,10 +195,12 @@ public class DataCTCI {
 					j++; //naechste Zeile (aufwaerts)
 				} while (!tmp.get(i-j).endsWith("*/"));
 				//letzte Formatierungen
-				strDesc = strDesc.replace("/**", "").replace("*/", "")
-						.replace("*", "")
+				strDesc = strDesc.substring(2, strDesc.indexOf("*/"));
+				strDesc = strDesc.replace("*", "")
 						//Javadoc-Tags entfernen
-						.replace("{@link ", "").replace("{@code", "")
+						//.replace("{@\\w+.$", "")
+						.replace("{@link", "")
+					    .replace("{@code", "")
 						.replace("}", "")
 						//Umlaute
 						.replace("[:ss]", "ß").replace("[:A]", "Ä")

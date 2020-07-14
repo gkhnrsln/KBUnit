@@ -23,7 +23,7 @@ public class BeispielTestPlain {
 	
 	@Test
 	void testMethode3() {
-		System.out.println("Musterstring");
+		System.out.println("ABC" + "ABC");
 		System.out.println(5);
 	}
 	

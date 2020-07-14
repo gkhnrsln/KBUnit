@@ -145,18 +145,14 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
-		String typ;
-		String attr;
-		String wert;
-		String desc;
 		boolean isDuplicate = false;
 
 		if (isInputCorrect()) {
-			typ = typComboBox.getSelectionModel().getSelectedItem().toString();
-			attr = methodeComboBox.getSelectionModel().getSelectedItem().toString()
-					+ "_" + parameterTextField.getText().trim();
-			wert = wertTextField.getText().trim();
-			desc = descTextField.getText().trim();
+			String typ = typComboBox.getSelectionModel().getSelectedItem().toString();
+			String attr = methodeComboBox.getSelectionModel().getSelectedItem().toString()
+					+ "_" + StringUtils.capitalize(parameterTextField.getText()).trim();
+			String wert = wertTextField.getText().trim();
+			String desc = descTextField.getText().trim();
 			//Gehe jeden Eintrag der Tabelle durch
 			for (int i = 0;  i < parameterTableView.getItems().size(); i++) {
 				//pruefe, ob aktuelle Zeile Duplikat
@@ -242,18 +238,22 @@ public class ParametrisierungController implements Initializable {
 			//Meldung, das erfolgreich erstellt wurde
 			showMessage(AlertType.INFORMATION, "Information",
 					"Generierte Testklasse wurde erfolgreich gespeichert!",
-					"Siehe im Sourceverzeichnis \"testPlain\"!");
+					"Siehe im Sourceverzeichnis \"test\"!");
 		} else {
 			showMessage(AlertType.ERROR, "Fehler!",
 					"Die Tabelle ist leer!",
 					"Für die Generierung einer neuen Testklasse "
-					+ "muss mind. ein Wert in der Tabelle vorhanden sein!");
+					+ "darf die Tabelle nicht leer sein!");
 		}
 	}
 	
 	/**
 	 * 
 	 * @param path
+	 */
+	/*
+	 * TODO:
+	 * - Wenn in einer Zeile mehrere Werte zu ersetzen sind, wird nur beim überspringen nicht auf das zweite eingegenagen.
 	 */
 	public static void insertAttributes(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
@@ -320,21 +320,35 @@ public class ParametrisierungController implements Initializable {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
+					
+					
+					
 					if (zeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
 						int count = StringUtils.countMatches(zeile, strAttrVal);
+						StringBuilder sb = new StringBuilder(zeile);
+						int n = 0;
+						int index;
 						for (int i = 0; i < count; i++) {
+							index = ordinalIndexOf(sb.toString(), strAttrVal, n);
+							
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
 							alert.setHeaderText(
 									"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
 									+ "\nNachher\n" + zeile.replaceFirst(strAttrVal, strAttrNameFull).trim()
 									);
+							
 							alert.setContentText("Sind Sie damit einverstanden?");
 							
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
-								zeile = zeile.replaceFirst(strAttrVal, strAttrNameFull);
+								sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
+								zeile = sb.toString();
+								n = 0;
+								//zeile = zeile.replaceFirst(strAttrVal, strAttrNameFull);
+							} else {
+								n++;
 							}
 						}	
 					}
@@ -347,6 +361,14 @@ public class ParametrisierungController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static int ordinalIndexOf(String str, String substr, int n) {
+	    int pos = -1;
+	    do {
+	        pos = str.indexOf(substr, pos + 1);
+	    } while (n-- > 0 && pos != -1);
+	    return pos;
 	}
 	
 	private void falscheEingabe(String typ) {

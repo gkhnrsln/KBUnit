@@ -3,8 +3,8 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
-	/** sdf */
-	public static boolean testMethode3_g = true;
+	/** asd */
+	public static String testMethode3_Sda = "ABC";
 	@Test
 	void testMethode1() {
 		System.out.println("Musterstring");
@@ -25,7 +25,7 @@ public class BeispielTest {
 	
 	@Test
 	void testMethode3() {
-		System.out.println("Musterstring");
+		System.out.println("ABC" + testMethode3_Sda);
 		System.out.println(5);
 	}
 	
