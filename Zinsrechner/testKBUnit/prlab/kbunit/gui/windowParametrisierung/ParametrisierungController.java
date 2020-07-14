@@ -133,7 +133,7 @@ public class ParametrisierungController implements Initializable {
 		}
 		showMessage(AlertType.WARNING, "Problem!",
 				"Formular unvollständig!",
-				"Füllen Sie das Formular erst aus, bevor Sie die Werte hinzufügen wollen!");
+				"Füllen Sie das Formular aus, bevor Sie Werte hinzufügen wollen!");
 		return false;
 	}
 	
@@ -298,15 +298,15 @@ public class ParametrisierungController implements Initializable {
 				ausgabe.write(zeile + "\n");
 			}
 			//ab letzte Testattribut Zeile
+			String strMethode = "";
 			while (true) {
-				String strMethode = null;
 				zeile = quelle.readLine();
 				if (zeile == null) break; //Dateiende
 				
-				for (String methodeName : ParametrisierungModel.getTestMethode(strPath, false)) {
-					strMethode = methodeName;
+				for (String methodeName : ParametrisierungModel.getTestMethode(strPath, false)) {	
 					//method gefunden
 					if(zeile.contains(methodeName + "(")) {
+						strMethode = methodeName;
 						temp.clear(); //leere Liste fuer neue Inhalte
 						//pruefe, ob Attribute zur Methode passen
 						for (String attr : listeTestAttribute) {
@@ -316,13 +316,11 @@ public class ParametrisierungController implements Initializable {
 						break;
 					}
 				}
+
 				for (String attr : temp) {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
-					
-					
-					
 					if (zeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
 						int count = StringUtils.countMatches(zeile, strAttrVal);
@@ -336,17 +334,18 @@ public class ParametrisierungController implements Initializable {
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
 							alert.setHeaderText(
 									"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
-									+ "\nNachher\n" + zeile.replaceFirst(strAttrVal, strAttrNameFull).trim()
+									+ "\nNachher\n" + sb.replace(index, index + strAttrVal.length(), strAttrNameFull).toString().trim()
 									);
 							
 							alert.setContentText("Sind Sie damit einverstanden?");
 							
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
-								sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
+								//sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
 								zeile = sb.toString();
 								n = 0;
 							} else {
+								zeile = sb.replace(index, index + strAttrNameFull.length(), strAttrVal).toString();
 								n++;
 							}
 						}	
@@ -362,6 +361,15 @@ public class ParametrisierungController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Finden das n-te Vorkommen eines substring in einer Zeichenfolge
+	 * 
+	 * aus <a href="https://programming.guide/java/nth-occurrence-in-string.html">https://programming.guide/</a>
+	 * @param str Zeichenkette
+	 * @param substr Zu suchender Wert
+	 * @param n das n-te Vorkommen in der Zeichenkette
+	 * @return
+	 */
 	public static int ordinalIndexOf(String str, String substr, int n) {
 	    int pos = -1;
 	    do {
