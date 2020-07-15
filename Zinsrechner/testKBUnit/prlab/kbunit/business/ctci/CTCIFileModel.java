@@ -1,4 +1,4 @@
-package prlab.kbunit.file;
+package prlab.kbunit.business.ctci;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +21,6 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import prlab.kbunit.business.ctci.DataCTCI;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
 import prlab.kbunit.test.ClassCreator;
@@ -35,14 +34,14 @@ import prlab.kbunit.test.ClassCreator;
  */
 
 /**
- * Diese Klasse stellt Methoden f&uuml;r die Generierung der 
- * {@code CustomerTestcaseInformation.xml} Datei bereit.
+ * Model-Klasse f&uuml;r die Generierung der 
+ * {@code CustomerTestcaseInformation.xml} Datei.
  * 
  * @author G&ouml;khan Arslan
  */
-public class FileCreatorCTCI {
+public class CTCIFileModel {
 	// das einzige FileCreatorCTCI- Objekt (singleton - pattern)
-	private static FileCreatorCTCI fcctci;
+	private static CTCIFileModel ctciFileModel;
 	/** JDOM XML Dokument */
 	private static Document doc;
 	/** Tag {@code <root>} f&uuml;r das XML Dokument*/
@@ -68,17 +67,17 @@ public class FileCreatorCTCI {
 	/** Text zu Klassen mit fehlenden Beschreibungen */
 	private String strMissingDescs;
 	
-	/**
-	 * Konstruktor
-	 */
-	private FileCreatorCTCI () {
+	private CTCIFileModel () {
 	}
 	
-	public static FileCreatorCTCI getInstance() {
-		if(fcctci == null) {
-			fcctci = new FileCreatorCTCI();
+	/**
+	 * Singleton vom FileCreatorCTCI-Model
+	 */
+	public static CTCIFileModel getInstance() {
+		if(ctciFileModel == null) {
+			ctciFileModel = new CTCIFileModel();
 		}
-		return fcctci;
+		return ctciFileModel;
 	}
 	
 	/**

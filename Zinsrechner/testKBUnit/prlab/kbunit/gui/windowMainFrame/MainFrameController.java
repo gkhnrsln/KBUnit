@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import junit.framework.TestResult;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import prlab.kbunit.Main;
+import prlab.kbunit.business.ctci.CTCIFileModel;
 import prlab.kbunit.business.dataModel.ActiveResult;
 import prlab.kbunit.business.dataModel.ActiveResultParameter;
 import prlab.kbunit.business.dataModel.InactiveResult;
@@ -29,7 +30,6 @@ import prlab.kbunit.business.testClassInfo.TestClassInfo;
 import prlab.kbunit.business.windowMainFrame.MainFrameModel;
 import prlab.kbunit.enums.Selection;
 import prlab.kbunit.enums.Variables;
-import prlab.kbunit.file.FileCreatorCTCI;
 import prlab.kbunit.gui.util.TooltipTableRow;
 import prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController;
 import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
@@ -97,7 +97,6 @@ public class MainFrameController implements Initializable {
 	private Button javaFilePlainButton;
 	
 	// Generate CTCI
-	private File ctciFile;
 	@FXML
 	private Button startGenerateCTCIButton;
 	@FXML
@@ -124,6 +123,8 @@ public class MainFrameController implements Initializable {
 	private Button newTestcaseButton;
     
 	private MainFrameModel mainFrameModel;
+	
+	private CTCIFileModel ctciFileModel;
 
 	/**
 	 * Konstruktor MainFrameControll
@@ -184,8 +185,6 @@ public class MainFrameController implements Initializable {
 			showMessage(AlertType.WARNING, "Fehler!", 
 					"Fehler beim Laden der Testklassen", e1.getMessage());
 		}
-
-		ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 
 		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
 		javaFilePlainComboBox.getSelectionModel().select(-1);
@@ -463,7 +462,7 @@ public class MainFrameController implements Initializable {
 	private void javaFileChoose(ActionEvent event) {
 		if (javafileComboBox.getSelectionModel().selectedItemProperty() != null) {
 			startGenerateCTCIButton.setDisable(false);
-			if (ctciFile.exists()) javafileButton.setDisable(false);
+			if (mainFrameModel.getCtciFile().exists()) javafileButton.setDisable(false);
 		}
 	}
 	
@@ -509,7 +508,7 @@ public class MainFrameController implements Initializable {
 		//bestaetigung fuer das ersetzen der XML Datei
 		Boolean isPermitted = true;
 		
-		if (ctciFile.exists()) {
+		if (mainFrameModel.getCtciFile().exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Bestätigung");
 			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
@@ -523,19 +522,19 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				FileCreatorCTCI ctci = FileCreatorCTCI.getInstance();
+				this.ctciFileModel = CTCIFileModel.getInstance();
+				ctciFileModel.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
 				
-				ctci.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
-				if (ctci.getStrMissingDescs().isEmpty()) {
+				if (ctciFileModel.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!ctci.getStrMissingDescs().isEmpty()) {
+				} else if (!ctciFileModel.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(ctci.getStrMissingDescs());
+					TextArea textArea = new TextArea(ctciFileModel.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -569,7 +568,7 @@ public class MainFrameController implements Initializable {
 		//bestaetigung fuer das ersetzen der XML Datei
 		Boolean isPermitted = true;
 		
-		if (ctciFile.exists()) {
+		if (mainFrameModel.getCtciFile().exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Bestätigung");
 			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
@@ -583,18 +582,18 @@ public class MainFrameController implements Initializable {
 		
 		if (isPermitted) {
 			try {
-				FileCreatorCTCI ctci = FileCreatorCTCI.getInstance();
-				ctci.createFile();
-				if (ctci.getStrMissingDescs().isEmpty()) {
+				this.ctciFileModel = CTCIFileModel.getInstance();
+				ctciFileModel.createFile();
+				if (ctciFileModel.getStrMissingDescs().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!ctci.getStrMissingDescs().isEmpty()) {
+				} else if (!ctciFileModel.getStrMissingDescs().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(ctci.getStrMissingDescs());
+					TextArea textArea = new TextArea(ctciFileModel.getStrMissingDescs());
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					

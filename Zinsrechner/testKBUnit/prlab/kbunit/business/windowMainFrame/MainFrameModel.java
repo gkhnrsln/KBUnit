@@ -33,6 +33,8 @@ public final class MainFrameModel {
 	private TestClassInfo openedTestClass;
 	// gewaehlte Java Testklasse
 	private File file;
+	// CustomerTestCaseInformation.xml
+	private File ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 	// Daten fuer die GUI
 	private ObservableList<ActiveResult> activeResults 
 	    = FXCollections.observableArrayList();
@@ -278,6 +280,14 @@ public final class MainFrameModel {
 				openedTestClass.getTriList().remove(i);
 			}	
 		}
+	}
+
+	public File getCtciFile() {
+		return ctciFile;
+	}
+
+	public void setCtciFile(File ctciFile) {
+		this.ctciFile = ctciFile;
 	}
 	
 }
