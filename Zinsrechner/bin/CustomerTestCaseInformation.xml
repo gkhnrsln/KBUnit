@@ -2,90 +2,80 @@
 <root>
   <testcases>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
-      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstelllt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden können.</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinDarlehen</name>
-          <desc>vom Wissensträger einstellbare Mindestdarlehen</desc>
-        </parameter>
-        <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MaxLaufzeit</name>
-          <desc>vom Wissensträger einstellbare maximale Laufzeit</desc>
-        </parameter>
-        <parameter>
-          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinJahreszahl</name>
-          <desc>vom Wissensträger einstellbare minimale Jahreszahl</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
-      <desc>Beschreibung fehlt</desc>
-      <testtype>5</testtype>
-      <parameters />
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMin</path>
+      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+          <name>testRaiseToPowerStandard_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMax</path>
+      <path>math.MathDotPowTest.testRaiseToPowerRepeated</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testGetGesamtschuldenMax_MaxGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare maximale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+          <name>testRaiseToPowerRepeated_Base</name>
+          <desc>gggg</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldMaxUsingMocks</path>
-      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benötigt.</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_Gesamtschulden</name>
-          <desc>vom Wissensträger einstellbare Gesamtschulden für Tilgungsdarlehen Stub. Angabe der Wert erfolgt durch das Trennen mit Komma</desc>
-        </parameter>
-        <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_NumOfGetGesamtschuldenCallsForEach</name>
-          <desc>vom Wissensträger einstellbare Anzahl der Methodenaufrufe von {@link darlehen.Tilgungsdarlehen#getGesamtschuld, die für jedes Tilgungsdarlehen durchgeführt werden, um das Maximum zu bestimmen</desc>
-        </parameter>
-        <parameter>
-          <name>testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld</name>
-          <desc>vom Wissensträger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissensträger einstellbaren Werten bestimmt werden soll</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
+      <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testFuerAssumptions1_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgeführt, falls Zahl gleich 1 ist</desc>
+          <name>testRaiseToPowerParameterized_Base</name>
+          <desc>gggg</desc>
         </parameter>
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
+      <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
       <desc>Beschreibung fehlt</desc>
       <testtype>5</testtype>
       <parameters>
         <parameter>
-          <name>testFuerAssumptions2_Zahl</name>
-          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgeführt, falls Zahl gleich 1 ist</desc>
+          <name>testRaiseToPowerTemplate_Base</name>
+          <desc>gggg</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerPerformance</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerPerformance_Base</name>
+          <desc>gggg</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_TimeoutInNanos</name>
+          <desc>vom Wissenstraeger einstellbarer Wert, nach wie vielen Millisekunden die Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_Exponent</name>
+          <desc>vom Wissenstraeger einstellbarer Exponent, mit der die zugehoerige Basis im Performance-Test potenziert werden soll</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_exp_Result</name>
+          <desc>vom Wissenstraeger einstellbares Ergebnis, das im Performance-Test zu den entsprechenden Parametern erwartet wird</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testFactory</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFactory_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basis fuer die TestFactory, die potenziert werden soll</desc>
         </parameter>
       </parameters>
     </testcase>
