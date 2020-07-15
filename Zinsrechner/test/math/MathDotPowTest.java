@@ -27,6 +27,7 @@ public class MathDotPowTest {
     public static int testRaiseToPowerRepeated_Base = 2;
     public static int testRaiseToPowerParameterized_Base = 2;
     public static int testRaiseToPowerTemplate_Base = 2;
+    
     public static int testRaiseToPowerPerformance_Base = 2;    
     /** vom Wissenstraeger einstellbarer Wert, nach wie vielen Millisekunden die
      * Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist */

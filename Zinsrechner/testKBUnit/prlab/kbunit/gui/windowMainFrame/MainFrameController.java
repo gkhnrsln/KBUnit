@@ -474,21 +474,25 @@ public class MainFrameController implements Initializable {
 	 * @throws IOException 
 	 */
 	@FXML
-	private void parameterizeTestclass(ActionEvent event) throws IOException  {
+	private void parameterizeTestclass(ActionEvent event)  {
 		//Maske ParametrisierungScene.fxml oeffnen
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(
 			"/prlab/kbunit/resources/view/ParametrisierungScene.fxml"));
 		
-		AnchorPane resultsDialog = (AnchorPane) loader.load();
+		AnchorPane resultsDialog;
 		Stage dialogStage = new Stage();
 		dialogStage.setResizable(false);
 		dialogStage.setTitle("Parameter eingeben");
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		Scene scene = new Scene(resultsDialog);
-		dialogStage.setScene(scene);
-		
-		
+		try {
+			resultsDialog = (AnchorPane) loader.load();
+			Scene scene = new Scene(resultsDialog);
+			dialogStage.setScene(scene);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ParametrisierungController parametrisierungController = loader.getController();
 		parametrisierungController.setKlassePfad(javaFilePlainComboBox.getSelectionModel().getSelectedItem().toString());
 		parametrisierungController.initModel();

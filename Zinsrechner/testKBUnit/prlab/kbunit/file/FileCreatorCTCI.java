@@ -126,27 +126,22 @@ public class FileCreatorCTCI {
 	 * @return Liste der Beschreibungen zu den Testmethoden
 	 * @exception IOException
 	 */
-	private List<String> descTestMethoden(File file) {
+	private List<String> descTestMethoden(File file) throws IOException {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
 		List<String> liste = new ArrayList<String>();
 		
 		//Lese file zeilenweise aus und fuege Zeile in eine Liste
-		BufferedReader in;
-		try {
-			in = new BufferedReader(new FileReader(file));
-			String s = in.readLine();
-			tmp.add(s);
-			while(s != null) {
-				s = s.trim();
-				tmp.add(s); 
-				s = in.readLine();
-			}
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		BufferedReader in = new BufferedReader(new FileReader(file));
+		String s = in.readLine();
+		tmp.add(s);
+		while(s != null) {
+			s = s.trim();
+			tmp.add(s); 
+			s = in.readLine();
 		}
+		in.close();
 		
 		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
@@ -207,27 +202,22 @@ public class FileCreatorCTCI {
 	 * @return Liste der Beschreibungen zu den Testattributen
 	 * @exception IOException
 	 */
-	private List<String> descTestAttribute(File file) {
+	private List<String> descTestAttribute(File file) throws IOException {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
 		List<String> liste = new ArrayList<String>();
 		
 		//Lese file zeilenweise aus und fuege Zeile in eine Liste
-		BufferedReader in;
-		try {
-			in = new BufferedReader(new FileReader(file));
-			String s = in.readLine();
-			tmp.add(s);
-			while(s != null) {
-				s = s.trim();
-				tmp.add(s); 
-				s = in.readLine();
-			}
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		BufferedReader in = new BufferedReader(new FileReader(file));
+		String s = in.readLine();
+		tmp.add(s);
+		while(s != null) {
+			s = s.trim();
+			tmp.add(s); 
+			s = in.readLine();
 		}
+		in.close();
 		
 		int i = 0; //Zaehler fuer Zeilen (abwaerts)
 		
@@ -252,8 +242,8 @@ public class FileCreatorCTCI {
 					j++; //naechste Zeile (aufwaerts)
 				} while (!tmp.get(i-j).endsWith("*/"));
 				//letzte Formatierungen
-				strDesc = strDesc.substring(2, strDesc.indexOf("*/"));
-				strDesc = strDesc.replace("*", "")
+				strDesc = strDesc.replace("/**", "").replace("*/", "")
+						.replace("*", "")
 						//Javadoc-Tags entfernen
 						//.replace("{@\\w+.$", "")
 						.replace("{@link", "")
@@ -303,21 +293,21 @@ public class FileCreatorCTCI {
 		List<String> methoden = new ArrayList<>();
 		
 		//lies die Datei zeilenweise aus
-		try (Stream<String> stream = Files.lines(Paths.get(file))) {
-			liste = stream
-					.map(Objects::toString)
-					.filter(m -> m.contains(Variables.METHOD_START_VOID)
-						|| m.contains(Variables.DYNAMIC_NODE)
-						|| m.contains(Variables.DYNAMIC_CONTAINER)
-						|| m.contains(Variables.DYNAMIC_TEST)
-						|| m.endsWith(Variables.ANNOTATION_TEST5) 
-						|| m.contains(Variables.ANNOTATION_TEST5_REPEATED) 
-						|| m.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
-						|| m.contains(Variables.ANNOTATION_TEST5_FACTORY)
-						|| m.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
-						)
-					.collect(Collectors.toList());
-		}
+		Stream<String> stream = Files.lines(Paths.get(file));
+		liste = stream
+				.map(Objects::toString)
+				.filter(m -> m.contains(Variables.METHOD_START_VOID)
+					|| m.contains(Variables.DYNAMIC_NODE)
+					|| m.contains(Variables.DYNAMIC_CONTAINER)
+					|| m.contains(Variables.DYNAMIC_TEST)
+					|| m.endsWith(Variables.ANNOTATION_TEST5) 
+					|| m.contains(Variables.ANNOTATION_TEST5_REPEATED) 
+					|| m.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+					|| m.contains(Variables.ANNOTATION_TEST5_FACTORY)
+					|| m.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
+					)
+				.collect(Collectors.toList());
+		stream.close();
 		
 		for (int i = 0; i<liste.size(); i++) {
 			String line = liste.get(i);
@@ -343,17 +333,18 @@ public class FileCreatorCTCI {
 	 */
 	private int testType(URI file) throws IOException {
 		Stream<String> testTyp;
-		try (Stream<String> stream = Files.lines(Paths.get(file))) {
-			testTyp = stream
-					.map(Objects::toString)
-					//JUnit 5 enthaelt immer folgendes import
-					.filter(type -> type.contains("import org.junit.jupiter"));
-			return testTyp.count() > 0 ? 5 : 4;
-		}
+		Stream<String> stream = Files.lines(Paths.get(file));
+		testTyp = stream
+				.map(Objects::toString)
+				//JUnit 5 enthaelt immer folgendes import
+				.filter(type -> type.contains("import org.junit.jupiter"));
+		//stream.close();
+		return testTyp.count() > 0 ? 5 : 4;
 	}
 	
+	
 	/**
-	 * Erstellt die CustomerTestCaseInformation f&uuml;r eine bestimmte Testklasse,
+	 * Erstellt die CustomerTestCaseInformation.xml f&uuml;r eine bestimmte Testklasse,
 	 * die vom Anwender in KBUnit-Entwickler ausgew&auml;hlt wurde.
 	 * @param index gibt die Position des ausgew&auml;hlten Elements der 
 	 * {@link prlab.kbunit.gui.windowMainFrame.MainFrameController
@@ -429,7 +420,7 @@ public class FileCreatorCTCI {
 	}
 	
 	/**
-	 * Erstellt die CustomerTestCaseInformation f&uuml;r alle Testklassen.
+	 * Erstellt die CustomerTestCaseInformation.xml f&uuml;r alle Testklassen.
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */

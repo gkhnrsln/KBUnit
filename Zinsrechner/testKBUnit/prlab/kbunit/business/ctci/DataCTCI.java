@@ -1,20 +1,7 @@
 package prlab.kbunit.business.ctci;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import prlab.kbunit.enums.Variables;
-import prlab.kbunit.test.ClassCreator;
 
 /*
  * TODO: Soll Entity Klasse werden.
@@ -23,8 +10,8 @@ import prlab.kbunit.test.ClassCreator;
  * Klassen, Schnittstellen, ... haben. Die Model-Klasse (CreateCTCI)
  * soll Objekte dieser Entity verwalten. 
  * 
- * Exceptions an den Controller (MainFrameController) geleitet werden,
- * der diese verarbeitet.
+ * Exceptions sollen an den Controller (MainFrameController) geleitet
+ * werden, der diese verarbeitet.
  */
 /**
  * Diese Klasse bereitet alle Informationen f&uuml;r die
@@ -34,20 +21,24 @@ import prlab.kbunit.test.ClassCreator;
 public class DataCTCI {
 	/** JUnit Testtyp der Testklasse */
 	private int testTyp;
-	/** Liste der TestMethoden der Testklasse */
+	/** Liste der Testmethoden der Testklasse */
 	private List<String> listeTestMethoden;
-	/** Liste der TestAttribute der Testklasse */
+	/** Liste der Testattribute der Testklasse */
 	private List<String> listeTestAttribute;
-	/** Liste der Beschreibungen der Test Methoden der Testklasse */
+	/** Liste der Beschreibungen der Testmethoden der Testklasse */
 	private List<String> listeDescTestMethoden;
-	/** Liste der Beschreibungen der Test Attribute der Testklasse */
+	/** Liste der Beschreibungen der Testattribute der Testklasse */
 	private List<String> listeDescTestAttribute;
 	
 	/**
-	 * Konstruktor f&uuml;r die Klasse.
-	 * @param file Dateipfad der Testklasse
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
+	 * Konstruktor
+	 * @param typ JUnit Testtyp der Testklasse
+	 * @param listeAttr Liste der TestAttribute der Testklasse
+	 * @param listeMeth Liste der TestMethoden der Testklasse
+	 * @param listeDescAttr Liste der Beschreibungen der Testattribute der Testklasse
+	 * @param listeDescMeth Liste der Beschreibungen der Testmethoden der Testklasse
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
 	public DataCTCI(int typ, List<String> listeAttr, List<String> listeMeth, List<String> listeDescAttr, List<String> listeDescMeth) 
 			throws IOException, ClassNotFoundException {
@@ -57,7 +48,7 @@ public class DataCTCI {
 		this.listeDescTestMethoden = listeDescMeth;
 		this.listeDescTestAttribute = listeDescAttr;
 	}
-
+	
 	//getter setter
 	public int getTestTyp() {
 		return testTyp;
