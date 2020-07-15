@@ -7,7 +7,7 @@ import java.util.List;
  * TODO: Soll Entity Klasse werden.
  * 
  * Soll sich zwar selbst verwalten, aber keine Zugriffe auf weitere
- * Klassen, Schnittstellen, ... haben. Die Model-Klasse (CreateCTCI)
+ * Klassen, Schnittstellen, ... haben. Die Model-Klasse (CTCIFileModel.java)
  * soll Objekte dieser Entity verwalten. 
  * 
  * Exceptions sollen an den Controller (MainFrameController) geleitet
