@@ -174,6 +174,9 @@ public class ParametrisierungController implements Initializable {
 						new ParametrisierungModel(typ,attr,wert,desc));
 			}
 		}
+		
+		saveButton.setDisable(false);
+		deleteButton.setDisable(false);
 	}
 	
 	/**
@@ -185,7 +188,16 @@ public class ParametrisierungController implements Initializable {
 		int index = parameterTableView.getSelectionModel().getSelectedIndex();
 		if (index >= 0) {
 			parameterTableView.getItems().remove(index);
+		} else {
+			showMessage(AlertType.WARNING, "Problem!", 
+					"Kein Testattribut ausgewählt!", "Bitte wählen Sie ein Testattribut aus!");
 		}
+		if (parameterTableView.getItems().isEmpty()) {
+			saveButton.setDisable(true);
+			deleteButton.setDisable(true);
+		}
+		
+
 	}
 	
 	/**
@@ -194,61 +206,53 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		//nur wenn Tabelle nicht leer ist
-		if (! parameterTableView.getItems().isEmpty()) {
-			String typ;
-			String attribut;
-			String wert;
-			String desc;
-			StringBuilder sb;
-			
-			BufferedWriter out;
-			//Speicherort der Parameter
-			File file = new File(Variables.PARAMETER_FILE_PATH);
-			try {
-				out = new BufferedWriter(new FileWriter(file));
-				for (ParametrisierungModel s : parameterTableView.getItems()) {
-					typ = s.getTyp().getValue();
-					attribut = s.getAttribut().getValue();
-					wert = s.getWert().getValue();
-					desc = s.getDesc().getValue();
-					
-					//Zeilenumbruch, bei laengeren Kommentaren
-					sb = new StringBuilder(desc);
-					int i = 0;
-					while ((i = sb.indexOf(" ", i + 75)) != -1) {
-					    sb.replace(i, i + 1, "\n * ");
-					}
-					//Formatierungen bei String und char
-					if (typ.equals("String")) {
-						wert = "\"" + wert + "\"";
-					} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
-							wert = "'" + wert + "'";		
-					}
-					//Formatierung
-					out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
+		String typ;
+		String attribut;
+		String wert;
+		String desc;
+		StringBuilder sb;
+		
+		BufferedWriter out;
+		//Speicherort der Parameter
+		File file = new File(Variables.PARAMETER_FILE_PATH);
+		try {
+			out = new BufferedWriter(new FileWriter(file));
+			for (ParametrisierungModel pm : parameterTableView.getItems()) {
+				typ = pm.getTyp().getValue();
+				attribut = pm.getAttribut().getValue();
+				wert = pm.getWert().getValue();
+				desc = pm.getDesc().getValue();
+				
+				//Zeilenumbruch, bei laengeren Kommentaren
+				sb = new StringBuilder(desc);
+				int i = 0;
+				while ((i = sb.indexOf(" ", i + 75)) != -1) {
+				    sb.replace(i, i + 1, "\n * ");
 				}
-				out.close();
-			} catch (IOException e2) {
-				e2.printStackTrace();
+				//Formatierungen bei String und char
+				if (typ.equals("String")) {
+					wert = "\"" + wert + "\"";
+				//Falls char Zeichen
+				} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
+					wert = "'" + wert + "'";		
+				}
+				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
-			
-			//parametrisiere und speichere Datei
-			saveFile("\\" + klassePfad.replace(".", "/") + ".java");
-			
-			//loesche Parameter.txt
-			file.delete();
-			
-			//Meldung, das erfolgreich erstellt wurde
-			showMessage(AlertType.INFORMATION, "Information",
-					"Generierte Testklasse wurde erfolgreich gespeichert!",
-					"Siehe im Sourceverzeichnis \"test\"!");
-		} else {
-			showMessage(AlertType.ERROR, "Fehler!",
-					"Die Tabelle ist leer!",
-					"Für die Generierung einer neuen Testklasse "
-					+ "darf die Tabelle nicht leer sein!");
+			out.close();
+		} catch (IOException e2) {
+			e2.printStackTrace();
 		}
+		
+		//parametrisiere und speichere Datei
+		saveFile("\\" + klassePfad.replace(".", "/") + ".java");
+		
+		//loesche Parameter.txt
+		file.delete();
+		
+		//Meldung, das erfolgreich erstellt wurde
+		showMessage(AlertType.INFORMATION, "Information",
+				"Generierte Testklasse wurde erfolgreich gespeichert!",
+				"Siehe im Sourceverzeichnis \"test\"!");
 	}
 	
 	/**

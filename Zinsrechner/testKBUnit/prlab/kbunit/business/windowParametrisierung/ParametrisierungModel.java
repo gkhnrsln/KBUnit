@@ -37,7 +37,7 @@ public class ParametrisierungModel {
 	 * @return Datentypen
 	 */
 	public static ObservableList<String> datenTypen() {
-		return FXCollections.observableArrayList("boolean", "String", "char", "byte", "short", "int", "long", "float", "double");
+		return FXCollections.observableArrayList("String", "boolean", "char", "byte", "short", "int", "long", "float", "double");
 	}
 
 	/**
@@ -52,13 +52,13 @@ public class ParametrisierungModel {
 	/**
 	 * Gibt eine Liste mit den Testmethoden zurueck.
 	 * @param file Dateipfad der Testklasse
-	 * @param withReturnType falls der Rueckgabetyp mit angegeben werden soll
+	 * @param isWithReturnType falls der Rueckgabetyp mit angegeben werden soll
 	 * @return Liste mit Testmethoden
 	 */
 	/*
 	 * TODO: Gehoert das noch zum Model? 
 	 */
-	private static List<String> getTestMethoden (String file, boolean withReturnType) {
+	private static List<String> getTestMethoden (String file, boolean isWithReturnType) {
 		List<String> liste = new ArrayList<>();
 
 		try {
@@ -72,7 +72,7 @@ public class ParametrisierungModel {
 						case Variables.ANNOTATION_TEST5_PARAMETERIZED:
 						case Variables.ANNOTATION_TEST5_FACTORY:
 						case Variables.ANNOTATION_TEST5_TEMPLATE:
-							if (withReturnType) {
+							if (isWithReturnType) {
 								Class<?> returnType = method.getReturnType();
 								liste.add(returnType + " " + method.getName());
 							} else {
