@@ -15,8 +15,8 @@ import prlab.kbunit.enums.Variables;
 /**
  * ParametrisierungModel ist die Model-Klasse vom Parametrisierungsfenster und 
  * verwaltet Daten-Objekte.
+ * 
  * @author G&ouml;khan Arslan
- *
  */
 public class ParametrisierungModel {
 	
@@ -45,17 +45,20 @@ public class ParametrisierungModel {
 	 * @return
 	 */
 	public static ObservableList<String> methoden(String pfad) {
-		return FXCollections.observableArrayList(getTestMethode(pfad, false));
+		return FXCollections.observableArrayList(getTestMethoden(pfad, false));
 	}
 	
 	
 	/**
 	 * Gibt eine Liste mit den Testmethoden zurueck.
 	 * @param file Dateipfad der Testklasse
-	 * @param withReturnType falls der Rueckgabetyp mit angegebn werden soll
+	 * @param withReturnType falls der Rueckgabetyp mit angegeben werden soll
 	 * @return Liste mit Testmethoden
 	 */
-	public static List<String> getTestMethode (String file, boolean withReturnType) {
+	/*
+	 * TODO: Gehoert das noch zum Model? 
+	 */
+	private static List<String> getTestMethoden (String file, boolean withReturnType) {
 		List<String> liste = new ArrayList<>();
 
 		try {
@@ -86,6 +89,7 @@ public class ParametrisierungModel {
 		}
 		return liste;
 	}
+	
 	
 	//getter setter
 	public StringProperty getTyp() {

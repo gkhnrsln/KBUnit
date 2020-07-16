@@ -230,7 +230,7 @@ public class CTCIFileModel {
 
 				//pruefe ob Beschreibung vorhanden
 				do {
-					String prevLine = tmp.get(i-j); //vorherhiger Zeileninhalt
+					String prevLine = tmp.get(i - j); //vorherhiger Zeileninhalt
 					if (prevLine.startsWith("/**")) {
 						strDesc = prevLine + strDesc; break;
 					}
@@ -239,7 +239,7 @@ public class CTCIFileModel {
 					}
 					strDesc = prevLine + strDesc;
 					j++; //naechste Zeile (aufwaerts)
-				} while (!tmp.get(i-j).endsWith("*/"));
+				} while (!tmp.get(i - j).endsWith("*/"));
 				//letzte Formatierungen
 				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
@@ -308,7 +308,7 @@ public class CTCIFileModel {
 				.collect(Collectors.toList());
 		stream.close();
 		
-		for (int i = 0; i<liste.size(); i++) {
+		for (int i = 0; i < liste.size(); i++) {
 			String line = liste.get(i);
 			if (line.contains(Variables.ANNOTATION_TEST5)
 				|| line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
