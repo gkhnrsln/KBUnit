@@ -72,6 +72,7 @@ public class ParametrisierungController implements Initializable {
 	 * init Nodes
 	 */
 	public void initModel() {
+		
 		typColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getTyp());
 		attributColumn.setCellValueFactory(cellData
