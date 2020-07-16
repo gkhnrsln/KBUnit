@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import prlab.kbunit.business.windowMainFrame.MainFrameModel;
 import prlab.kbunit.business.windowParametrisierung.*;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.file.FileCreator;
@@ -64,7 +63,6 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private Button saveButton;
 	
-	private static ParametrisierungModel parametrisierungModel;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -303,7 +301,7 @@ public class ParametrisierungController implements Initializable {
 			while (true) {
 				zeile = quelle.readLine();
 				if (zeile == null) break; //Dateiende
-				for (String methodeName : parametrisierungModel.methoden(strPath)) {	
+				for (String methodeName : ParametrisierungModel.methoden(strPath)) {	
 				//for (String methodeName : parametrisierungModel.getTestMethode(strPath, false)) {	
 					//method gefunden
 					if(zeile.contains(methodeName + "(")) {
