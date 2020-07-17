@@ -172,11 +172,10 @@ public class ParametrisierungController implements Initializable {
 			if (!isDuplicate) {
 				parameterTableView.getItems().add(
 						new ParametrisierungModel(typ,attr,wert,desc));
+				deleteButton.setDisable(false);
+				saveButton.setDisable(false);
 			}
 		}
-		
-		saveButton.setDisable(false);
-		deleteButton.setDisable(false);
 	}
 	
 	/**
