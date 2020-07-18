@@ -146,16 +146,20 @@ public class ParametrisierungController implements Initializable {
 	 * method for the add Button
 	 * 
 	 * F&uuml;ge der Tabelle eine neue Zeile hinzu. Es wird weiterhin darauf geachtet,
-	 * dass keine Duplikate zu den Attributen existieren.
+	 * dass keine Duplikate zu den Attributen existieren. Der erste Buchstabe des
+	 * Parameters wird automatisch in Gro&szlig;buchstaben abgespeichert.
+	 * 
+	 * Konkatenation bei Parameter und Bezeichner der Testmethode, z. B.:
+	 * {@code testMethode1_Parameter}
 	 */
 	@FXML
 	private void addToParamList(ActionEvent e) {
 		boolean isDuplicate = false;
 
 		if (isInputCorrect()) {
-			String typ = typComboBox.getSelectionModel().getSelectedItem().toString();
-			String attr = methodeComboBox.getSelectionModel().getSelectedItem().toString()
-					+ "_" + StringUtils.capitalize(parameterTextField.getText()).trim();
+			String typ = "" + typComboBox.getSelectionModel().getSelectedItem();
+			String attr = "" + methodeComboBox.getSelectionModel().getSelectedItem()
+					+ "_" + StringUtils.capitalize(parameterTextField.getText()); //erster Buchstabe gross
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
 			//Gehe jeden Eintrag der Tabelle durch
@@ -180,6 +184,9 @@ public class ParametrisierungController implements Initializable {
 	
 	/**
 	 * method for the delete Button
+	 * 
+	 * Entfernt ein Zeilenelement aus der Tabelle. Ist keine Zeile vorher ausgew&auml;hlt
+	 * worden, folgt ein Alert.
 	 * @param e
 	 */
 	@FXML
@@ -200,7 +207,12 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
+	 * method for the transfer Button
 	 * 
+	 * Speichert die neuen Attribute in einer vorl&auml;ufigen Datei.
+	 * 
+	 * Ruft anschlie&szlig;end die Methode f&uuml;r das Generieren der neuen 
+	 * KBUnit-f&auml;higen JUnit-Testklasse auf.
 	 * @param e
 	 */
 	@FXML
@@ -255,8 +267,8 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * setzt Werte und speichert 
-	 * @param path
+	 * generiert neuen KBUnit-f&auml;higen JUnit-Testklasse
+	 * @param path 
 	 */
 	public static void saveFile(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
@@ -280,7 +292,7 @@ public class ParametrisierungController implements Initializable {
 			
 			while (true) {
 				zeile = quelle.readLine();
-				//falls Klassenname: zeile drunter attribute hinzufuegen
+				//falls Klassenname: Zeile drunter attribute hinzufuegen
 				if (zeile.startsWith("class")|| zeile.startsWith("public class")) {
 					//Klassenname anpassen
 					ausgabe.write(zeile.replace("Plain", "") + "\n");
@@ -331,8 +343,8 @@ public class ParametrisierungController implements Initializable {
 						int n = 0;
 						int index;
 						for (int i = 0; i < count; i++) {
-							index = ordinalIndexOf(sb.toString(), strAttrVal, n);
-							
+							index = ordinalIndexOf("" + sb, strAttrVal, n);
+					
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
 							alert.setHeaderText(
@@ -344,11 +356,10 @@ public class ParametrisierungController implements Initializable {
 							
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
-								//sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
-								zeile = sb.toString();
+								zeile = "" + sb;
 								n = 0;
 							} else {
-								zeile = sb.replace(index, index + strAttrNameFull.length(), strAttrVal).toString();
+								zeile = "" + sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
 								n++;
 							}
 						}	
@@ -364,9 +375,10 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * Finden das n-te Vorkommen eines substring in einer Zeichenfolge
+	 * Finden das n-te Vorkommen eines substring in einer Zeichenfolge.
 	 * 
-	 * aus <a href="https://programming.guide/java/nth-occurrence-in-string.html">https://programming.guide/</a>
+	 * Aus <a href="https://programming.guide/java/nth-occurrence-in-string.html">https://programming.guide/</a>
+	 * &uuml;bernommen.
 	 * @param str Zeichenkette
 	 * @param substr Zu suchender Wert
 	 * @param n das n-te Vorkommen in der Zeichenkette

@@ -14,8 +14,8 @@ import java.util.List;
  * werden, der diese verarbeitet.
  */
 /**
- * Diese Klasse bereitet alle Informationen f&uuml;r die
- * {@code CustomerTestCaseInformation.xml} Datei vor.
+ * Diese Klasse bereitet alle Informationen f&uuml;r die Generierung der
+ * {@code CustomerTestCaseInformation.xml}-Datei vor.
  * @author G&ouml;khan Arslan
  */
 public class DataCTCI {
