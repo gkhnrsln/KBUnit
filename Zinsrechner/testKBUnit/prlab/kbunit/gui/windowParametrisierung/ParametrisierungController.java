@@ -102,11 +102,11 @@ public class ParametrisierungController implements Initializable {
 	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
-		if (! parameterTextField.getText().isBlank() && ! wertTextField.getText().isBlank() 
-				&& ! descTextField.getText().isBlank()) {
-			
-			parameterTextField.setText(parameterTextField.getText().replace(" ",""));
-			
+		if (! parameterTextField.getText().isBlank() 
+				&& ! wertTextField.getText().isBlank() 
+				&& ! descTextField.getText().isBlank()
+				&& ! typComboBox.getSelectionModel().isSelected(-1)
+				&& ! methodeComboBox.getSelectionModel().isSelected(-1)) {
 			/*
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
@@ -155,13 +155,15 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private void addToParamList(ActionEvent e) {
 		boolean isDuplicate = false;
-
+		parameterTextField.setText(parameterTextField.getText().replace(" ",""));
+		
 		if (isInputCorrect()) {
 			String typ = "" + typComboBox.getSelectionModel().getSelectedItem();
 			String attr = "" + methodeComboBox.getSelectionModel().getSelectedItem()
 					+ "_" + StringUtils.capitalize(parameterTextField.getText()); //erster Buchstabe gross
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
+			
 			//Gehe jeden Eintrag der Tabelle durch
 			for (int i = 0;  i < parameterTableView.getItems().size(); i++) {
 				//pruefe, ob aktuelle Zeile Duplikat
