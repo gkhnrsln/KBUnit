@@ -85,11 +85,11 @@ public class CTCIFileModel {
 	 */
 	private static void load() {
 		doc = new Document();
-		elRoot = new Element("root"); 
-		elTestCases = new Element(Variables.CTCI_NODE_TESTCASES); 
-		elTestCase = new Element(Variables.CTCI_NODE_TESTCASE); 
-		elPath = new Element(Variables.CTCI_NODE_PATH); 
-		elDescMethode = new Element(Variables.CTCI_NODE_DESC); 
+		elRoot = new Element("root");
+		elTestCases = new Element(Variables.CTCI_NODE_TESTCASES);
+		elTestCase = new Element(Variables.CTCI_NODE_TESTCASE);
+		elPath = new Element(Variables.CTCI_NODE_PATH);
+		elDescMethode = new Element(Variables.CTCI_NODE_DESC);
 		elDescAttribut = new Element(Variables.CTCI_NODE_DESC);
 		elTestType = new Element(Variables.CTCI_NODE_TESTTYPE);
 		elParameters = new Element(Variables.CTCI_NODE_PARAMETERS);

@@ -63,6 +63,7 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private Button saveButton;
 	
+	private ParametrisierungModel parametrisierungModel;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,9 +88,15 @@ public class ParametrisierungController implements Initializable {
 				.replace("\\", ".")
 				.replace(".java", "");
 		
+		parametrisierungModel = new ParametrisierungModel(null, null, null, null);
 		//***************fill Selection ComboBox************************************//
-		typComboBox.setItems(ParametrisierungModel.datenTypen());
-		methodeComboBox.setItems(ParametrisierungModel.methoden(klassePfad));
+		typComboBox.setItems(parametrisierungModel.datenTypen());
+		try {
+			methodeComboBox.setItems(parametrisierungModel.methoden(klassePfad));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -106,7 +113,9 @@ public class ParametrisierungController implements Initializable {
 				&& ! wertTextField.getText().isBlank() 
 				&& ! descTextField.getText().isBlank()
 				&& ! typComboBox.getSelectionModel().isSelected(-1)
-				&& ! methodeComboBox.getSelectionModel().isSelected(-1)) {
+				&& ! methodeComboBox.getSelectionModel().isSelected(-1)
+				)
+		{
 			/*
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
@@ -158,8 +167,8 @@ public class ParametrisierungController implements Initializable {
 		parameterTextField.setText(parameterTextField.getText().replace(" ",""));
 		
 		if (isInputCorrect()) {
-			String typ = "" + typComboBox.getSelectionModel().getSelectedItem();
-			String attr = "" + methodeComboBox.getSelectionModel().getSelectedItem()
+			String typ = typComboBox.getSelectionModel().getSelectedItem();
+			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
 					+ "_" + StringUtils.capitalize(parameterTextField.getText()); //erster Buchstabe gross
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
@@ -176,8 +185,7 @@ public class ParametrisierungController implements Initializable {
 				}
 			}
 			if (!isDuplicate) {
-				parameterTableView.getItems().add(
-						new ParametrisierungModel(typ,attr,wert,desc));
+				parameterTableView.getItems().add(new ParametrisierungModel(typ,attr,wert,desc));
 				deleteButton.setDisable(false);
 				saveButton.setDisable(false);
 			}
@@ -198,14 +206,13 @@ public class ParametrisierungController implements Initializable {
 			parameterTableView.getItems().remove(index);
 		} else {
 			showMessage(AlertType.WARNING, "Problem!", 
-					"Kein Testattribut ausgewählt!", "Bitte wählen Sie ein Testattribut aus!");
+					"Kein Testattribut ausgewählt!",
+					"Bitte wählen Sie ein Testattribut aus!");
 		}
 		if (parameterTableView.getItems().isEmpty()) {
 			saveButton.setDisable(true);
 			deleteButton.setDisable(true);
 		}
-		
-
 	}
 	
 	/**
@@ -243,6 +250,7 @@ public class ParametrisierungController implements Initializable {
 				    sb.replace(i, i + 1, "\n * ");
 				}
 				//Formatierungen bei String und char
+				//TODO: Soll jetzt auf sinnvolle werte geprueft werden?
 				if (typ.equals("String")) {
 					wert = "\"" + wert + "\"";
 				//Falls char Zeichen
@@ -272,7 +280,7 @@ public class ParametrisierungController implements Initializable {
 	 * generiert neuen KBUnit-f&auml;higen JUnit-Testklasse
 	 * @param path 
 	 */
-	public static void saveFile(String path) {
+	public void saveFile(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
 		BufferedReader quelle, txt;
 		BufferedWriter ausgabe;
@@ -295,7 +303,7 @@ public class ParametrisierungController implements Initializable {
 			while (true) {
 				zeile = quelle.readLine();
 				//falls Klassenname: Zeile drunter attribute hinzufuegen
-				if (zeile.startsWith("class")|| zeile.startsWith("public class")) {
+				if (zeile.startsWith("class") || zeile.startsWith("public class")) {
 					//Klassenname anpassen
 					ausgabe.write(zeile.replace("Plain", "") + "\n");
 					while (true) {
@@ -319,19 +327,23 @@ public class ParametrisierungController implements Initializable {
 			while (true) {
 				zeile = quelle.readLine();
 				if (zeile == null) break; //Dateiende
-				for (String methodeName : ParametrisierungModel.methoden(strPath)) {	
-				//for (String methodeName : parametrisierungModel.getTestMethode(strPath, false)) {	
-					//method gefunden
-					if(zeile.contains(methodeName + "(")) {
-						strMethode = methodeName;
-						temp.clear(); //leere Liste fuer neue Inhalte
-						//pruefe, ob Attribute zur Methode passen
-						for (String attr : listeTestAttribute) {
-							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
-							if(methodeName.equals(strAttrName)) temp.add(attr);
+				try {
+					for (String methodeName : parametrisierungModel.methoden(strPath)) {
+						//method gefunden
+						if(zeile.contains(methodeName + "(")) {
+							strMethode = methodeName;
+							temp.clear(); //leere Liste fuer neue Inhalte
+							//pruefe, ob Attribute zur Methode passen
+							for (String attr : listeTestAttribute) {
+								String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
+								if(methodeName.equals(strAttrName)) temp.add(attr);
+							}
+							break;
 						}
-						break;
 					}
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				for (String attr : temp) {
