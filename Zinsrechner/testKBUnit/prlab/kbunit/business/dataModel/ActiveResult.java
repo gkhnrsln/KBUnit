@@ -53,7 +53,6 @@ public class ActiveResult {
 		this.exceptionExpected = new SimpleBooleanProperty();
 		this.testFile = new SimpleBooleanProperty();
 		this.parameters = parameters2;
-		
 	}
 	
 	

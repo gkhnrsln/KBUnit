@@ -185,7 +185,8 @@ public class ParametrisierungController implements Initializable {
 				}
 			}
 			if (!isDuplicate) {
-				parameterTableView.getItems().add(new ParametrisierungModel(typ,attr,wert,desc));
+				parameterTableView.getItems().add(
+						new ParametrisierungModel(typ,attr,wert,desc));
 				deleteButton.setDisable(false);
 				saveButton.setDisable(false);
 			}
@@ -348,7 +349,7 @@ public class ParametrisierungController implements Initializable {
 
 				for (String attr : temp) {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
-					String strAttrVal = attr.substring(attr.indexOf("=")+2, attr.indexOf(";"));
+					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
 					if (zeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
@@ -358,14 +359,14 @@ public class ParametrisierungController implements Initializable {
 						int index;
 						for (int i = 0; i < count; i++) {
 							index = ordinalIndexOf("" + sb, strAttrVal, n);
-					
+							//Fenster
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
-							alert.setHeaderText(
-									"Zu ersetzenden Wert [" + strAttrVal +"] in folgender Zeile gefunden:\n" + zeile.trim()
-									+ "\nNachher\n" + sb.replace(index, index + strAttrVal.length(), strAttrNameFull).toString().trim()
+							alert.setHeaderText("Zu ersetzenden Wert [" + strAttrVal +"] "
+									+ "in folgender Zeile gefunden:\n" + zeile.trim()
+									+ "\nNachher\n" 
+									+ sb.replace(index, index + strAttrVal.length(), strAttrNameFull).toString().trim()
 									);
-							
 							alert.setContentText("Sind Sie damit einverstanden?");
 							
 							Optional<ButtonType> result = alert.showAndWait();
@@ -406,11 +407,13 @@ public class ParametrisierungController implements Initializable {
 	    return pos;
 	}
 	
+	/*
 	private void falscheEingabe(String typ) {
 		showMessage(AlertType.WARNING, "Problem!",
 				"Falsche Eingabe erkannt!",
 				"Geben Sie einen korrekten " + typ + " Wert ein!");
 	}
+	*/
 	
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 
