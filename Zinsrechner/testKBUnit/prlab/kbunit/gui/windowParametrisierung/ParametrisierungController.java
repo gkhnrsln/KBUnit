@@ -287,10 +287,7 @@ public class ParametrisierungController implements Initializable {
 		BufferedWriter ausgabe;
 		String zeile, txtLine;
 		List<String> temp = new ArrayList<>();
-		String strPath = path
-				.replace("\\","")
-				.replace("/", ".")
-				.replace(Variables.EXTENSION_JAVA, "");
+
 		try {
 			//JUnit Testklasse
 			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
@@ -327,26 +324,24 @@ public class ParametrisierungController implements Initializable {
 			String strMethode = "";
 			while (true) {
 				zeile = quelle.readLine();
-				if (zeile == null) break; //Dateiende
-				try {
-					for (String methodeName : parametrisierungModel.methoden(strPath)) {
-						//method gefunden
-						if(zeile.contains(methodeName + "(")) {
-							strMethode = methodeName;
-							temp.clear(); //leere Liste fuer neue Inhalte
-							//pruefe, ob Attribute zur Methode passen
-							for (String attr : listeTestAttribute) {
-								String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
-								if(methodeName.equals(strAttrName)) temp.add(attr);
-							}
-							break;
+				
+				//Dateiende
+				if (zeile == null) break; 
+				
+				for (String methodeName : methodeComboBox.getItems()) {
+					//method gefunden
+					if(zeile.contains(methodeName + "(")) {
+						strMethode = methodeName;
+						temp.clear(); //leere Liste fuer neue Inhalte
+						//pruefe, ob Attribute zur Methode passen
+						for (String attr : listeTestAttribute) {
+							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
+							if(methodeName.equals(strAttrName)) temp.add(attr);
 						}
+						break;
 					}
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
+				
 				for (String attr : temp) {
 					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
