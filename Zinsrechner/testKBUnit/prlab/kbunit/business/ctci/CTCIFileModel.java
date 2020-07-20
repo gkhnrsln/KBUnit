@@ -338,7 +338,9 @@ public class CTCIFileModel {
 				//JUnit 5 enthaelt immer folgendes import
 				.filter(type -> type.contains("import org.junit.jupiter"));
 		//stream.close();
-		return testTyp.count() > 0 ? 5 : 4;
+		long n = testTyp.count();
+		stream.close();
+		return n > 0 ? 5 : 4;
 	}
 	
 	
