@@ -25,14 +25,6 @@ import prlab.kbunit.enums.Variables;
 import prlab.kbunit.scan.FolderScanner;
 import prlab.kbunit.test.ClassCreator;
 
-/*
- * TODO: Soll Model Klasse werden.
- * 
- * Soll Objekte von DataCTCI verwalten.
- * Nicht auf Methoden des Controllers zugreifen.
- * Dafür gibt es das Observer-Pattern, falls notwendig.
- */
-
 /**
  * Model-Klasse f&uuml;r die Generierung der 
  * {@code CustomerTestcaseInformation.xml} Datei.
@@ -166,7 +158,7 @@ public class CTCIFileModel {
 							&& ! prevLine.startsWith("*"))) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
-					//Zeile ueberspringen wenn Annotation / Javadoc Ende vorhanden ist
+					//Zeile ueberspringen wenn Annotation/Javadoc-Ende vorhanden ist
 					else if(prevLine.startsWith("@") || prevLine.contains("*/")) {
 						j++; //naechste Zeile (aufwaerts)
 						continue;
@@ -230,7 +222,7 @@ public class CTCIFileModel {
 
 				//pruefe ob Beschreibung vorhanden
 				do {
-					String prevLine = tmp.get(i - j); //vorherhiger Zeileninhalt
+					String prevLine = tmp.get(i - j); //vorherhige Zeile
 					if (prevLine.startsWith("/**")) {
 						strDesc = prevLine + strDesc; break;
 					}
@@ -337,7 +329,6 @@ public class CTCIFileModel {
 				.map(Objects::toString)
 				//JUnit 5 enthaelt immer folgendes import
 				.filter(type -> type.contains("import org.junit.jupiter"));
-		//stream.close();
 		long n = testTyp.count();
 		stream.close();
 		return n > 0 ? 5 : 4;
@@ -377,6 +368,7 @@ public class CTCIFileModel {
 				descTestAttribute(listeKlassen.get(index)),
 				descTestMethoden(listeKlassen.get(index))
 				);
+		
 		int k = 0; //Zaehler fuer testMethoden
 		
 		//Gehe jede Testmethode der Testklasse durch

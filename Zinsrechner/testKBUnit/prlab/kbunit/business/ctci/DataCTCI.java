@@ -3,16 +3,6 @@ package prlab.kbunit.business.ctci;
 import java.io.IOException;
 import java.util.List;
 
-/*
- * TODO: Soll Entity Klasse werden.
- * 
- * Soll sich zwar selbst verwalten, aber keine Zugriffe auf weitere
- * Klassen, Schnittstellen, ... haben. Die Model-Klasse (CTCIFileModel.java)
- * soll Objekte dieser Entity verwalten. 
- * 
- * Exceptions sollen an den Controller (MainFrameController) geleitet
- * werden, der diese verarbeitet.
- */
 /**
  * Diese Klasse bereitet alle Informationen f&uuml;r die Generierung der
  * {@code CustomerTestCaseInformation.xml}-Datei vor.

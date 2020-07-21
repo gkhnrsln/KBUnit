@@ -1,6 +1,5 @@
 package prlab.kbunit.business.windowParametrisierung;
 
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ import javafx.collections.ObservableList;
 import prlab.kbunit.enums.Variables;
 
 /**
- * ParametrisierungModel ist die Model-Klasse vom Parametrisierungsfenster und 
- * verwaltet Daten-Objekte.
+ * ParametrisierungModel ist die Model-Klasse vom 
+ * Parametrisierungsfenster und verwaltet Daten-Objekte.
  * 
  * @author G&ouml;khan Arslan
  */
@@ -25,28 +24,36 @@ public class ParametrisierungModel {
 	private final StringProperty wert;
 	private final StringProperty desc;
 	
-	public ParametrisierungModel(String typ, String attribut, String wert, String desc) {
+	public ParametrisierungModel(String typ, String attribut, String wert, String desc){
 		this.typ = new SimpleStringProperty(typ);
 		this.attribut = new SimpleStringProperty(attribut);
 		this.wert = new SimpleStringProperty(wert);
 		this.desc = new SimpleStringProperty(desc);
 	}
-
 	
 	/**
 	 * Legt die moeglichen Datentypen der ComboBox "typComboBox" fest.
+	 * 
+	 * Dies sind die Java Grunddatentypen {@code boolean}, {@code char},
+	 * {@code byte}, {@code short}, {@code int}, {@code long}, {@code float}
+	 * und {@code double} sowie der Datentyp {@code String}.
 	 * @return Datentypen
 	 */
 	public ObservableList<String> datenTypen() {
-		return FXCollections.observableArrayList("String", "boolean", "char", "byte", "short", "int", "long", "float", "double");
+		return FXCollections.observableArrayList(
+				"String", "boolean", "char", "byte",
+				"short", "int", "long", "float", "double"
+				);
 	}
 
 	/**
-	 * @param pfad
-	 * @return
+	 * Gibt eine Liste mit Testmethoden zu einer Testklasse zur&uuml;ck.
+	 * @param pfad Pfad der Testklasse
+	 * @return Liste 
 	 * @throws ClassNotFoundException 
 	 */
-	public ObservableList<String> methoden(String pfad) throws ClassNotFoundException {
+	public ObservableList<String> methoden(String pfad) 
+			throws ClassNotFoundException {
 		List<String> liste = new ArrayList<>();
 		Class<?> clazz = Class.forName(pfad);
 		//nur oeffentliche Methoden
