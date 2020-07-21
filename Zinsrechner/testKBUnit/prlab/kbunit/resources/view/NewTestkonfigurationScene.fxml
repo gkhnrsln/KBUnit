@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="443.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8"
-			xmlns:fx="http://javafx.com/fxml/1"
-			fx:controller="prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController">
   <children>
       <Label layoutX="250.0" layoutY="14.0" text="Erzeugen einer neuen Testkonfiguration">
          <font>

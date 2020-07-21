@@ -94,7 +94,6 @@ public class ParametrisierungController implements Initializable {
 		try {
 			methodeComboBox.setItems(parametrisierungModel.methoden(klassePfad));
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
