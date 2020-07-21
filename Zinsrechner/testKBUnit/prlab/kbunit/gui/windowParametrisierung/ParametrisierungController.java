@@ -239,10 +239,10 @@ public class ParametrisierungController implements Initializable {
 		try {
 			out = new BufferedWriter(new FileWriter(file));
 			for (ParametrisierungModel pm : parameterTableView.getItems()) {
-				typ = pm.getTyp().getValue();
-				attribut = pm.getAttribut().getValue();
-				wert = pm.getWert().getValue();
-				desc = pm.getDesc().getValue();
+				typ 		= pm.getTyp().getValue();
+				attribut 	= pm.getAttribut().getValue();
+				wert 		= pm.getWert().getValue();
+				desc 		= pm.getDesc().getValue();
 				
 				//Zeilenumbruch, bei laengeren Kommentaren
 				sb = new StringBuilder(desc);
@@ -312,8 +312,10 @@ public class ParametrisierungController implements Initializable {
 						//kopiere Inhalt von txt Datei
 						ausgabe.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
-						if (txtLine.contains("public static") && txtLine.contains("test") && txtLine.contains("=")) 
+						if (txtLine.contains("public static") && txtLine.contains("test") 
+								&& txtLine.contains("=")) {
 							listeTestAttribute.add(txtLine);
+						}
 					}
 					txt.close();
 					break;
@@ -335,7 +337,8 @@ public class ParametrisierungController implements Initializable {
 						temp.clear(); //leere Liste fuer neue Inhalte
 						//pruefe, ob Attribute zur Methode passen
 						for (String attr : listeTestAttribute) {
-							String strAttrName = attr.substring(attr.indexOf("test"), attr.indexOf("_"));
+							String strAttrName = attr.substring(attr.indexOf("test")
+									, attr.indexOf("_"));
 							if(methodeName.equals(strAttrName)) temp.add(attr);
 						}
 						break;
