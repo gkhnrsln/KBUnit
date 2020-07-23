@@ -3,16 +3,16 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
-	/** s */
-	public static String testMethode3_Eins = "ABC";
-	/** s */
-	public static String testMethode3_Zwei = "ABC";
+	/** sdf */
+	public static double testMethode1_E = 1.0E19d;
+	/** sdf */
+	public static double testMethode1_F = 9.8988888888E10d;
+	/** sdf */
+	public static float testMethode1_Fhfgh = 9.9999999E14f;
 	@Test
 	void testMethode1() {
 		System.out.println("Musterstring");
 		System.out.println(5);
-		String s = "Musterstring";
-		String Musterstring = "kk";
 		System.out.println("Musterstring");
 		System.out.println("Musterstrin");
 		System.out.println("Musterstring" + "Musterstring");

@@ -489,7 +489,6 @@ public class MainFrameController implements Initializable {
 			Scene scene = new Scene(resultsDialog);
 			dialogStage.setScene(scene);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ParametrisierungController parametrisierungController = loader.getController();

@@ -100,11 +100,9 @@ public class ParametrisierungController implements Initializable {
 	
 	/**
 	 * Pr&uuml;ft, ob das Formular korrekt ausgef&uuml;llt ist.
+	 * 
+	 * Bei Zahlen wird auf Min und Max werte geachtet.
 	 * @return true, wenn Eingaben korrekt 
-	 */
-	/*
-	 * TODO: 
-	 * - Minimum/Maximum Werte bei Zahlen pruefen?
 	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
@@ -115,33 +113,64 @@ public class ParametrisierungController implements Initializable {
 				&& ! methodeComboBox.getSelectionModel().isSelected(-1)
 				)
 		{
-			/*
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
 			String wert = wertTextField.getText();
-			//wenn Datentyp boolean, pruefe, ob werte true/false
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
 				else falscheEingabe("boolean"); return false;
-			} else {
-				if (! datentyp.equals("String")) {
-					//entferne leerzeichen bei Zahlen
-					wertTextField.setText(wert.replace(" ",""));
-					//nur Ziffern und bestimmte Zeichen erlaubt
-					if (datentyp.equals("int") || datentyp.equals("long") || datentyp.equals("short")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)")) return true;
-						else falscheEingabe("int/long/short"); return false;
-					} else if (datentyp.equals("char")) {
-						if (wert.matches("(^[a-zA-Z]$)|^[-+]?\\b[0-9]+\\b")) return true;
-						else falscheEingabe("char"); return false;
-					} else if (datentyp.equals("float")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?[fF]$")) return true;
-						else falscheEingabe("float"); return false;					
-					} else if (datentyp.equals("double")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?$")) return true;
-						else falscheEingabe("double"); return false;
-					}
+			}
+			else if (datentyp.equals("char")) {
+				if (wert.matches("(^[a-zA-Z]$)|^[-+]?\\b[0-9]+\\b")) return true;
+				else falscheEingabe("char"); return false;
+			}
+			else if (datentyp.equals("int")) {
+				try {
+					Integer.parseInt(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("int"); return false;
 				}
-			}*/
+			} 
+			else if (datentyp.equals("long")) {
+				try {
+					long l = Long.parseLong(wert); 
+					wertTextField.setText(l + "L");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("long"); return false;
+				}
+			}
+			else if (datentyp.equals("short")) {
+				try {
+					Short.parseShort(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("short"); return false;
+				}
+			}
+			else if (datentyp.equals("byte")) {
+				try {
+					Byte.parseByte(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("byte"); return false;
+				}
+			}
+			else if (datentyp.equals("float")) {
+				try {
+					float f = Float.parseFloat(wert);
+					wertTextField.setText(f + "F");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("float"); return false;
+				}
+			}
+			else if (datentyp.equals("double")) {
+				try {
+					double d = Double.parseDouble(wert); 
+					wertTextField.setText(d + "D");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("double"); return false;
+				}
+			}
 			return true;
 		}
 		showMessage(AlertType.WARNING, "Problem!",
@@ -250,7 +279,6 @@ public class ParametrisierungController implements Initializable {
 				    sb.replace(i, i + 1, "\n * ");
 				}
 				//Formatierungen bei String und char
-				//TODO: Soll jetzt auf sinnvolle werte geprueft werden?
 				if (typ.equals("String")) {
 					wert = "\"" + wert + "\"";
 				//Falls char Zeichen
@@ -404,13 +432,13 @@ public class ParametrisierungController implements Initializable {
 	    return pos;
 	}
 	
-	/*
+	
 	private void falscheEingabe(String typ) {
 		showMessage(AlertType.WARNING, "Problem!",
 				"Falsche Eingabe erkannt!",
 				"Geben Sie einen korrekten " + typ + " Wert ein!");
 	}
-	*/
+	
 	
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 

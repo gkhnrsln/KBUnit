@@ -7,8 +7,6 @@ public class BeispielTestPlain {
 	void testMethode1() {
 		System.out.println("Musterstring");
 		System.out.println(5);
-		String s = "Musterstring";
-		String Musterstring = "kk";
 		System.out.println("Musterstring");
 		System.out.println("Musterstrin");
 		System.out.println("Musterstring" + "Musterstring");
