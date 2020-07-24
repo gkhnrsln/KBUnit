@@ -90,7 +90,7 @@ public class CTCIFileModel {
 	}
 	
 	/**
-	 * Erstellt im Source Verzeichnis {@link prlab.kbunit.enums.Variables#
+	 * Erstellt im source folder {@link prlab.kbunit.enums.Variables#
 	 * CUSTOMER_TEST_CASE_INFO_FILE_PATH
 	 * Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH} 
 	 * eine {@code CustomerTestCaseInformation.xml}-Datei.
@@ -327,7 +327,7 @@ public class CTCIFileModel {
 		Stream<String> stream = Files.lines(Paths.get(file));
 		testTyp = stream
 				.map(Objects::toString)
-				//JUnit 5 enthaelt immer folgendes import
+				//JUnit 5 Tests enthalten folgenden import
 				.filter(type -> type.contains("import org.junit.jupiter"));
 		long n = testTyp.count();
 		stream.close();

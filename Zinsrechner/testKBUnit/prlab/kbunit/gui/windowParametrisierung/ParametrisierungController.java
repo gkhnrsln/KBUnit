@@ -208,7 +208,7 @@ public class ParametrisierungController implements Initializable {
 			String desc = descTextField.getText().trim();
 			
 			//Gehe jeden Eintrag der Tabelle durch
-			for (int i = 0;  i < parameterTableView.getItems().size(); i++) {
+			for (int i = 0; i < parameterTableView.getItems().size(); i++) {
 				//pruefe, ob aktuelle Zeile Duplikat
 				if (attributColumn.getCellData(i).equals(attr)) {
 					isDuplicate = true;
@@ -323,7 +323,8 @@ public class ParametrisierungController implements Initializable {
 			//zu hinzufuegende Testattribute
 			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
-			File newFile = new File("transferierteKlassen/" + path.replace("Plain", "")); //TODO: ersetze mit untere Zeile
+			File newFile = new File("transferierteKlassen/" + path.replace("Plain", ""));
+			//TODO: ersetze obere Zeile mit untere Zeile
 			//File newFile = new File(Variables.TEST_SOURCE + "/" + path.replace("Plain", ""));
 			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
