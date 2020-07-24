@@ -100,48 +100,82 @@ public class ParametrisierungController implements Initializable {
 	
 	/**
 	 * Pr&uuml;ft, ob das Formular korrekt ausgef&uuml;llt ist.
+	 * 
+	 * Bei Zahlen wird auf Min und Max werte geachtet.
 	 * @return true, wenn Eingaben korrekt 
 	 */
-	/*
-	 * TODO: 
-	 * - Minimum/Maximum Werte bei Zahlen pruefen?
-	 */
 	private boolean isInputCorrect() {
+		boolean isParaBlank 	= parameterTextField.getText().isBlank();
+		boolean isWertBlank 	= wertTextField.getText().isBlank();
+		boolean isDescBlank 	= descTextField.getText().isBlank();
+		boolean isTypSelected 	= typComboBox.getSelectionModel().isSelected(-1);
+		boolean isMethSelected 	= methodeComboBox.getSelectionModel().isSelected(-1);
+		
 		//pruefe, ob Formular ausgefuellt ist
-		if (! parameterTextField.getText().isBlank() 
-				&& ! wertTextField.getText().isBlank() 
-				&& ! descTextField.getText().isBlank()
-				&& ! typComboBox.getSelectionModel().isSelected(-1)
-				&& ! methodeComboBox.getSelectionModel().isSelected(-1)
-				)
-		{
-			/*
-			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
+		if (!isParaBlank && !isWertBlank && !isDescBlank && !isTypSelected && !isMethSelected) {
+			String datentyp = typComboBox.getSelectionModel().getSelectedItem();
 			String wert = wertTextField.getText();
-			//wenn Datentyp boolean, pruefe, ob werte true/false
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
 				else falscheEingabe("boolean"); return false;
-			} else {
-				if (! datentyp.equals("String")) {
-					//entferne leerzeichen bei Zahlen
-					wertTextField.setText(wert.replace(" ",""));
-					//nur Ziffern und bestimmte Zeichen erlaubt
-					if (datentyp.equals("int") || datentyp.equals("long") || datentyp.equals("short")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)")) return true;
-						else falscheEingabe("int/long/short"); return false;
-					} else if (datentyp.equals("char")) {
-						if (wert.matches("(^[a-zA-Z]$)|^[-+]?\\b[0-9]+\\b")) return true;
-						else falscheEingabe("char"); return false;
-					} else if (datentyp.equals("float")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?[fF]$")) return true;
-						else falscheEingabe("float"); return false;					
-					} else if (datentyp.equals("double")) {
-						if (wert.matches("^[-+]?([1-9][0-9]*)+(\\.\\d+)?$")) return true;
-						else falscheEingabe("double"); return false;
-					}
+			}
+			else if (datentyp.equals("char")) {
+				if (wert.matches("^.$")) {
+					wertTextField.setText("'" + wert + "'");
+					return true;
+				} else if (wert.matches("^[-+]?\\b[0-9]+\\b")) {
+					return true;
 				}
-			}*/
+				else falscheEingabe("char"); return false;
+			}
+			else if (datentyp.equals("int")) {
+				try {
+					Integer.parseInt(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("int"); return false;
+				}
+			} 
+			else if (datentyp.equals("long")) {
+				try {
+					long l = Long.parseLong(wert); 
+					wertTextField.setText(l + "");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("long"); return false;
+				}
+			}
+			else if (datentyp.equals("short")) {
+				try {
+					Short.parseShort(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("short"); return false;
+				}
+			}
+			else if (datentyp.equals("byte")) {
+				try {
+					Byte.parseByte(wert); return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("byte"); return false;
+				}
+			}
+			else if (datentyp.equals("float")) {
+				try {
+					float f = Float.parseFloat(wert);
+					wertTextField.setText(f + "F");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("float"); return false;
+				}
+			}
+			else if (datentyp.equals("double")) {
+				try {
+					double d = Double.parseDouble(wert); 
+					wertTextField.setText(d + "");
+					return true;
+				} catch (NumberFormatException nfe) {
+					falscheEingabe("double"); return false;
+				}
+			}
 			return true;
 		}
 		showMessage(AlertType.WARNING, "Problem!",
@@ -168,7 +202,8 @@ public class ParametrisierungController implements Initializable {
 		if (isInputCorrect()) {
 			String typ = typComboBox.getSelectionModel().getSelectedItem();
 			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
-					+ "_" + StringUtils.capitalize(parameterTextField.getText()); //erster Buchstabe gross
+					//erster Buchstabe gross
+					+ "_" + StringUtils.capitalize(parameterTextField.getText()); 
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
 			
@@ -249,14 +284,9 @@ public class ParametrisierungController implements Initializable {
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				//Formatierungen bei String und char
-				//TODO: Soll jetzt auf sinnvolle werte geprueft werden?
-				if (typ.equals("String")) {
-					wert = "\"" + wert + "\"";
-				//Falls char Zeichen
-				} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
-					wert = "'" + wert + "'";		
-				}
+				//Formatierungen bei String
+				if (typ.equals("String")) wert = "\"" + wert + "\"";
+				
 				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
 			out.close();
@@ -404,13 +434,13 @@ public class ParametrisierungController implements Initializable {
 	    return pos;
 	}
 	
-	/*
+	
 	private void falscheEingabe(String typ) {
 		showMessage(AlertType.WARNING, "Problem!",
 				"Falsche Eingabe erkannt!",
 				"Geben Sie einen korrekten " + typ + " Wert ein!");
 	}
-	*/
+	
 	
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 
