@@ -105,22 +105,27 @@ public class ParametrisierungController implements Initializable {
 	 * @return true, wenn Eingaben korrekt 
 	 */
 	private boolean isInputCorrect() {
+		boolean isParaBlank = parameterTextField.getText().isBlank();
+		boolean isWertBlank = wertTextField.getText().isBlank();
+		boolean isDescBlank = descTextField.getText().isBlank();
+		boolean isTypSelected = typComboBox.getSelectionModel().isSelected(-1);
+		boolean isMethSelected = methodeComboBox.getSelectionModel().isSelected(-1);
+		
 		//pruefe, ob Formular ausgefuellt ist
-		if (! parameterTextField.getText().isBlank() 
-				&& ! wertTextField.getText().isBlank() 
-				&& ! descTextField.getText().isBlank()
-				&& ! typComboBox.getSelectionModel().isSelected(-1)
-				&& ! methodeComboBox.getSelectionModel().isSelected(-1)
-				)
-		{
-			String datentyp = typComboBox.getSelectionModel().getSelectedItem().toString();
+		if (!isParaBlank && !isWertBlank && !isDescBlank && !isTypSelected && !isMethSelected) {
+			String datentyp = typComboBox.getSelectionModel().getSelectedItem();
 			String wert = wertTextField.getText();
 			if (datentyp.equals("boolean")) {
 				if(wert.equals("true") || wert.equals("false")) return true;
 				else falscheEingabe("boolean"); return false;
 			}
 			else if (datentyp.equals("char")) {
-				if (wert.matches("(^[a-zA-Z]$)|^[-+]?\\b[0-9]+\\b")) return true;
+				if (wert.matches("^.$")) {
+					wertTextField.setText("'" + wert + "'");
+					return true;
+				} else if (wert.matches("^[-+]?\\b[0-9]+\\b")) {
+					return true;
+				}
 				else falscheEingabe("char"); return false;
 			}
 			else if (datentyp.equals("int")) {
@@ -133,7 +138,7 @@ public class ParametrisierungController implements Initializable {
 			else if (datentyp.equals("long")) {
 				try {
 					long l = Long.parseLong(wert); 
-					wertTextField.setText(l + "L");
+					wertTextField.setText(l + "");
 					return true;
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("long"); return false;
@@ -165,7 +170,7 @@ public class ParametrisierungController implements Initializable {
 			else if (datentyp.equals("double")) {
 				try {
 					double d = Double.parseDouble(wert); 
-					wertTextField.setText(d + "D");
+					wertTextField.setText(d + "");
 					return true;
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("double"); return false;
@@ -278,13 +283,10 @@ public class ParametrisierungController implements Initializable {
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				//Formatierungen bei String und char
+				//Formatierungen bei String
 				if (typ.equals("String")) {
 					wert = "\"" + wert + "\"";
-				//Falls char Zeichen
-				} else if (typ.equals("char") && wert.matches("^[a-zA-Z]$")) {
-					wert = "'" + wert + "'";		
-				}
+				} 
 				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
 			out.close();
