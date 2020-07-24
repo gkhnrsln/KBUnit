@@ -105,11 +105,11 @@ public class ParametrisierungController implements Initializable {
 	 * @return true, wenn Eingaben korrekt 
 	 */
 	private boolean isInputCorrect() {
-		boolean isParaBlank = parameterTextField.getText().isBlank();
-		boolean isWertBlank = wertTextField.getText().isBlank();
-		boolean isDescBlank = descTextField.getText().isBlank();
-		boolean isTypSelected = typComboBox.getSelectionModel().isSelected(-1);
-		boolean isMethSelected = methodeComboBox.getSelectionModel().isSelected(-1);
+		boolean isParaBlank 	= parameterTextField.getText().isBlank();
+		boolean isWertBlank 	= wertTextField.getText().isBlank();
+		boolean isDescBlank 	= descTextField.getText().isBlank();
+		boolean isTypSelected 	= typComboBox.getSelectionModel().isSelected(-1);
+		boolean isMethSelected 	= methodeComboBox.getSelectionModel().isSelected(-1);
 		
 		//pruefe, ob Formular ausgefuellt ist
 		if (!isParaBlank && !isWertBlank && !isDescBlank && !isTypSelected && !isMethSelected) {
@@ -202,7 +202,8 @@ public class ParametrisierungController implements Initializable {
 		if (isInputCorrect()) {
 			String typ = typComboBox.getSelectionModel().getSelectedItem();
 			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
-					+ "_" + StringUtils.capitalize(parameterTextField.getText()); //erster Buchstabe gross
+					//erster Buchstabe gross
+					+ "_" + StringUtils.capitalize(parameterTextField.getText()); 
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
 			
@@ -284,9 +285,8 @@ public class ParametrisierungController implements Initializable {
 				    sb.replace(i, i + 1, "\n * ");
 				}
 				//Formatierungen bei String
-				if (typ.equals("String")) {
-					wert = "\"" + wert + "\"";
-				} 
+				if (typ.equals("String")) wert = "\"" + wert + "\"";
+				
 				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
 			out.close();
