@@ -123,13 +123,14 @@ public class ParametrisierungController implements Initializable {
 					falscheEingabe("boolean");
 					return false;
 				}
-			}
-			else if (datentyp.equals("char")) {
+			} else if (datentyp.equals("char")) {
 				if (wert.matches("^\\b[0-9]+\\b")) {
 					if (Integer.parseInt(wert) > 65535) {
 						falscheEingabe("char");
 						return false;
 					}	
+				} else if (wert.matches("^'.'$")) {
+					return true;
 				} else if (wert.matches("^.$")) {
 					//fehlende Formatierung wird ergaenzt
 					if (!wert.startsWith("'") && !wert.endsWith("\'")) {
