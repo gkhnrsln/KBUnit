@@ -124,6 +124,7 @@ public class ParametrisierungController implements Initializable {
 					return false;
 				}
 			} else if (datentyp.equals("char")) {
+				//wenn (pos) Zahl
 				if (wert.matches("^\\b[0-9]+\\b")) {
 					if (Integer.parseInt(wert) > 65535) {
 						falscheEingabe("char");
@@ -312,7 +313,6 @@ public class ParametrisierungController implements Initializable {
 		showMessage(AlertType.INFORMATION, "Information",
 				"Generierte Testklasse wurde erfolgreich gespeichert!",
 				"Siehe im Sourceverzeichnis \"" + Variables.TEST_PARAMETERIZED_SOURCE + "\"!");
-		
 	}
 	
 	/**
@@ -321,9 +321,11 @@ public class ParametrisierungController implements Initializable {
 	 */
 	public void saveFile(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
-		BufferedReader quelle, txt;
+		BufferedReader quelle;
+		BufferedReader txt;
 		BufferedWriter ausgabe;
-		String zeile, txtLine;
+		String zeile;
+		String txtLine;
 		List<String> temp = new ArrayList<>();
 
 		try {
@@ -332,7 +334,8 @@ public class ParametrisierungController implements Initializable {
 			//zu hinzufuegende Testattribute
 			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
-			File newFile = new File(Variables.TEST_PARAMETERIZED_SOURCE + "/" + path.replace("Plain", ""));
+			File newFile = new File(Variables.TEST_PARAMETERIZED_SOURCE 
+					+ "/" + path.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME));
 			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {
@@ -340,7 +343,7 @@ public class ParametrisierungController implements Initializable {
 				//falls Klassenname: Zeile drunter Attribute hinzufuegen
 				if (zeile.startsWith("class") || zeile.startsWith("public class")) {
 					//Klassenname anpassen
-					ausgabe.write(zeile.replace("Plain", "") + "\n");
+					ausgabe.write(zeile.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME) + "\n");
 					while (true) {
 						//Inhalt der .txt Datei lesen
 						txtLine = txt.readLine();

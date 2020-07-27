@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class DarlehenAnalytics2TestPlain {
+class DarlehenAnalyticsTestPlain {
     // das zu testende DarlehenAnalytics-Objekt
     private final DarlehenAnalytics darlehenAnalytics = new DarlehenAnalytics();
 
