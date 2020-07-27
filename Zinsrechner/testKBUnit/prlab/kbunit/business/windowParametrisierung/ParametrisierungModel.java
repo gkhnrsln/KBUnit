@@ -19,11 +19,14 @@ import prlab.kbunit.enums.Variables;
  */
 public class ParametrisierungModel {
 	
-	private final StringProperty typ;
-	private final StringProperty attribut;
-	private final StringProperty wert;
-	private final StringProperty desc;
+	private StringProperty typ;
+	private StringProperty attribut;
+	private StringProperty wert;
+	private StringProperty desc;
 	
+	public ParametrisierungModel() {
+	}
+
 	public ParametrisierungModel(String typ, String attribut, String wert, String desc){
 		this.typ = new SimpleStringProperty(typ);
 		this.attribut = new SimpleStringProperty(attribut);

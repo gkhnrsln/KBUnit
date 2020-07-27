@@ -88,7 +88,7 @@ public class ParametrisierungController implements Initializable {
 				.replace("\\", ".")
 				.replace(".java", "");
 		
-		parametrisierungModel = new ParametrisierungModel(null, null, null, null);
+		parametrisierungModel = new ParametrisierungModel();
 		//***************fill Selection ComboBox************************************//
 		typComboBox.setItems(parametrisierungModel.datenTypen());
 		try {
@@ -115,22 +115,34 @@ public class ParametrisierungController implements Initializable {
 		if (!isParaBlank && !isWertBlank && !isDescBlank && !isTypSelected && !isMethSelected) {
 			String datentyp = typComboBox.getSelectionModel().getSelectedItem();
 			String wert = wertTextField.getText();
+			if (datentyp.equals("String") && !wert.startsWith("\"") && !wert.endsWith("\"")) {
+				wertTextField.setText("\"" + wert + "\"");
+			}
 			if (datentyp.equals("boolean")) {
-				if(wert.equals("true") || wert.equals("false")) return true;
-				else falscheEingabe("boolean"); return false;
+				if(! wert.equals("true") || ! wert.equals("false")) {
+					falscheEingabe("boolean");
+					return false;
+				}
 			}
 			else if (datentyp.equals("char")) {
-				if (wert.matches("^.$")) {
-					wertTextField.setText("'" + wert + "'");
-					return true;
-				} else if (wert.matches("^[-+]?\\b[0-9]+\\b")) {
-					return true;
+				if (wert.matches("^\\b[0-9]+\\b")) {
+					if (Integer.parseInt(wert) > 65535) {
+						falscheEingabe("char");
+						return false;
+					}	
+				} else if (wert.matches("^.$")) {
+					//fehlende Formatierung wird ergaenzt
+					if (!wert.startsWith("'") && !wert.endsWith("\'")) {
+						wertTextField.setText("'" + wert + "'");
+					}
+				} else {
+					falscheEingabe("char");
+					return false;
 				}
-				else falscheEingabe("char"); return false;
 			}
 			else if (datentyp.equals("int")) {
 				try {
-					Integer.parseInt(wert); return true;
+					Integer.parseInt(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("int"); return false;
 				}
@@ -139,21 +151,20 @@ public class ParametrisierungController implements Initializable {
 				try {
 					long l = Long.parseLong(wert); 
 					wertTextField.setText(l + "");
-					return true;
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("long"); return false;
 				}
 			}
 			else if (datentyp.equals("short")) {
 				try {
-					Short.parseShort(wert); return true;
+					Short.parseShort(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("short"); return false;
 				}
 			}
 			else if (datentyp.equals("byte")) {
 				try {
-					Byte.parseByte(wert); return true;
+					Byte.parseByte(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("byte"); return false;
 				}
@@ -162,7 +173,6 @@ public class ParametrisierungController implements Initializable {
 				try {
 					float f = Float.parseFloat(wert);
 					wertTextField.setText(f + "F");
-					return true;
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("float"); return false;
 				}
@@ -171,7 +181,6 @@ public class ParametrisierungController implements Initializable {
 				try {
 					double d = Double.parseDouble(wert); 
 					wertTextField.setText(d + "");
-					return true;
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("double"); return false;
 				}
@@ -197,12 +206,12 @@ public class ParametrisierungController implements Initializable {
 	@FXML
 	private void addToParamList(ActionEvent e) {
 		boolean isDuplicate = false;
+		//verhindere leerzeichen beim Parameter
 		parameterTextField.setText(parameterTextField.getText().replace(" ",""));
 		
 		if (isInputCorrect()) {
 			String typ = typComboBox.getSelectionModel().getSelectedItem();
 			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
-					//erster Buchstabe gross
 					+ "_" + StringUtils.capitalize(parameterTextField.getText()); 
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
@@ -218,6 +227,7 @@ public class ParametrisierungController implements Initializable {
 					break;
 				}
 			}
+			//falls kein Duplikat, fuege der Tabelle hinzu
 			if (!isDuplicate) {
 				parameterTableView.getItems().add(
 						new ParametrisierungModel(typ,attr,wert,desc));
@@ -253,7 +263,7 @@ public class ParametrisierungController implements Initializable {
 	/**
 	 * method for the transfer Button
 	 * 
-	 * Speichert die neuen Attribute in einer vorl&auml;ufigen Datei.
+	 * Speichert die neuen Zeilen des Testattribute in einer vorl&auml;ufigen Datei.
 	 * 
 	 * Ruft anschlie&szlig;end die Methode f&uuml;r das Generieren der neuen 
 	 * KBUnit-f&auml;higen JUnit-Testklasse auf.
@@ -268,7 +278,7 @@ public class ParametrisierungController implements Initializable {
 		StringBuilder sb;
 		
 		BufferedWriter out;
-		//Speicherort der Parameter
+		//Speicherort der Parameterzeilen
 		File file = new File(Variables.PARAMETER_FILE_PATH);
 		try {
 			out = new BufferedWriter(new FileWriter(file));
@@ -284,9 +294,6 @@ public class ParametrisierungController implements Initializable {
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				//Formatierungen bei String
-				if (typ.equals("String")) wert = "\"" + wert + "\"";
-				
 				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
 			}
 			out.close();
@@ -303,7 +310,8 @@ public class ParametrisierungController implements Initializable {
 		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
 				"Generierte Testklasse wurde erfolgreich gespeichert!",
-				"Siehe im Sourceverzeichnis \"test\"!");
+				"Siehe im Sourceverzeichnis \"" + Variables.TEST_PARAMETERIZED_SOURCE + "\"!");
+		
 	}
 	
 	/**
@@ -323,23 +331,21 @@ public class ParametrisierungController implements Initializable {
 			//zu hinzufuegende Testattribute
 			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
-			File newFile = new File("transferierteKlassen/" + path.replace("Plain", ""));
-			//TODO: ersetze obere Zeile mit untere Zeile
-			//File newFile = new File(Variables.TEST_SOURCE + "/" + path.replace("Plain", ""));
+			File newFile = new File(Variables.TEST_PARAMETERIZED_SOURCE + "/" + path.replace("Plain", ""));
 			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {
 				zeile = quelle.readLine();
-				//falls Klassenname: Zeile drunter attribute hinzufuegen
+				//falls Klassenname: Zeile drunter Attribute hinzufuegen
 				if (zeile.startsWith("class") || zeile.startsWith("public class")) {
 					//Klassenname anpassen
 					ausgabe.write(zeile.replace("Plain", "") + "\n");
 					while (true) {
-						//inhalt der .txt Datei lesen
+						//Inhalt der .txt Datei lesen
 						txtLine = txt.readLine();
-						//brich ab, wenn Dateiende
+						//brich ab, wenn Dateiende erreicht
 						if (txtLine == null) break;
-						//kopiere Inhalt von txt Datei
+						//kopiere Inhalt von .txt Datei
 						ausgabe.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
 						if (txtLine.contains("public static") && txtLine.contains("test") 
@@ -356,8 +362,7 @@ public class ParametrisierungController implements Initializable {
 			String strMethode = "";
 			while (true) {
 				zeile = quelle.readLine();
-				
-				//Dateiende
+				//brich ab, wenn Dateiende erreicht
 				if (zeile == null) break; 
 				
 				for (String methodeName : methodeComboBox.getItems()) {
@@ -435,13 +440,11 @@ public class ParametrisierungController implements Initializable {
 	    return pos;
 	}
 	
-	
 	private void falscheEingabe(String typ) {
 		showMessage(AlertType.WARNING, "Problem!",
 				"Falsche Eingabe erkannt!",
 				"Geben Sie einen korrekten " + typ + " Wert ein!");
 	}
-	
 	
 	//Info Fenster
 	private void showMessage(AlertType alertType, String title, 

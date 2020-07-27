@@ -3,17 +3,17 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 public class BeispielTest {
-	/** wer */
-	public static String testMethode1_Er = "werwe";
-	/** wer */
-	public static boolean testMethode1_Erf = true;
+	/** c */
+	public static String testMethode1_C = "c";
+	/** c */
+	public static String testMethode1_Cd = "Musterstring";
 	@Test
 	void testMethode1() {
-		System.out.println("Musterstring");
+		System.out.println(testMethode1_Cd);
 		System.out.println(5);
-		System.out.println("Musterstring");
+		System.out.println(testMethode1_Cd);
 		System.out.println("Musterstrin");
-		System.out.println("Musterstring" + "Musterstring");
+		System.out.println(testMethode1_Cd + testMethode1_Cd);
 	}
 	
 	@Test
