@@ -117,9 +117,10 @@ public class ParametrisierungController implements Initializable {
 			String wert = wertTextField.getText();
 			if (datentyp.equals("String") && !wert.startsWith("\"") && !wert.endsWith("\"")) {
 				wertTextField.setText("\"" + wert + "\"");
-			}
-			if (datentyp.equals("boolean")) {
-				if(! wert.equals("true") || ! wert.equals("false")) {
+			} else if (datentyp.equals("boolean")) {
+				if(wert.equals("true") || wert.equals("false")) {
+					return true;
+				} else {
 					falscheEingabe("boolean");
 					return false;
 				}
