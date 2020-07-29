@@ -550,7 +550,7 @@ public class MainFrameController implements Initializable {
 					alert.getDialogPane().setExpandableContent(expContent);
 					alert.showAndWait();
 				}
-			} catch(Exception ex) {
+			} catch(ClassNotFoundException | IOException ex) {
 				showMessage(AlertType.ERROR, "Information",
 						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
 			}
@@ -609,7 +609,7 @@ public class MainFrameController implements Initializable {
 					alert.getDialogPane().setExpandableContent(expContent);
 					alert.showAndWait();
 				}
-			} catch(Exception ex) {
+			} catch(ClassNotFoundException | IOException ex) {
 				showMessage(AlertType.ERROR, "Information",
 						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
 			}
