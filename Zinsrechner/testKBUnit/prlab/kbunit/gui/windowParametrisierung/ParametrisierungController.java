@@ -134,7 +134,7 @@ public class ParametrisierungController implements Initializable {
 					return true;
 				} else if (wert.matches("^.$")) {
 					//fehlende Formatierung wird ergaenzt
-					if (!wert.startsWith("'") && !wert.endsWith("\'")) {
+					if (!wert.startsWith("'") && !wert.endsWith("'")) {
 						wertTextField.setText("'" + wert + "'");
 					}
 				} else {
