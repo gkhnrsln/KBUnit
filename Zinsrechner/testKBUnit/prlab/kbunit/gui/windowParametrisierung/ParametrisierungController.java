@@ -130,9 +130,11 @@ public class ParametrisierungController implements Initializable {
 						falscheEingabe("char");
 						return false;
 					}	
+				} else if (wert.matches("^'.'$")) {
+					return true;
 				} else if (wert.matches("^.$")) {
 					//fehlende Formatierung wird ergaenzt
-					if (!wert.startsWith("'") && !wert.endsWith("\'")) {
+					if (!wert.startsWith("'") && !wert.endsWith("'")) {
 						wertTextField.setText("'" + wert + "'");
 					}
 				} else {
