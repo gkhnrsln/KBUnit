@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import prlab.kbunit.business.windowParametrisierung.*;
+import prlab.kbunit.business.windowParametrisierung.ParametrisierungModel;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.file.FileCreator;
 

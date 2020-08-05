@@ -32,7 +32,7 @@ import prlab.kbunit.test.ClassCreator;
  * @author G&ouml;khan Arslan
  */
 public class CTCIFileModel {
-	// das einzige FileCreatorCTCI- Objekt (singleton - pattern)
+	// das einzige CTCIFileModel - Objekt (singleton - pattern)
 	private static CTCIFileModel ctciFileModel;
 	/** JDOM XML Dokument */
 	private static Document doc;
@@ -58,6 +58,7 @@ public class CTCIFileModel {
 	private static Element elName;
 	/** Text zu Klassen mit fehlenden Beschreibungen */
 	private String strMissingDescs;
+	private DataCTCI testKlasse;
 	
 	private CTCIFileModel () {
 	}
@@ -97,13 +98,11 @@ public class CTCIFileModel {
 	 * @throws IOException
 	 */
 	private static void createXML() throws IOException {
-		FileOutputStream fileStream;
-		OutputStreamWriter writer;
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-		fileStream = new FileOutputStream(
+		FileOutputStream fileStream = new FileOutputStream(
 				Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 		//charset wegen Umlaute auf UTF-8
-		writer = new OutputStreamWriter(fileStream, "UTF-8");
+		OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
 		outputter.output(doc, writer);
 		//ersetze vorhandenen Text
 		doc.removeContent(); 
@@ -231,7 +230,7 @@ public class CTCIFileModel {
 					}
 					strDesc = prevLine + strDesc;
 					j++; //naechste Zeile (aufwaerts)
-				} while (!tmp.get(i - j).endsWith("*/"));
+				} while (true);
 				//letzte Formatierungen
 				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
@@ -361,7 +360,7 @@ public class CTCIFileModel {
 				.replace("\\", ".")
 				.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 		
-		DataCTCI testKlasse = new DataCTCI(
+		testKlasse = new DataCTCI(
 				testType(listeKlassen.get(index).toURI()),
 				testAttribute(listeKlassen.get(index)),
 				testMethoden(listeKlassen.get(index).toURI()),
@@ -435,7 +434,7 @@ public class CTCIFileModel {
 					.replace("\\", ".")
 					.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 		
-			DataCTCI testKlasse = new DataCTCI(
+			 testKlasse = new DataCTCI(
 					testType(listeKlassen.get(i).toURI()),
 					testAttribute(listeKlassen.get(i)),
 					testMethoden(listeKlassen.get(i).toURI()),
