@@ -213,7 +213,7 @@ public class ParametrisierungController implements Initializable {
 		if (isInputCorrect()) {
 			String typ = typComboBox.getSelectionModel().getSelectedItem();
 			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
-					+ "_" + StringUtils.capitalize(parameterTextField.getText()); 
+					+ "_" + parameterTextField.getText(); 
 			String wert = wertTextField.getText().trim();
 			String desc = descTextField.getText().trim();
 			

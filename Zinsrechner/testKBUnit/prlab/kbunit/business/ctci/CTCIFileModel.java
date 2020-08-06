@@ -58,6 +58,7 @@ public class CTCIFileModel {
 	private static Element elName;
 	/** Text zu Klassen mit fehlenden Beschreibungen */
 	private String strMissingDescs;
+	
 	private DataCTCI testKlasse;
 	
 	private CTCIFileModel () {
@@ -220,7 +221,7 @@ public class CTCIFileModel {
 				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
 
 				//pruefe ob Beschreibung vorhanden
-				do {
+				while (true) {
 					String prevLine = tmp.get(i - j); //vorherhige Zeile
 					if (prevLine.startsWith("/**")) {
 						strDesc = prevLine + strDesc; break;
@@ -230,7 +231,7 @@ public class CTCIFileModel {
 					}
 					strDesc = prevLine + strDesc;
 					j++; //naechste Zeile (aufwaerts)
-				} while (true);
+				}
 				//letzte Formatierungen
 				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
