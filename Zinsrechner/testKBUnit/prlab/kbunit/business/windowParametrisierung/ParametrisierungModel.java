@@ -57,25 +57,28 @@ public class ParametrisierungModel {
 	 */
 	public ObservableList<String> methoden(String pfad) 
 			throws ClassNotFoundException {
-		List<String> liste = new ArrayList<>();
+		List<String> list = new ArrayList<>();
+
 		Class<?> clazz = Class.forName(pfad);
 		//nur oeffentliche Methoden
 		for (Method method : clazz.getDeclaredMethods()) {
-			for (Annotation s : method.getAnnotations()) {
-				switch ("@" + s.annotationType().getSimpleName()) {
+			
+			for (Annotation annotation : method.getAnnotations()) {
+				//nur Methoden mit Testannotation
+				switch ("@" + annotation.annotationType().getSimpleName()) {
 					case Variables.ANNOTATION_TEST5:
 					case Variables.ANNOTATION_TEST5_REPEATED:
 					case Variables.ANNOTATION_TEST5_PARAMETERIZED:
 					case Variables.ANNOTATION_TEST5_FACTORY:
 					case Variables.ANNOTATION_TEST5_TEMPLATE:
-						liste.add(method.getName());
+						list.add(method.getName());
 						break;
 					default:
 						break;
 				}
 			}
 		}
-		return FXCollections.observableArrayList(liste);
+		return FXCollections.observableArrayList(list);
 	}
 	
 	//getter setter
@@ -83,31 +86,31 @@ public class ParametrisierungModel {
 		return typ;
 	}
 
-	public void setTyp(String txt) {
-		typ.set(txt);
+	public void setTyp(String typ) {
+		this.typ.set(typ);
 	}
 
 	public StringProperty getAttribut() {
 		return attribut;
 	}
 
-	public void setAttribut(String txt) {
-		attribut.set(txt);
+	public void setAttribut(String attribut) {
+		this.attribut.set(attribut);
 	}
 
 	public StringProperty getWert() {
 		return wert;
 	}
 
-	public void setWert(String txt) {
-		wert.set(txt);
+	public void setWert(String wert) {
+		this.wert.set(wert);
 	}
 	
 	public StringProperty getDesc() {
 		return desc;
 	}
 
-	public void setDesc(String txt) {
-		desc.set(txt);
+	public void setDesc(String desc) {
+		this.desc.set(desc);
 	}
 }

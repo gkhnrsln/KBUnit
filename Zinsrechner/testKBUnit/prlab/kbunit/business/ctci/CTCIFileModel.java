@@ -65,7 +65,7 @@ public class CTCIFileModel {
 	}
 	
 	/**
-	 * Singleton vom FileCreatorCTCI-Model
+	 * Singleton vom CTCIFileModel
 	 */
 	public static CTCIFileModel getInstance() {
 		if(ctciFileModel == null) {
@@ -149,16 +149,15 @@ public class CTCIFileModel {
 				) {
 				//Zaehler fuer Zeilen (aufwaerts)
 				int j = 1;
-				//pruefe bis in vorheriger Zeile "/**" vorkommt
+				//pruefe bis Javadoc-Anfang vorkommt
 				while (!tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
-					//wenn vorherige Zeile mit "}" oder ";" endet 
-					//-> kein Javadoc-Kommentar vorhanden
+					//wenn kein Javadoc-Kommentar vorhanden
 					if (prevLine.endsWith("}") || (prevLine.endsWith(";") 
 							&& ! prevLine.startsWith("*"))) {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
-					//Zeile ueberspringen wenn Annotation/Javadoc-Ende vorhanden ist
+					//Zeile ueberspringen wenn Annotation/Javadoc-Ende
 					else if(prevLine.startsWith("@") || prevLine.contains("*/")) {
 						j++; //naechste Zeile (aufwaerts)
 						continue;
@@ -179,13 +178,14 @@ public class CTCIFileModel {
 						.replace("[:A]", "Ä").replace("[:O]", "Ö")
 						.replace("[:U]", "Ü").replace("[:a]", "ä")
 						.replace("[:o]", "ö").replace("[:u]", "ü");
-				//fuege der Liste ein neue Beschreibung hinzu
+				//fuege Liste eine neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
 			i++;//naechste Zeile (abwaerts)
 		}
 		return liste;
 	}
+	
 	/**
 	 * Gibt eine Liste der Javadoc-Kommentare zu den Testattributen der 
 	 * angegebenen Java Datei zur&uuml;ck.
@@ -236,7 +236,6 @@ public class CTCIFileModel {
 				strDesc = strDesc.replace("/**", "").replace("*/", "")
 						.replace("*", "")
 						//Javadoc-Tags entfernen
-						//.replace("{@\\w+.$", "")
 						.replace("{@link", "")
 					    .replace("{@code", "")
 						.replace("}", "")
