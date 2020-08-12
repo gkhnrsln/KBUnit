@@ -44,8 +44,6 @@ public class Variables {
 	public final static String TEST_PLAIN_NAME = "TestPlain";
 	/**{@value #TEST_PLAIN_SOURCE}*/
 	public final static String TEST_PLAIN_SOURCE = "testPlain";
-	/**{@value #TEST_PLAIN_SOURCE}*/
-	public final static String TEST_PARAMETERIZED_SOURCE = "testParameterized";
 	/**{@value #TEST_NEW_SOURCE}*/
 	public final static String TEST_NEW_SOURCE = "testKBUnit";
 	/**{@value #ALLTEST_PACKAGE}*/

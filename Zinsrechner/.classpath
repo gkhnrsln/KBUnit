@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="testKBUnit"/>
 	<classpathentry kind="src" path="testPlain"/>
-	<classpathentry kind="src" path="testParameterized"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.6">
 		<attributes>
 			<attribute name="module" value="true"/>

@@ -56,7 +56,7 @@ public class CTCIFileModel {
 	private static Element elParameter;
 	/** Tag {@code <name>} f&uuml;r das XML Dokument*/
 	private static Element elName;
-	/** Text zu Klassen mit fehlenden Beschreibungen */
+	// Text zu Klassen mit fehlenden Beschreibungen
 	private String strMissingDescs;
 	
 	private DataCTCI testKlasse;

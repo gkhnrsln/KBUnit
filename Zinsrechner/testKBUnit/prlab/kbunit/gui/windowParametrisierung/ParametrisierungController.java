@@ -140,45 +140,39 @@ public class ParametrisierungController implements Initializable {
 					falscheEingabe("char");
 					return false;
 				}
-			}
-			else if (datentyp.equals("int")) {
+			} else if (datentyp.equals("int")) {
 				try {
 					Integer.parseInt(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("int"); return false;
 				}
-			} 
-			else if (datentyp.equals("long")) {
+			} else if (datentyp.equals("long")) {
 				try {
 					long l = Long.parseLong(wert); 
 					wertTextField.setText(l + "");
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("long"); return false;
 				}
-			}
-			else if (datentyp.equals("short")) {
+			} else if (datentyp.equals("short")) {
 				try {
 					Short.parseShort(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("short"); return false;
 				}
-			}
-			else if (datentyp.equals("byte")) {
+			} else if (datentyp.equals("byte")) {
 				try {
 					Byte.parseByte(wert);
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("byte"); return false;
 				}
-			}
-			else if (datentyp.equals("float")) {
+			} else if (datentyp.equals("float")) {
 				try {
 					float f = Float.parseFloat(wert);
 					wertTextField.setText(f + "F");
 				} catch (NumberFormatException nfe) {
 					falscheEingabe("float"); return false;
 				}
-			}
-			else if (datentyp.equals("double")) {
+			} else if (datentyp.equals("double")) {
 				try {
 					double d = Double.parseDouble(wert); 
 					wertTextField.setText(d + "");
@@ -211,16 +205,16 @@ public class ParametrisierungController implements Initializable {
 		parameterTextField.setText(parameterTextField.getText().replace(" ",""));
 		
 		if (isInputCorrect()) {
-			String typ = typComboBox.getSelectionModel().getSelectedItem();
-			String attr = methodeComboBox.getSelectionModel().getSelectedItem()
+			String strType = typComboBox.getSelectionModel().getSelectedItem();
+			String strAttr = methodeComboBox.getSelectionModel().getSelectedItem()
 					+ "_" + parameterTextField.getText(); 
-			String wert = wertTextField.getText().trim();
-			String desc = descTextField.getText().trim();
+			String strVal = wertTextField.getText().trim();
+			String strDesc = descTextField.getText().trim();
 			
 			//Gehe jeden Eintrag der Tabelle durch
 			for (int i = 0; i < parameterTableView.getItems().size(); i++) {
 				//pruefe, ob aktuelle Zeile Duplikat
-				if (attributColumn.getCellData(i).equals(attr)) {
+				if (attributColumn.getCellData(i).equals(strAttr)) {
 					isDuplicate = true;
 					showMessage(AlertType.WARNING, "Problem!",
 							"Duplikat erkannt!",
@@ -231,7 +225,7 @@ public class ParametrisierungController implements Initializable {
 			//falls kein Duplikat, fuege der Tabelle hinzu
 			if (!isDuplicate) {
 				parameterTableView.getItems().add(
-						new ParametrisierungModel(typ,attr,wert,desc));
+						new ParametrisierungModel(strType,strAttr,strVal,strDesc));
 				deleteButton.setDisable(false);
 				saveButton.setDisable(false);
 			}
@@ -272,10 +266,10 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		String typ;
-		String attribut;
-		String wert;
-		String desc;
+		String strType;
+		String strAttr;
+		String strVal;
+		String strDesc;
 		StringBuilder sb;
 		
 		BufferedWriter out;
@@ -284,18 +278,18 @@ public class ParametrisierungController implements Initializable {
 		try {
 			out = new BufferedWriter(new FileWriter(file));
 			for (ParametrisierungModel pm : parameterTableView.getItems()) {
-				typ 		= pm.getTyp().getValue();
-				attribut 	= pm.getAttribut().getValue();
-				wert 		= pm.getWert().getValue();
-				desc 		= pm.getDesc().getValue();
+				strType 	= pm.getTyp().getValue();
+				strAttr 	= pm.getAttribut().getValue();
+				strVal 		= pm.getWert().getValue();
+				strDesc 	= pm.getDesc().getValue();
 				
 				//Zeilenumbruch, bei laengeren Kommentaren
-				sb = new StringBuilder(desc);
+				sb = new StringBuilder(strDesc);
 				int i = 0;
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				out.write("/** " + sb + " */\npublic static " + typ + " " + attribut + " = " + wert + ";\n");
+				out.write("/** " + sb + " */\npublic static " + strType + " " + strAttr + " = " + strVal + ";\n");
 			}
 			out.close();
 		} catch (IOException e2) {
@@ -311,7 +305,7 @@ public class ParametrisierungController implements Initializable {
 		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
 				"Generierte Testklasse wurde erfolgreich gespeichert!",
-				"Siehe im Sourceverzeichnis \"" + Variables.TEST_PARAMETERIZED_SOURCE + "\"!");
+				"Siehe im Sourceverzeichnis \"" + Variables.TEST_SOURCE + "\"!");
 	}
 	
 	/**
@@ -320,10 +314,9 @@ public class ParametrisierungController implements Initializable {
 	 */
 	public void saveFile(String path) {
 		List<String> listeTestAttribute = new ArrayList<>();
-		BufferedReader quelle;
-		BufferedReader txt;
-		BufferedWriter ausgabe;
-		String zeile;
+		BufferedReader quelle, txt;
+		BufferedWriter out;
+		String strZeile;
 		String txtLine;
 		List<String> temp = new ArrayList<>();
 
@@ -333,23 +326,23 @@ public class ParametrisierungController implements Initializable {
 			//zu hinzufuegende Testattribute
 			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
-			File newFile = new File(Variables.TEST_PARAMETERIZED_SOURCE 
+			File newFile = new File(Variables.TEST_SOURCE 
 					+ "/" + path.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME));
-			ausgabe = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
+			out = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {
-				zeile = quelle.readLine();
+				strZeile = quelle.readLine();
 				//falls Klassenname: Zeile drunter Attribute hinzufuegen
-				if (zeile.startsWith("class") || zeile.startsWith("public class")) {
+				if (strZeile.startsWith("class") || strZeile.startsWith("public class")) {
 					//Klassenname anpassen
-					ausgabe.write(zeile.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME) + "\n");
+					out.write(strZeile.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME) + "\n");
 					while (true) {
 						//Inhalt der .txt Datei lesen
 						txtLine = txt.readLine();
 						//brich ab, wenn Dateiende erreicht
 						if (txtLine == null) break;
 						//kopiere Inhalt von .txt Datei
-						ausgabe.write("\t" + txtLine + "\n");
+						out.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
 						if (txtLine.contains("public static") && txtLine.contains("test") 
 								&& txtLine.contains("=")) {
@@ -359,24 +352,24 @@ public class ParametrisierungController implements Initializable {
 					txt.close();
 					break;
 				}
-				ausgabe.write(zeile + "\n");
+				out.write(strZeile + "\n");
 			}
 			//ab letzte Testattribut Zeile
 			String strMethode = "";
 			while (true) {
-				zeile = quelle.readLine();
+				strZeile = quelle.readLine();
 				//brich ab, wenn Dateiende erreicht
-				if (zeile == null) break; 
+				if (strZeile == null) break; 
 				
 				for (String methodeName : methodeComboBox.getItems()) {
 					//method gefunden
-					if(zeile.contains(methodeName + "(")) {
+					if(strZeile.contains(methodeName + "(")) {
 						strMethode = methodeName;
 						temp.clear(); //leere Liste fuer neue Inhalte
 						//pruefe, ob Attribute zur Methode passen
 						for (String attr : listeTestAttribute) {
-							String strAttrName = attr.substring(attr.indexOf("test")
-									, attr.indexOf("_"));
+							String strAttrName = attr.substring(attr.indexOf("test"),
+									attr.indexOf("_"));
 							if(methodeName.equals(strAttrName)) temp.add(attr);
 						}
 						break;
@@ -384,13 +377,14 @@ public class ParametrisierungController implements Initializable {
 				}
 				
 				for (String attr : temp) {
-					String strAttrNameFull = attr.substring(attr.indexOf("test"), attr.indexOf("=") - 1);
+					String strAttrNameFull = attr.substring(attr.indexOf("test"),
+							attr.indexOf("=") - 1);
 					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
-					if (zeile.contains(strAttrVal)) {
+					if (strZeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
-						int count = StringUtils.countMatches(zeile, strAttrVal);
-						StringBuilder sb = new StringBuilder(zeile);
+						int count = StringUtils.countMatches(strZeile, strAttrVal);
+						StringBuilder sb = new StringBuilder(strZeile);
 						int n = 0;
 						int index;
 						for (int i = 0; i < count; i++) {
@@ -399,7 +393,7 @@ public class ParametrisierungController implements Initializable {
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
 							alert.setHeaderText("Zu ersetzenden Wert [" + strAttrVal +"] "
-									+ "in folgender Zeile gefunden:\n" + zeile.trim()
+									+ "in folgender Zeile gefunden:\n" + strZeile.trim()
 									+ "\nNachher\n" 
 									+ sb.replace(index, index + strAttrVal.length(), strAttrNameFull).toString().trim()
 									);
@@ -407,19 +401,19 @@ public class ParametrisierungController implements Initializable {
 							
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
-								zeile = "" + sb;
+								strZeile = "" + sb;
 								n = 0;
 							} else {
-								zeile = "" + sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
+								strZeile = "" + sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
 								n++;
 							}
 						}	
 					}
 				}
-				ausgabe.write(zeile + "\n");
+				out.write(strZeile + "\n");
 			}
 			quelle.close();
-			ausgabe.close();
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
