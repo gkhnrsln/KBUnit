@@ -147,9 +147,9 @@ public class CTCIFileModel {
 				|| line.contains(Variables.DYNAMIC_TEST)
 				|| line.contains(Variables.DYNAMIC_CONTAINER)
 				) {
-				//Zaehler fuer Zeilen (aufwaerts)
-				int j = 1;
-				//pruefe bis Javadoc-Anfang vorkommt
+				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
+				
+				/* pruefe bis Javadoc-Anfang vorkommt */
 				while (!tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
 					//wenn kein Javadoc-Kommentar vorhanden
@@ -165,12 +165,11 @@ public class CTCIFileModel {
 					//wenn Javadoc-Tag vorhanden
 					else if(prevLine.contains("* @")) {
 						strDesc = ""; //vorherigen Inhalt entfernen
-						j++; //naechste Zeile (aufwaerts)
+						j++;
 						continue;
-					}
-					else {
+					} else {
 						strDesc = prevLine + strDesc;
-						j++; //naechste Zeile (aufwaerts)
+						j++;
 					}
 				}
 				//letzte Formatierungen
@@ -295,7 +294,7 @@ public class CTCIFileModel {
 					)
 				.collect(Collectors.toList());
 		stream.close();
-		//for (String s : liste) System.out.println(s);
+		for (String s : liste) System.out.println(s);
 		List<String> methoden = new ArrayList<>();
 		for (int i = 0; i < liste.size(); i++) {
 			String line = liste.get(i);
