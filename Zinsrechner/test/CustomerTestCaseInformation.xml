@@ -90,17 +90,6 @@
       </parameters>
     </testcase>
     <testcase>
-      <path>darlehen.Tilgungsdarlehen2Test.testBerechneGesamtschuld</path>
-      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
-      <testtype>5</testtype>
-      <parameters>
-        <parameter>
-          <name>testBerechneGesamtschuld_asdasd</name>
-          <desc>ddd</desc>
-        </parameter>
-      </parameters>
-    </testcase>
-    <testcase>
       <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
       <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
       <testtype>5</testtype>

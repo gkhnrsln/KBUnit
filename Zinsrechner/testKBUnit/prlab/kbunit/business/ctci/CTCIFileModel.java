@@ -225,8 +225,7 @@ public class CTCIFileModel {
 					String prevLine = tmp.get(i - j); //vorherhige Zeile
 					if (prevLine.startsWith("/**")) {
 						strDesc = prevLine + strDesc; break;
-					}
-					else if (prevLine.endsWith(";")) {
+					} else if (prevLine.endsWith(";")) {
 						strDesc = "Beschreibung fehlt"; break;
 					}
 					strDesc = prevLine + strDesc;
@@ -279,14 +278,12 @@ public class CTCIFileModel {
 	 * @exception ClassNotFoundException
 	 */
 	private List<String> testMethoden(URI file) throws IOException {
-		List<String> liste = null;
-		List<String> methoden = new ArrayList<>();
-		
 		//lies die Datei zeilenweise aus
 		Stream<String> stream = Files.lines(Paths.get(file));
-		liste = stream
+		List<String> liste = stream
 				.map(Objects::toString)
-				.filter(m -> m.contains(Variables.METHOD_START_VOID)
+				.filter(m -> (m.contains(Variables.METHOD_START_VOID) 
+						&& m.contains("test"))
 					|| m.contains(Variables.DYNAMIC_NODE)
 					|| m.contains(Variables.DYNAMIC_CONTAINER)
 					|| m.contains(Variables.DYNAMIC_TEST)
@@ -298,7 +295,8 @@ public class CTCIFileModel {
 					)
 				.collect(Collectors.toList());
 		stream.close();
-		
+		//for (String s : liste) System.out.println(s);
+		List<String> methoden = new ArrayList<>();
 		for (int i = 0; i < liste.size(); i++) {
 			String line = liste.get(i);
 			if (line.contains(Variables.ANNOTATION_TEST5)
