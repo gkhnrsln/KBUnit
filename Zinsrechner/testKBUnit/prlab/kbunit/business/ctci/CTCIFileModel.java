@@ -322,9 +322,8 @@ public class CTCIFileModel {
 	 * @exception IOException
 	 */
 	private int testType(URI file) throws IOException {
-		Stream<String> testTyp;
 		Stream<String> stream = Files.lines(Paths.get(file));
-		testTyp = stream
+		Stream<String> testTyp = stream
 				.map(Objects::toString)
 				//JUnit 5 Tests enthalten folgenden import
 				.filter(type -> type.contains("import org.junit.jupiter"));
