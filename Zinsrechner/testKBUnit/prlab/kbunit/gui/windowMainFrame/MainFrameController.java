@@ -329,7 +329,7 @@ public class MainFrameController implements Initializable {
 						|| testExecutionSummary.getContainersSkippedCount() > 0)
 					{
 						testSuccess = TestResultInfo.TESTSKIPPED;
-						testMessage = "Test wurde übersprungen";
+						testMessage = "Test wurde Ã¼bersprungen";
 					}
 					else if(testExecutionSummary.getTestsSucceededCount() > 0)
 					{
@@ -509,8 +509,8 @@ public class MainFrameController implements Initializable {
 		
 		if (mainFrameModel.getCtciFile().exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestätigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setTitle("BestÃ¤tigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird Ã¼berschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -524,16 +524,21 @@ public class MainFrameController implements Initializable {
 				this.ctciFileModel = CTCIFileModel.getInstance();
 				ctciFileModel.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
 				
-				if (ctciFileModel.getStrMissingDescs().isEmpty()) {
+				if (ctciFileModel.getLiMissDesc().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!ctciFileModel.getStrMissingDescs().isEmpty()) {
+				} else if (!ctciFileModel.getLiMissDesc().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(ctciFileModel.getStrMissingDescs());
+					String temp = "";
+					for (String s : ctciFileModel.getLiMissDesc()) {
+						temp += s + "\n";
+					}
+					
+					TextArea textArea = new TextArea(temp);
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -569,8 +574,8 @@ public class MainFrameController implements Initializable {
 		
 		if (mainFrameModel.getCtciFile().exists()) {
 			alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Bestätigung");
-			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setTitle("BestÃ¤tigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird Ã¼berschrieben.");
 			alert.setContentText("Sind Sie damit einverstanden?");
 			
 			Optional<ButtonType> result = alert.showAndWait();
@@ -583,16 +588,21 @@ public class MainFrameController implements Initializable {
 			try {
 				this.ctciFileModel = CTCIFileModel.getInstance();
 				ctciFileModel.createFile();
-				if (ctciFileModel.getStrMissingDescs().isEmpty()) {
+				if (ctciFileModel.getLiMissDesc().isEmpty()) {
 					showMessage(AlertType.INFORMATION, "Information",
 							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
-				} else if (!ctciFileModel.getStrMissingDescs().isEmpty()) {
+				} else if (!ctciFileModel.getLiMissDesc().isEmpty()) {
 					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Problem!");
 					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
 					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
 					
-					TextArea textArea = new TextArea(ctciFileModel.getStrMissingDescs());
+					String temp = "";
+					for (String s : ctciFileModel.getLiMissDesc()) {
+						temp += s + "\n";
+					}
+					
+					TextArea textArea = new TextArea(temp);
 					textArea.setEditable(false);
 					textArea.setWrapText(true);
 					
@@ -632,7 +642,7 @@ public class MainFrameController implements Initializable {
 			}
 			catch (Exception exc) {
 				showMessage(AlertType.WARNING, "Problem!", 
-					"Fehler beim Löschen des der Testkonfiguration!", exc.getMessage());
+					"Fehler beim LÃ¶schen des der Testkonfiguration!", exc.getMessage());
 				ok = false;
 			}
 			if(ok) {				
@@ -650,7 +660,7 @@ public class MainFrameController implements Initializable {
 		}
 		else {
 			showMessage(AlertType.WARNING, "Problem!", 
-				"Keine Testkonfiguration ausgewählt!", "Bitte wählen Sie eine Testkonfiguration aus!");
+				"Keine Testkonfiguration ausgewÃ¤hlt!", "Bitte wÃ¤hlen Sie eine Testkonfiguration aus!");
 		}
 	}
 
@@ -660,7 +670,7 @@ public class MainFrameController implements Initializable {
 			if(inactiveResultTable.getSelectionModel().isEmpty()){
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Alert!");
-				alert.setHeaderText("Keine inaktive ID ausgewählt");
+				alert.setHeaderText("Keine inaktive ID ausgewÃ¤hlt");
 				alert.showAndWait();
 			} 
 			else {
@@ -675,7 +685,7 @@ public class MainFrameController implements Initializable {
 			}
 		} catch (Exception e) {
 			showMessage(AlertType.WARNING, "Warnung", 
-				"Keine ID ausgewählt!", e.getMessage());
+				"Keine ID ausgewÃ¤hlt!", e.getMessage());
 		}
 	}
 	
@@ -736,7 +746,7 @@ public class MainFrameController implements Initializable {
 		}
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestcaseInformation.xml konnte nicht geÃ¶ffnet werden.");
 		}
 	}
 		
@@ -799,7 +809,7 @@ public class MainFrameController implements Initializable {
         }
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestCaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestCaseInformation.xml konnte nicht geÃ¶ffnet werden.");
 		}
 	}
 
