@@ -56,8 +56,8 @@ public class CTCIFileModel {
 	private static Element elParameter;
 	/** Tag {@code <name>} f&uuml;r das XML Dokument*/
 	private static Element elName;
-	// Text zu Klassen mit fehlenden Beschreibungen
-	private String strMissingDescs;
+	
+	private ArrayList<String> liMissDesc;
 	
 	private DataCTCI testKlasse;
 	
@@ -173,10 +173,10 @@ public class CTCIFileModel {
 					}
 				}
 				//letzte Formatierungen
-				strDesc = strDesc.replace("*", "").replace("[:ss]", "ß")
-						.replace("[:A]", "Ä").replace("[:O]", "Ö")
-						.replace("[:U]", "Ü").replace("[:a]", "ä")
-						.replace("[:o]", "ö").replace("[:u]", "ü");
+				strDesc = strDesc.replace("*", "").replace("[:ss]", "ÃŸ")
+						.replace("[:A]", "Ã„").replace("[:O]", "Ã–")
+						.replace("[:U]", "Ãœ").replace("[:a]", "Ã¤")
+						.replace("[:o]", "Ã¶").replace("[:u]", "Ã¼");
 				//fuege Liste eine neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -238,10 +238,10 @@ public class CTCIFileModel {
 					    .replace("{@code", "")
 						.replace("}", "")
 						//Umlaute
-						.replace("[:ss]", "ß").replace("[:A]", "Ä")
-						.replace("[:O]", "Ö").replace("[:U]", "Ü")
-						.replace("[:a]", "ä").replace("[:o]", "ö")
-						.replace("[:u]", "ü");
+						.replace("[:ss]", "ÃŸ").replace("[:A]", "Ã„")
+						.replace("[:O]", "Ã–").replace("[:U]", "Ãœ")
+						.replace("[:a]", "Ã¤").replace("[:o]", "Ã¶")
+						.replace("[:u]", "Ã¼");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -341,16 +341,12 @@ public class CTCIFileModel {
 	 */
 	public void createFile(int index) throws IOException, ClassNotFoundException {
 		load();
-		elRoot.addContent(elTestCases);
-
+		
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
 		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
 				Variables.EXTENSION_TEST_JAVA);
 
-		strMissingDescs = "";
-		List<Element> listeElParameters = new ArrayList<>();
-		
 		String strKlasse = listeKlassen.get(index).toString();
 		strKlasse = strKlasse
 				.replace("\\", ".")
@@ -364,6 +360,9 @@ public class CTCIFileModel {
 				descTestMethoden(listeKlassen.get(index))
 				);
 		
+		liMissDesc = new ArrayList<>();
+		List<Element> listeElParameters = new ArrayList<>();
+		
 		int k = 0; //Zaehler fuer testMethoden
 		
 		//Gehe jede Testmethode der Testklasse durch
@@ -371,7 +370,7 @@ public class CTCIFileModel {
 			int j = 0; //Zaehler fuer testAttribute
 			String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
 			if (strDescMeth.equals("Beschreibung fehlt"))
-				strMissingDescs += strMeth + "\n";
+				liMissDesc.add(strMeth);
 
 			//Gehe jedes Testattribut der Testklasse durch
 			for (String strAttr : testKlasse.getListeTestAttribute()) {
@@ -379,7 +378,7 @@ public class CTCIFileModel {
 					String strDescAttr = 
 							testKlasse.getListeDescTestAttribute().get(j);
 					if (strDescAttr.equals("Beschreibung fehlt"))
-			   			strMissingDescs += "\t\t" + strAttr + "\n";
+			   			liMissDesc.add("\t" + strAttr);
 			   		
 			   		listeElParameters.add(elParameter.clone()
 			   			.addContent(elName.clone().setText(strAttr))
@@ -402,7 +401,7 @@ public class CTCIFileModel {
 			elTestCases.addContent(elTestCase.clone());
 			k++; //naechste testMethode
 		}
-		doc.setContent(elRoot);
+		doc.setContent(elRoot.addContent(elTestCases));
 		//Erstelle die XML-Datei
 		createXML();
 	}
@@ -414,15 +413,14 @@ public class CTCIFileModel {
 	 */
 	public void createFile() throws IOException, ClassNotFoundException {
 		load();
-		elRoot.addContent(elTestCases);
-
+		
 		//Gehe jede Testklasse durch
 		ArrayList<File> listeKlassen = new ArrayList<>();
 		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
 				Variables.EXTENSION_TEST_JAVA);
 		
-		strMissingDescs = "";
 		List<Element> listeElParameters = new ArrayList<>();
+		liMissDesc = new ArrayList<>();
 		
 		for (int i = 0; listeKlassen.size() > i; i++) {
 			String strKlasse = listeKlassen.get(i).toString();
@@ -447,10 +445,10 @@ public class CTCIFileModel {
 				String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
 				if (strDescMeth.equals("Beschreibung fehlt")) {
 					if(isNextClass) {
-						strMissingDescs += strKlasse + "\n";
+						liMissDesc.add(strKlasse);
 						isNextClass = false;
 					}
-					strMissingDescs += "\t" + strMeth + "\n";
+					liMissDesc.add("\t" + strMeth);
 				}
 				
 				//Gehe jedes Testattribut der Testklasse durch
@@ -459,7 +457,7 @@ public class CTCIFileModel {
 						String strDescAttr = 
 								testKlasse.getListeDescTestAttribute().get(j);
 						if (strDescAttr.equals("Beschreibung fehlt"))  
-							strMissingDescs += "\t\t" + strAttr + "\n";
+							liMissDesc.add("\t\t" + strAttr);
 						
 						listeElParameters.add(elParameter.clone()
 							.addContent(elName.clone().setText(strAttr))
@@ -475,7 +473,7 @@ public class CTCIFileModel {
  
 				elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
 					.addContent(elDescMethode.clone().setText(strDescMeth))
-					.addContent(elTestType.clone().setText(""+ testKlasse.getTestTyp()))
+					.addContent(elTestType.clone().setText("" + testKlasse.getTestTyp()))
 					.addContent(elParameters.clone()
 				);
 				
@@ -483,17 +481,17 @@ public class CTCIFileModel {
 				k++; //naechste testMethode
 			}
 		}
-		doc.setContent(elRoot);
+		doc.setContent(elRoot.addContent(elTestCases));
 		//Erstelle die XML-Datei
 		createXML();
 	}
 	
 	//getter and setter
-	public String getStrMissingDescs() {
-		return strMissingDescs;
+	public ArrayList<String> getLiMissDesc() {
+		return liMissDesc;
 	}
 
-	public void setStrMissingDescs(String strMissingDescs) {
-		this.strMissingDescs = strMissingDescs;
+	public void setLiMissDesc(ArrayList<String>  liMissDesc) {
+		this.liMissDesc = liMissDesc;
 	}
 }
