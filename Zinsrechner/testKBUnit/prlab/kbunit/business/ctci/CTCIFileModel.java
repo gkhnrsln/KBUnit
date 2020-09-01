@@ -294,7 +294,7 @@ public class CTCIFileModel {
 					)
 				.collect(Collectors.toList());
 		stream.close();
-		for (String s : liste) System.out.println(s);
+		//for (String s : liste) System.out.println(s);
 		List<String> methoden = new ArrayList<>();
 		for (int i = 0; i < liste.size(); i++) {
 			String line = liste.get(i);
@@ -311,7 +311,7 @@ public class CTCIFileModel {
 		}
 		return methoden;
 	}
-	
+
 	/**
 	 * Gibt JUnit Testtyp der &uuml;bergebenen Java Testklasse zur&uuml;ck.
 	 * @param file Datei, dessen JUnit-Testtyp (4 oder 5) erkannt werden soll
