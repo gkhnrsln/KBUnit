@@ -173,10 +173,10 @@ public class CTCIFileModel {
 					}
 				}
 				//letzte Formatierungen
-				strDesc = strDesc.replace("*", "").replace("[:ss]", "ÃŸ")
-						.replace("[:A]", "Ã„").replace("[:O]", "Ã–")
-						.replace("[:U]", "Ãœ").replace("[:a]", "Ã¤")
-						.replace("[:o]", "Ã¶").replace("[:u]", "Ã¼");
+				strDesc = strDesc.replace("*", "").replace("[:ss]", "ß")
+						.replace("[:A]", "Ä").replace("[:O]", "Ö")
+						.replace("[:U]", "Ü").replace("[:a]", "ä")
+						.replace("[:o]", "ö").replace("[:u]", "ü");
 				//fuege Liste eine neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
@@ -238,10 +238,10 @@ public class CTCIFileModel {
 					    .replace("{@code", "")
 						.replace("}", "")
 						//Umlaute
-						.replace("[:ss]", "ÃŸ").replace("[:A]", "Ã„")
-						.replace("[:O]", "Ã–").replace("[:U]", "Ãœ")
-						.replace("[:a]", "Ã¤").replace("[:o]", "Ã¶")
-						.replace("[:u]", "Ã¼");
+						.replace("[:ss]", "ß").replace("[:A]", "Ä")
+						.replace("[:O]", "Ö").replace("[:U]", "Ü")
+						.replace("[:a]", "ä").replace("[:o]", "ö")
+						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
 				liste.add(strDesc);
 			}
