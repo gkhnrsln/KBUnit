@@ -92,9 +92,9 @@ public class MainFrameController implements Initializable {
 	private Button javafileButton;
 
 	@FXML
-	private ComboBox<File> javaFilePlainComboBox;
+	private ComboBox<File> javafilePlainComboBox;
 	@FXML 
-	private Button javaFilePlainButton;
+	private Button javafilePlainButton;
 	
 	// Generate CTCI
 	@FXML
@@ -170,7 +170,7 @@ public class MainFrameController implements Initializable {
 		try {
 			javafileComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_SOURCE, Variables.EXTENSION_TEST_JAVA));
-			javaFilePlainComboBox.setItems(mainFrameModel
+			javafilePlainComboBox.setItems(mainFrameModel
 				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
 						Variables.EXTENSION_TEST_PLAIN_JAVA));
 			//falls Testklassen vorhanden, sind Buttons aktiv
@@ -187,7 +187,7 @@ public class MainFrameController implements Initializable {
 		}
 
 		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
-		javaFilePlainComboBox.getSelectionModel().select(-1);
+		javafilePlainComboBox.getSelectionModel().select(-1);
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
 
@@ -448,9 +448,9 @@ public class MainFrameController implements Initializable {
 	 * @param event
 	 */
 	@FXML
-	private void javaFilePlainChoose(ActionEvent event) {
-		if (javaFilePlainComboBox.getSelectionModel().selectedItemProperty() != null) {
-			javaFilePlainButton.setDisable(false);
+	private void javafilePlainChoose(ActionEvent event) {
+		if (javafilePlainComboBox.getSelectionModel().selectedItemProperty() != null) {
+			javafilePlainButton.setDisable(false);
 		}
 	}
 	
@@ -459,7 +459,7 @@ public class MainFrameController implements Initializable {
 	 * @param event
 	 */
 	@FXML
-	private void javaFileChoose(ActionEvent event) {
+	private void javafileChoose(ActionEvent event) {
 		if (javafileComboBox.getSelectionModel().selectedItemProperty() != null) {
 			startGenerateCTCIButton.setDisable(false);
 			if (mainFrameModel.getCtciFile().exists()) javafileButton.setDisable(false);
@@ -468,7 +468,7 @@ public class MainFrameController implements Initializable {
 	
 
 	/**
-	 * method for the "konvertieren" button.
+	 * method for the "parameterize" button.
 	 * @param event
 	 * @throws IOException 
 	 */
@@ -492,7 +492,7 @@ public class MainFrameController implements Initializable {
 			e.printStackTrace();
 		}
 		ParametrisierungController parametrisierungController = loader.getController();
-		parametrisierungController.setKlassePfad(javaFilePlainComboBox.getSelectionModel().getSelectedItem().toString());
+		parametrisierungController.setKlassePfad(javafilePlainComboBox.getSelectionModel().getSelectedItem().toString());
 		parametrisierungController.initModel();
 		dialogStage.showAndWait();
 	}

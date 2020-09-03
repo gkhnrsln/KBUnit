@@ -106,8 +106,7 @@ public class CTCIFileModel {
 		OutputStreamWriter writer = new OutputStreamWriter(fileStream, "UTF-8");
 		outputter.output(doc, writer);
 		//ersetze vorhandenen Text
-		doc.removeContent(); 
-		
+		doc.removeContent();
 	}
 	
 	/**
@@ -294,7 +293,6 @@ public class CTCIFileModel {
 					)
 				.collect(Collectors.toList());
 		stream.close();
-		//for (String s : liste) System.out.println(s);
 		List<String> methoden = new ArrayList<>();
 		for (int i = 0; i < liste.size(); i++) {
 			String line = liste.get(i);
@@ -328,7 +326,6 @@ public class CTCIFileModel {
 		stream.close();
 		return n > 0 ? 5 : 4;
 	}
-	
 	
 	/**
 	 * Erstellt die CustomerTestCaseInformation.xml f&uuml;r eine bestimmte Testklasse,
@@ -401,7 +398,7 @@ public class CTCIFileModel {
 			elTestCases.addContent(elTestCase.clone());
 			k++; //naechste testMethode
 		}
-		doc.setContent(elRoot.addContent(elTestCases));
+		doc.setRootElement(elRoot.addContent(elTestCases));
 		//Erstelle die XML-Datei
 		createXML();
 	}
@@ -437,16 +434,16 @@ public class CTCIFileModel {
 					);
 		
 			int k = 0; //Zaehler fuer testMethoden
-			boolean isNextClass = true;
+			boolean isNextClazz = true;
 			
 			//Gehe jede Testmethode der Testklasse durch
 			for (String strMeth : testKlasse.getListeTestMethoden()) {
 				int j = 0; //Zaehler fuer testAttribute
 				String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
 				if (strDescMeth.equals("Beschreibung fehlt")) {
-					if(isNextClass) {
+					if(isNextClazz) {
 						liMissDesc.add(strKlasse);
-						isNextClass = false;
+						isNextClazz = false;
 					}
 					liMissDesc.add("\t" + strMeth);
 				}
@@ -481,7 +478,7 @@ public class CTCIFileModel {
 				k++; //naechste testMethode
 			}
 		}
-		doc.setContent(elRoot.addContent(elTestCases));
+		doc.setRootElement(elRoot.addContent(elTestCases));
 		//Erstelle die XML-Datei
 		createXML();
 	}
