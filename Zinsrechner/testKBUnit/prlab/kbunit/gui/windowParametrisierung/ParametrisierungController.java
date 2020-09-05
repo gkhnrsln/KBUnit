@@ -258,30 +258,23 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		String strType;
-		String strAttr;
-		String strVal;
-		String strDesc;
 		StringBuilder sb;
-		
 		BufferedWriter out;
 		//Speicherort der Parameterzeilen
 		File file = new File(Variables.PARAMETER_FILE_PATH);
 		try {
 			out = new BufferedWriter(new FileWriter(file));
 			for (ParametrisierungModel pm : parameterTableView.getItems()) {
-				strType 	= pm.getTyp().getValue();
-				strAttr 	= pm.getAttribut().getValue();
-				strVal 		= pm.getWert().getValue();
-				strDesc 	= pm.getDesc().getValue();
-				
 				//Zeilenumbruch, bei laengeren Kommentaren
-				sb = new StringBuilder(strDesc);
+				sb = new StringBuilder(pm.getDesc().getValue());
 				int i = 0;
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
 				}
-				out.write("/** " + sb + " */\npublic static " + strType + " " + strAttr + " = " + strVal + ";\n");
+				out.write("/** " + sb + " */\n");
+				out.write("public static " + pm.getTyp().getValue());
+				out.write(" " + pm.getAttribut().getValue());
+				out.write(" = " + pm.getWert().getValue() + ";\n");
 			}
 			out.close();
 		} catch (IOException e2) {
