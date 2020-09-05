@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <testcases>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testSollTilgungsdarlehenAkzeptiertWerden</path>
+      <desc>Liest die Werte der Tilgungsdarlehen aus der Datei tilgungsdarlehen.csv ein, die zuvor mit der Terminal-Anwendung (Tilgungsdarlehenrechner) erstelllt worden sind. Danach wird anhand der vom Wissensträger definierten Werte kontrolliert, ob die Werte vom Tilgungsdarlehen akzeptiert werden können.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinDarlehen</name>
+          <desc>vom Wissensträger einstellbare Mindestdarlehen</desc>
+        </parameter>
+        <parameter>
+          <name>testSollTilgungsdarlehenAkzeptiertWerden_MaxLaufzeit</name>
+          <desc>vom Wissensträger einstellbare maximale Laufzeit</desc>
+        </parameter>
+        <parameter>
+          <name>testSollTilgungsdarlehenAkzeptiertWerden_MinJahreszahl</name>
+          <desc>vom Wissensträger einstellbare minimale Jahreszahl</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testSortiereTilgungsdarlehenNachGesamtschuld</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters />
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMin</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testGetGesamtschuldenMin_MinGesamtschuld</name>
+          <desc>vom Wissensträger einstellbare minimale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldenMax</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testGetGesamtschuldenMax_MaxGesamtschuld</name>
+          <desc>vom Wissensträger einstellbare maximale Gesamtschuld, die sie unter den Darlehen befinden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testGetGesamtschuldMaxUsingMocks</path>
+      <desc>Bestimmt das Maximum aus einer vom Wissensträger definierten Liste aus Zahlen. Die Tilgungsdarlehen-Objekte werden gemockt: Es werden jeweils nur die Gesamtschulden benötigt.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testGetGesamtschuldMaxUsingMocks_Gesamtschulden</name>
+          <desc>vom Wissensträger einstellbare Gesamtschulden für Tilgungsdarlehen Stub. Angabe der Wert erfolgt durch das Trennen mit Komma</desc>
+        </parameter>
+        <parameter>
+          <name>testGetGesamtschuldMaxUsingMocks_NumOfGetGesamtschuldenCallsForEach</name>
+          <desc>vom Wissensträger einstellbare Anzahl der Methodenaufrufe von  darlehen.Tilgungsdarlehen#getGesamtschuld, die für jedes Tilgungsdarlehen durchgeführt werden, um das Maximum zu bestimmen</desc>
+        </parameter>
+        <parameter>
+          <name>testGetGesamtschuldMaxUsingMocks_exp_MaxGesamtschuld</name>
+          <desc>vom Wissensträger einstellbare erwartete maximale Gesamtschuld die aus den beiden vom Wissensträger einstellbaren Werten bestimmt werden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions1</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerAssumptions1_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgeführt, falls Zahl gleich 1 ist</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.DarlehenAnalyticsTest.testFuerAssumptions2</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerAssumptions2_Zahl</name>
+          <desc>vom Wissensträger einstellbare Zahl. Test wird ausgeführt, falls Zahl gleich 1 ist</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneGesamtschuld</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechneGesamtschuld_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneGesamtschuld_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechneAnnuitaetFuerPeriode</path>
+      <desc>Test zur Methode berechneAnnuitaetFuerPeriode aus der Klasse Tilgungsdarlehen</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbare Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_Periode</name>
+          <desc>vom Wissenstraeger einstellbare Periode des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechneAnnuitaetFuerPeriode_exp_ErwarteteAnnuitaet</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Annuitaets</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>darlehen.TilgungsdarlehenTest.testBerechnungGesamtschuldMitInflation</path>
+      <desc>Test zur Methode berechneGesamtschuld aus der Klasse Tilgungsdarlehen mit dem Setzen der Inflationsrate. Durch die randomisierte Ermittlung der Inflationsrate ist die Testausfuehrung zufallsbehaftet, was ein Grund fuer den Einsatz von RepeatedTests sein kann.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_User</name>
+          <desc>vom Wissenstraeger einstellbarer Name des Benutzers des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Darlehen</name>
+          <desc>vom Wissenstraeger einstellbare Hoehe des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Laufzeit</name>
+          <desc>vom Wissenstraeger einstellbare Laufzeit des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Zinssatz</name>
+          <desc>vom Wissenstraeger einstellbarer Zinssatz des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_exp_ErwarteteGesamtschuld</name>
+          <desc>vom Wissenstraeger einstellbare erwartete Gesamtschuld des Darlehens</desc>
+        </parameter>
+        <parameter>
+          <name>testBerechnungGesamtschuldMitInflation_Bias</name>
+          <desc>vom Wissenstraeger tolerierte Abweichung zwischen erwarteter und berechneter Gesamtschuld</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testSetKundeZumKonto</path>
+      <desc>Test zum Setzen des Kunden zu dem Konto</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testSetKundeZumKonto_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testSetKontoZumKunden</path>
+      <desc>Test zum Setzen des Konto zu dem Kunden</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testSetKontoZumKunden_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testRechneAlterMal2</path>
+      <desc>Test von Multiplikation. Die Formatierung ist absichtlich so gewaehlt, als Test fuer den KBUnit-Runner</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRechneAlterMal2_Alter</name>
+          <desc>vom Wissenstraeger einstellbares Alter des Kunden des Kontos</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testWithArg</path>
+      <desc>Dieser Testfall befindet sich nicht im Testfallverwaltungsdokument CustomerTestCaseInformation.xml, wird aber in der zu exportierenden JAR als Teil dieser Klasse mit den anderen Testfaellen verpackt.</desc>
+      <testtype>5</testtype>
+      <parameters />
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testWithExternalMethodSource</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testWithExternalMethodSource_Musterstring</name>
+          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.JUnit5KontoTest.testFuerDisabled</path>
+      <desc>Dieser Test ist erfolgreich, falls der Anwender Musterstring eingibt.</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFuerDisabled_Musterstring</name>
+          <desc>vom Wissenstraeger einstellbarer Musterstring</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>konten.KontoTest.testSetKundeZumKonto</path>
+      <desc>Test zum Setzen des Kunden zu dem Konto</desc>
+      <testtype>4</testtype>
+      <parameters>
+        <parameter>
+          <name>testSetKundeZumKonto_Nachname</name>
+          <desc>vom Wissenstraeger einstellbarer Nachname des Kunden des Kontos</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerStandard</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerStandard_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basen, die potenziert werden sollen</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerRepeated</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerRepeated_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerParameterized</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerParameterized_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerTemplate</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerTemplate_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testRaiseToPowerPerformance</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRaiseToPowerPerformance_Base</name>
+          <desc>Beschreibung fehlt</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_TimeoutInNanos</name>
+          <desc>vom Wissenstraeger einstellbarer Wert, nach wie vielen Millisekunden die Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_Exponent</name>
+          <desc>vom Wissenstraeger einstellbarer Exponent, mit der die zugehoerige Basis im Performance-Test potenziert werden soll</desc>
+        </parameter>
+        <parameter>
+          <name>testRaiseToPowerPerformance_exp_Result</name>
+          <desc>vom Wissenstraeger einstellbares Ergebnis, das im Performance-Test zu den entsprechenden Parametern erwartet wird</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.MathDotPowTest.testFactory</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testFactory_Base</name>
+          <desc>vom Wissenstraeger einstellbare Basis fuer die TestFactory, die potenziert werden soll</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>math.TestFactoryTest.testDynamicTestFromIntStream</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testDynamicTestFromIntStream_Limit</name>
+          <desc>vom Wissenstraeger einstellbare Zahl, welche ersten n geraden natuerlichen Zahlen ausgegeben werden sollen</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>methodTypes.ParameterizingTest.testWithValueSource</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testWithValueSource_Bias</name>
+          <desc>vom Wissenstraeger einstellbare Zahl, die als Bias dient</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>methodTypes.RepeatingTest.testRepeating</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testRepeating_MaxRepetition</name>
+          <desc>vom Wissenstraeger einstellbare maximale Wiederholungszahl, fuer den Repeated Test, bei dem noch erfolgreich ausgefuehrt wird</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>methodTypes.TemplateTest.testTemplate</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testTemplate_ListShouldContain</name>
+          <desc>vom Wissenstraeger einstellbarer Wahrheitswert</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+    <testcase>
+      <path>service.BerechnungsserviceTest.testAddiereAlleZahlen</path>
+      <desc>Beschreibung fehlt</desc>
+      <testtype>5</testtype>
+      <parameters>
+        <parameter>
+          <name>testAddiereAlleZahlen_EingabeZahl1</name>
+          <desc>Der erste Parameter fuer die Addition</desc>
+        </parameter>
+        <parameter>
+          <name>testAddiereAlleZahlen_EingabeZahl2</name>
+          <desc>Der zweite Parameter fuer die Addition</desc>
+        </parameter>
+        <parameter>
+          <name>testAddiereAlleZahlen_EingabeZahl3</name>
+          <desc>Der dritte Parameter fuer die Addition</desc>
+        </parameter>
+        <parameter>
+          <name>testAddiereAlleZahlen_exp_ErgebnisSumme</name>
+          <desc>Ergebnis-Summe, die zur Ueberpruefung dient</desc>
+        </parameter>
+      </parameters>
+    </testcase>
+  </testcases>
+</root>

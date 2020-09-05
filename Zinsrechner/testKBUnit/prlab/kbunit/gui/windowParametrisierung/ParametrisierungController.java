@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -73,7 +75,6 @@ public class ParametrisierungController implements Initializable {
 	 * init Nodes
 	 */
 	public void initModel() {
-		
 		typColumn.setCellValueFactory(cellData
 				-> cellData.getValue().getTyp());
 		attributColumn.setCellValueFactory(cellData
@@ -96,6 +97,22 @@ public class ParametrisierungController implements Initializable {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		//addButton erst aktiv, wenn Formular ausgefuellt
+		BooleanBinding booleanBind = descTextField.textProperty().isEmpty()
+				.or(parameterTextField.textProperty().isEmpty())
+				.or(wertTextField.textProperty().isEmpty())
+				.or(typComboBox.getSelectionModel().selectedIndexProperty()
+						.isEqualTo(-1))
+				.or(methodeComboBox.getSelectionModel().selectedIndexProperty()
+						.isEqualTo(-1));
+		addButton.disableProperty().bind(booleanBind);
+		//deleteButton
+		deleteButton.disableProperty().bind(Bindings.isEmpty(
+				parameterTableView.getItems()));
+		//saveButton
+		saveButton.disableProperty().bind(Bindings.isEmpty(
+				parameterTableView.getItems()));
 	}
 	
 	/**
@@ -105,95 +122,76 @@ public class ParametrisierungController implements Initializable {
 	 * @return true, wenn Eingaben korrekt 
 	 */
 	private boolean isInputCorrect() {
-		boolean isParaBlank 	= parameterTextField.getText().isBlank();
-		boolean isWertBlank 	= wertTextField.getText().isBlank();
-		boolean isDescBlank 	= descTextField.getText().isBlank();
-		boolean isTypSelected 	= typComboBox.getSelectionModel().isSelected(-1);
-		boolean isMethSelected 	= methodeComboBox.getSelectionModel().isSelected(-1);
-		
 		//pruefe, ob Formular ausgefuellt ist
-		if (!isParaBlank && !isWertBlank && !isDescBlank && !isTypSelected && !isMethSelected) {
-			String datentyp = typComboBox.getSelectionModel().getSelectedItem();
-			String wert = wertTextField.getText();
-			if (datentyp.equals("String") && !wert.startsWith("\"") && !wert.endsWith("\"")) {
-				wertTextField.setText("\"" + wert + "\"");
-			} else if (datentyp.equals("boolean")) {
-				if(! wert.equals("true") && ! wert.equals("false")) {
-					falscheEingabe("boolean");
-					return false;
-				}
-			} else if (datentyp.equals("char")) {
-				//wenn (pos) Zahl
-				if (wert.matches("^\\b[0-9]+\\b")) {
-					if (Integer.parseInt(wert) > 65535) {
-						falscheEingabe("char");
-						return false;
-					}	
-				} else if (wert.matches("^'.'$")) {
-					return true;
-				} else if (wert.matches("^.$")) {
-					//fehlende Formatierung wird ergaenzt
-					if (!wert.startsWith("'") && !wert.endsWith("'")) {
-						wertTextField.setText("'" + wert + "'");
-					}
-				} else {
-					falscheEingabe("char");
-					return false;
-				}
-			} else if (datentyp.equals("int")) {
-				try {
-					Integer.parseInt(wert);
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("int"); return false;
-				}
-			} else if (datentyp.equals("long")) {
-				try {
-					long l = Long.parseLong(wert); 
-					wertTextField.setText(l + "");
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("long"); return false;
-				}
-			} else if (datentyp.equals("short")) {
-				try {
-					Short.parseShort(wert);
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("short"); return false;
-				}
-			} else if (datentyp.equals("byte")) {
-				try {
-					Byte.parseByte(wert);
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("byte"); return false;
-				}
-			} else if (datentyp.equals("float")) {
-				try {
-					float f = Float.parseFloat(wert);
-					wertTextField.setText(f + "F");
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("float"); return false;
-				}
-			} else if (datentyp.equals("double")) {
-				try {
-					double d = Double.parseDouble(wert); 
-					wertTextField.setText(d + "");
-				} catch (NumberFormatException nfe) {
-					falscheEingabe("double"); return false;
-				}
+		String datentyp = typComboBox.getSelectionModel().getSelectedItem();
+		String wert = wertTextField.getText();
+		if (datentyp.equals("String") && !wert.startsWith("\"") && !wert.endsWith("\"")) {
+			wertTextField.setText("\"" + wert + "\"");
+		} else if (datentyp.equals("boolean")) {
+			if(! wert.equals("true") && ! wert.equals("false")) {
+				falscheEingabe("boolean"); return false;
 			}
-			return true;
+		} else if (datentyp.equals("char")) {
+			//wenn (pos) Zahl
+			if (wert.matches("^[0-9]+$")) {
+				if (Integer.parseInt(wert) > Character.MAX_VALUE) {
+					falscheEingabe("char"); return false;						
+				}	
+			} else if (wert.matches("^'.'$")) {
+				return true;
+			} else if (wert.matches("^.$")) {
+				//fehlende Formatierung wird ergaenzt
+				if (!wert.startsWith("'") && !wert.endsWith("'")) {
+					wertTextField.setText("'" + wert + "'");
+				}
+			} else {
+				falscheEingabe("char"); return false;
+			}
+		} else if (datentyp.equals("int")) {
+			try {
+				Integer.parseInt(wert);
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("int"); return false;
+			}
+		} else if (datentyp.equals("long")) {
+			try {
+				Long.parseLong(wert);
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("long"); return false;
+			}
+		} else if (datentyp.equals("short")) {
+			try {
+				Short.parseShort(wert);
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("short"); return false;
+			}
+		} else if (datentyp.equals("byte")) {
+			try {
+				Byte.parseByte(wert);
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("byte"); return false;
+			}
+		} else if (datentyp.equals("float")) {
+			try {
+				wertTextField.setText(Float.parseFloat(wert) + "f");
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("float"); return false;
+			}
+		} else if (datentyp.equals("double")) {
+			try {
+				wertTextField.setText(Double.parseDouble(wert) + "");
+			} catch (NumberFormatException nfe) {
+				falscheEingabe("double"); return false;
+			}
 		}
-		showMessage(AlertType.WARNING, "Problem!",
-				"Formular unvollständig!",
-				"Füllen Sie das Formular aus, bevor Sie Werte hinzufügen wollen!");
-		return false;
+		return true;
 	}
 	
 	/**
 	 * method for the add Button
 	 * 
 	 * F&uuml;ge der Tabelle eine neue Zeile hinzu. Es wird weiterhin darauf geachtet,
-	 * dass keine Duplikate zu den Attributen existieren. Der erste Buchstabe des
-	 * Parameters wird automatisch in Gro&szlig;buchstaben abgespeichert.
+	 * dass keine Duplikate zu den Attributen existieren.
 	 * 
 	 * Konkatenation bei Parameter und Bezeichner der Testmethode, z. B.:
 	 * {@code testMethode1_Parameter}
@@ -203,7 +201,7 @@ public class ParametrisierungController implements Initializable {
 		boolean isDuplicate = false;
 		//verhindere leerzeichen beim Parameter
 		parameterTextField.setText(parameterTextField.getText().replace(" ",""));
-		
+
 		if (isInputCorrect()) {
 			String strType = typComboBox.getSelectionModel().getSelectedItem();
 			String strAttr = methodeComboBox.getSelectionModel().getSelectedItem()
@@ -226,8 +224,6 @@ public class ParametrisierungController implements Initializable {
 			if (!isDuplicate) {
 				parameterTableView.getItems().add(
 						new ParametrisierungModel(strType,strAttr,strVal,strDesc));
-				deleteButton.setDisable(false);
-				saveButton.setDisable(false);
 			}
 		}
 	}
@@ -248,10 +244,6 @@ public class ParametrisierungController implements Initializable {
 			showMessage(AlertType.WARNING, "Problem!", 
 					"Kein Testattribut ausgewählt!",
 					"Bitte wählen Sie ein Testattribut aus!");
-		}
-		if (parameterTableView.getItems().isEmpty()) {
-			saveButton.setDisable(true);
-			deleteButton.setDisable(true);
 		}
 	}
 	
