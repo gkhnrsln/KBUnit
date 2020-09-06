@@ -116,10 +116,12 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * Pr&uuml;ft, ob das Formular korrekt ausgef&uuml;llt ist.
-	 * 
-	 * Bei Zahlen wird auf Min und Max werte geachtet.
-	 * @return true, wenn Eingaben korrekt 
+	 * Pr&uuml;ft, ob der Wert in Zusammenhang mit dem ausgew&auml;hlten Datentypen
+	 * korrekt ist. Bei Zahlen wird auf Min und Max werte geachtet. Fehlende 
+	 * Formatierungen bei 'String' und ggf. 'char' werden erg&auml;nzt. L&auml;ngere
+	 * Zahlendarstellungen (z. B. bei 'double') werden in die wissenschaftliche
+	 * Schreibweise umgewandelt.
+	 * @return true, wenn Wert korrekt
 	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
@@ -294,26 +296,26 @@ public class ParametrisierungController implements Initializable {
 	}
 	
 	/**
-	 * generiert neuen KBUnit-f&auml;higen JUnit-Testklasse
+	 * Generiert neuen KBUnit-f&auml;higen JUnit-Testklasse.
 	 * @param path 
 	 */
 	public void saveFile(String path) {
-		List<String> listeTestAttribute = new ArrayList<>();
-		BufferedReader quelle, txt;
-		BufferedWriter out;
-		String strZeile;
-		String txtLine;
+		String strZeile, txtLine;
 		List<String> temp = new ArrayList<>();
-
+		List<String> listeTestAttribute = new ArrayList<>();
+		
 		try {
-			//JUnit Testklasse
-			quelle = new BufferedReader(new FileReader(Variables.TEST_PLAIN_SOURCE + path));
-			//zu hinzufuegende Testattribute
-			txt = new BufferedReader(new FileReader(Variables.PARAMETER_FILE_PATH));
+			//TestPlain-Datei
+			BufferedReader quelle = new BufferedReader(new FileReader(
+					Variables.TEST_PLAIN_SOURCE + path));
+			//Parameter-Datei
+			BufferedReader txt = new BufferedReader(new FileReader(
+					Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
 			File newFile = new File(Variables.TEST_SOURCE 
 					+ "/" + path.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME));
-			out = new BufferedWriter(new FileWriter(FileCreator.createMissingPackages(newFile)));
+			BufferedWriter out = new BufferedWriter(new FileWriter(
+					FileCreator.createMissingPackages(newFile)));
 			
 			while (true) {
 				strZeile = quelle.readLine();
