@@ -244,7 +244,7 @@ public class ParametrisierungController implements Initializable {
 			parameterTableView.getItems().remove(index);
 		} else {
 			showMessage(AlertType.WARNING, "Problem!", 
-					"Kein Testattribut ausgewählt!",
+					"Kein Testattribut zum Löschen ausgewählt!",
 					"Bitte wählen Sie ein Testattribut aus!");
 		}
 	}
