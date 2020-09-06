@@ -320,7 +320,7 @@ public class ParametrisierungController implements Initializable {
 			while (true) {
 				strZeile = quelle.readLine();
 				//falls Klassenname: Zeile drunter Attribute hinzufuegen
-				if (strZeile.startsWith("class") || strZeile.startsWith("public class")) {
+				if (strZeile.matches("(class|public class).+Test.+")) {
 					//Klassenname anpassen
 					out.write(strZeile.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME) + "\n");
 					while (true) {
@@ -331,8 +331,7 @@ public class ParametrisierungController implements Initializable {
 						//kopiere Inhalt von .txt Datei
 						out.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
-						if (txtLine.contains("public static") && txtLine.contains("test") 
-								&& txtLine.contains("=")) {
+						if (txtLine.matches("public static.+test.+_.+=.+$")) {
 							listeTestAttribute.add(txtLine);
 						}
 					}
