@@ -15,11 +15,10 @@ public class BeispielTestPlain {
 
 	@Test
 	void testBerechneGesamtschuld() throws Exception {
-		System.out.println("Sample");
-		System.out.println("Sample" + "Sample");
-		System.out.println("Sample Sample");
-		System.out.println("Sample" + "Sample Sample" + "Sample");
-		System.out.println("Sample" + 4 + "kk");
+		
+
+		System.out.println("Sample" + "Sample" + "Sample");
+
 		}
 
 }

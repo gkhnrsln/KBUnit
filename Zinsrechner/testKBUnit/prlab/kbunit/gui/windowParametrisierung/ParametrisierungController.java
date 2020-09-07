@@ -377,34 +377,33 @@ public class ParametrisierungController implements Initializable {
 						//falls in einer Zeile mehrere Faelle vorhanden
 						int count = StringUtils.countMatches(strZeile, strAttrVal);
 						StringBuilder sb = new StringBuilder(strZeile);
-						int n = 0;
-						int index;
+						
+						int n = 1;
 						for (int i = 0; i < count; i++) {
 							//Finde das n-te Vorkommen eines substring in einer Zeichenfolge
-							index = StringUtils.ordinalIndexOf(sb, strAttrVal, n+1);
-							//Fenster
+							int index = StringUtils.ordinalIndexOf(sb, strAttrVal, n);
+							//Bestaetigungs-Fenster
+							sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
-							alert.setHeaderText("Zu ersetzenden Wert [" + strAttrVal +"] "
-									+ "in folgender Zeile gefunden:\n" + strZeile.trim()
+							alert.setHeaderText("Zu ersetzender Wert [" + strAttrVal +"]"
+									+ " in folgender Zeile gefunden:\n" + strZeile.trim()
 									+ "\nNachher\n" 
-									+ sb.replace(index, index + strAttrVal.length(), strAttrNameFull).toString().trim()
+									+ sb.toString().trim()
 									);
 							alert.setContentText("Sind Sie damit einverstanden?");
-							
+							//Aenderung zustimmen oder verweigern
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
-								strZeile = "" + sb;
-								n = 0;
+								strZeile = sb.toString();
 							} else {
-								strZeile = "" + sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
+								sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
 								n++;
 							}
 						}	
 					}
 				}
 				out.write(strZeile + "\n");
-				
 			}
 			quelle.close();
 			out.close();

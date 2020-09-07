@@ -3,8 +3,8 @@ package darlehen;
 import org.junit.Test;
 
 public class BeispielTest {
-	/** sdf */
-	public static String testBerechneGesamtschuld_name = "Sample";
+	/** d */
+	public static String testBerechneGesamtschuld_We = "Sample";
 	
 	private Tilgungsdarlehen t;
 
@@ -17,11 +17,10 @@ public class BeispielTest {
 
 	@Test
 	void testBerechneGesamtschuld() throws Exception {
-		System.out.println(testBerechneGesamtschuld_name);
-		System.out.println("Sample" + testBerechneGesamtschuld_name);
-		System.out.println("Sample Sample");
-		System.out.println(testBerechneGesamtschuld_name + "Sample Sample" + testBerechneGesamtschuld_name);
-		System.out.println("Sample" + 4 + "kk");
+		
+
+		System.out.println("Sample" + "Sample" + testBerechneGesamtschuld_We);
+
 		}
 
 }
