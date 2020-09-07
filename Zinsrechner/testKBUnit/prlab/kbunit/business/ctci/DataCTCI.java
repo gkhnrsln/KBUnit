@@ -12,31 +12,31 @@ public class DataCTCI {
 	/** JUnit Testtyp der Testklasse */
 	private int testTyp;
 	/** Liste der Testmethoden der Testklasse */
-	private List<String> listeTestMethoden;
+	private List<String> liTestMethoden;
 	/** Liste der Testattribute der Testklasse */
-	private List<String> listeTestAttribute;
+	private List<String> liTestAttribute;
 	/** Liste der Beschreibungen der Testmethoden der Testklasse */
-	private List<String> listeDescTestMethoden;
+	private List<String> liDescTestMethoden;
 	/** Liste der Beschreibungen der Testattribute der Testklasse */
-	private List<String> listeDescTestAttribute;
+	private List<String> liDescTestAttribute;
 	
 	/**
 	 * Konstruktor
 	 * @param typ JUnit Testtyp der Testklasse
-	 * @param listeAttr Liste der TestAttribute der Testklasse
-	 * @param listeMeth Liste der TestMethoden der Testklasse
-	 * @param listeDescAttr Liste der Beschreibungen der Testattribute der Testklasse
-	 * @param listeDescMeth Liste der Beschreibungen der Testmethoden der Testklasse
+	 * @param liAttr Liste der TestAttribute der Testklasse
+	 * @param liMeth Liste der TestMethoden der Testklasse
+	 * @param liDescAttr Liste der Beschreibungen der Testattribute der Testklasse
+	 * @param liDescMeth Liste der Beschreibungen der Testmethoden der Testklasse
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public DataCTCI(int typ, List<String> listeAttr, List<String> listeMeth, List<String> listeDescAttr, List<String> listeDescMeth) 
+	public DataCTCI(int typ, List<String> liAttr, List<String> liMeth, List<String> liDescAttr, List<String> liDescMeth) 
 			throws IOException, ClassNotFoundException {
 		this.testTyp = typ;
-		this.listeTestAttribute = listeAttr;
-		this.listeTestMethoden = listeMeth;
-		this.listeDescTestMethoden = listeDescMeth;
-		this.listeDescTestAttribute = listeDescAttr;
+		this.liTestAttribute = liAttr;
+		this.liTestMethoden = liMeth;
+		this.liDescTestMethoden = liDescMeth;
+		this.liDescTestAttribute = liDescAttr;
 	}
 	
 	//getter setter
@@ -48,35 +48,35 @@ public class DataCTCI {
 		this.testTyp = typ;
 	}
 
-	public List<String> getListeTestMethoden() {
-		return listeTestMethoden;
+	public List<String> getLiTestMethoden() {
+		return liTestMethoden;
 	}
 	
-	public void setListeTestMethoden(List<String> liste) {
-		this.listeTestMethoden = liste;
+	public void setLiTestMethoden(List<String> li) {
+		this.liTestMethoden = li;
 	}
 	
-	public List<String> getListeDescTestMethoden() {
-		return listeDescTestMethoden;
+	public List<String> getLiDescTestMethoden() {
+		return liDescTestMethoden;
 	}
 	
-	public void setListeDescTestMethoden(List<String> liste) {
-		this.listeDescTestMethoden = liste;
+	public void setLiDescTestMethoden(List<String> li) {
+		this.liDescTestMethoden = li;
 	}
 
-	public List<String> getListeTestAttribute() {
-		return listeTestAttribute;
+	public List<String> getLiTestAttribute() {
+		return liTestAttribute;
 	}
 	
-	public void setListeTestAttribute(List<String> liste) {
-		this.listeTestAttribute = liste;
+	public void setLiTestAttribute(List<String> li) {
+		this.liTestAttribute = li;
 	}
 	
-	public List<String> getListeDescTestAttribute() {
-		return listeDescTestAttribute;
+	public List<String> getLiDescTestAttribute() {
+		return liDescTestAttribute;
 	}
 	
-	public void setListeDescTestAttribute(List<String> liste) {
-		this.listeDescTestAttribute = liste;
+	public void setLiDescTestAttribute(List<String> li) {
+		this.liDescTestAttribute = li;
 	}
 }

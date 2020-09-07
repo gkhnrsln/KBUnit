@@ -120,7 +120,7 @@ public class CTCIFileModel {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testmethoden
-		List<String> liste = new ArrayList<String>();
+		List<String> li = new ArrayList<String>();
 		
 		//Lese file zeilenweise aus und fuege Zeile in eine Liste
 		BufferedReader in = new BufferedReader(new FileReader(file));
@@ -177,11 +177,11 @@ public class CTCIFileModel {
 						.replace("[:U]", "Ü").replace("[:a]", "ä")
 						.replace("[:o]", "ö").replace("[:u]", "ü");
 				//fuege Liste eine neue Beschreibung hinzu
-				liste.add(strDesc);
+				li.add(strDesc);
 			}
 			i++;//naechste Zeile (abwaerts)
 		}
-		return liste;
+		return li;
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public class CTCIFileModel {
 		//Temporaere Liste fuer Zeileninhalte
 		List<String> tmp = new ArrayList<String>();
 		//Liste mit den Beschreibungen zu den Testattributen
-		List<String> liste = new ArrayList<String>();
+		List<String> li = new ArrayList<String>();
 		
 		//Lese file zeilenweise aus und fuege Zeile in eine Liste
 		BufferedReader in = new BufferedReader(new FileReader(file));
@@ -215,7 +215,7 @@ public class CTCIFileModel {
 			//Javadoc-Kommentar der Testattribute
 			String strDesc = "";
 			String line = tmp.get(i); //aktuelle Zeile
-			if(line.startsWith("public static") && line.contains("test")) {
+			if (line.matches("^public static.+test.+_.+=.+")) {
 				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
 
 				//pruefe ob Beschreibung vorhanden
@@ -242,11 +242,11 @@ public class CTCIFileModel {
 						.replace("[:a]", "ä").replace("[:o]", "ö")
 						.replace("[:u]", "ü");
 				//fuege der Liste ein neue Beschreibung hinzu
-				liste.add(strDesc);
+				li.add(strDesc);
 			}
 			i++; //naechste Zeile (abwaerts)
 		}
-		return liste;
+		return li;
 	} 
 	
 	/**
@@ -259,14 +259,14 @@ public class CTCIFileModel {
 		//Formatierungen fuer den Pfad
 		String strFile = ClassCreator.convertIntoClassName(file, Variables.TEST_SOURCE);
 		
-		List<String> liste = new ArrayList<>();
+		List<String> li = new ArrayList<>();
 
 		Class<?> clazz = Class.forName(strFile);
 		for (Field field : clazz.getFields()) {
 			if(field.getName().startsWith("test"))
-				liste.add(field.getName());
+				li.add(field.getName());
 		}
-		return liste;
+		return li;
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class CTCIFileModel {
 	private List<String> testMethoden(URI file) throws IOException {
 		//lies die Datei zeilenweise aus
 		Stream<String> stream = Files.lines(Paths.get(file));
-		List<String> liste = stream
+		List<String> li = stream
 				.map(Objects::toString)
 				.filter(m -> (m.contains(Variables.METHOD_START_VOID) 
 						&& m.contains("test"))
@@ -294,16 +294,16 @@ public class CTCIFileModel {
 				.collect(Collectors.toList());
 		stream.close();
 		List<String> methoden = new ArrayList<>();
-		for (int i = 0; i < liste.size(); i++) {
-			String line = liste.get(i);
+		for (int i = 0; i < li.size(); i++) {
+			String line = li.get(i);
 			if (line.contains(Variables.ANNOTATION_TEST5)
 				|| line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
 				|| line.contains(Variables.ANNOTATION_TEST5_REPEATED)
 				|| line.contains(Variables.ANNOTATION_TEST5_FACTORY)
 				|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
 				) {
-				String methode = liste.get(i+1)
-						.substring(liste.get(i+1).indexOf("test"));
+				String methode = li.get(i+1)
+						.substring(li.get(i+1).indexOf("test"));
 				methoden.add(methode.substring(0, methode.indexOf('(')));
 			}
 		}
@@ -340,44 +340,44 @@ public class CTCIFileModel {
 		load();
 		
 		//Gehe jede Testklasse durch
-		ArrayList<File> listeKlassen = new ArrayList<>();
-		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
+		ArrayList<File> liKlassen = new ArrayList<>();
+		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), liKlassen,
 				Variables.EXTENSION_TEST_JAVA);
 
-		String strKlasse = listeKlassen.get(index).toString();
+		String strKlasse = liKlassen.get(index).toString();
 		strKlasse = strKlasse
 				.replace("\\", ".")
 				.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 		
 		testKlasse = new DataCTCI(
-				testType(listeKlassen.get(index).toURI()),
-				testAttribute(listeKlassen.get(index)),
-				testMethoden(listeKlassen.get(index).toURI()),
-				descTestAttribute(listeKlassen.get(index)),
-				descTestMethoden(listeKlassen.get(index))
+				testType(liKlassen.get(index).toURI()),
+				testAttribute(liKlassen.get(index)),
+				testMethoden(liKlassen.get(index).toURI()),
+				descTestAttribute(liKlassen.get(index)),
+				descTestMethoden(liKlassen.get(index))
 				);
 		
 		liMissDesc = new ArrayList<>();
-		List<Element> listeElParameters = new ArrayList<>();
+		List<Element> liElParameters = new ArrayList<>();
 		
 		int k = 0; //Zaehler fuer testMethoden
 		
 		//Gehe jede Testmethode der Testklasse durch
-		for (String strMeth : testKlasse.getListeTestMethoden()) {
+		for (String strMeth : testKlasse.getLiTestMethoden()) {
 			int j = 0; //Zaehler fuer testAttribute
-			String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
+			String strDescMeth = testKlasse.getLiDescTestMethoden().get(k);
 			if (strDescMeth.equals("Beschreibung fehlt"))
 				liMissDesc.add(strMeth);
 
 			//Gehe jedes Testattribut der Testklasse durch
-			for (String strAttr : testKlasse.getListeTestAttribute()) {
+			for (String strAttr : testKlasse.getLiTestAttribute()) {
 				if (strAttr.contains(strMeth)) {
 					String strDescAttr = 
-							testKlasse.getListeDescTestAttribute().get(j);
+							testKlasse.getLiDescTestAttribute().get(j);
 					if (strDescAttr.equals("Beschreibung fehlt"))
 			   			liMissDesc.add("\t" + strAttr);
 			   		
-			   		listeElParameters.add(elParameter.clone()
+			   		liElParameters.add(elParameter.clone()
 			   			.addContent(elName.clone().setText(strAttr))
 			   			.addContent(elDescAttribut.clone().setText(strDescAttr))
 			   		);
@@ -385,9 +385,9 @@ public class CTCIFileModel {
 				j++; //naechstes testAttribut
    			}
 			  
-			elParameters.setContent(listeElParameters);
+			elParameters.setContent(liElParameters);
 			//entferne alle Elemente der Liste fuer naechsten Durchlauf
-			listeElParameters.clear();
+			liElParameters.clear();
 			
 			elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
 			   	.addContent(elDescMethode.clone().setText(strDescMeth))
@@ -412,34 +412,34 @@ public class CTCIFileModel {
 		load();
 		
 		//Gehe jede Testklasse durch
-		ArrayList<File> listeKlassen = new ArrayList<>();
-		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), listeKlassen,
+		ArrayList<File> liKlassen = new ArrayList<>();
+		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), liKlassen,
 				Variables.EXTENSION_TEST_JAVA);
 		
-		List<Element> listeElParameters = new ArrayList<>();
+		List<Element> liElParameters = new ArrayList<>();
 		liMissDesc = new ArrayList<>();
 		
-		for (int i = 0; listeKlassen.size() > i; i++) {
-			String strKlasse = listeKlassen.get(i).toString();
+		for (int i = 0; liKlassen.size() > i; i++) {
+			String strKlasse = liKlassen.get(i).toString();
 			strKlasse = strKlasse
 					.replace("\\", ".")
 					.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
 		
 			 testKlasse = new DataCTCI(
-					testType(listeKlassen.get(i).toURI()),
-					testAttribute(listeKlassen.get(i)),
-					testMethoden(listeKlassen.get(i).toURI()),
-					descTestAttribute(listeKlassen.get(i)),
-					descTestMethoden(listeKlassen.get(i))
+					testType(liKlassen.get(i).toURI()),
+					testAttribute(liKlassen.get(i)),
+					testMethoden(liKlassen.get(i).toURI()),
+					descTestAttribute(liKlassen.get(i)),
+					descTestMethoden(liKlassen.get(i))
 					);
 		
 			int k = 0; //Zaehler fuer testMethoden
 			boolean isNextClazz = true;
 			
 			//Gehe jede Testmethode der Testklasse durch
-			for (String strMeth : testKlasse.getListeTestMethoden()) {
+			for (String strMeth : testKlasse.getLiTestMethoden()) {
 				int j = 0; //Zaehler fuer testAttribute
-				String strDescMeth = testKlasse.getListeDescTestMethoden().get(k);
+				String strDescMeth = testKlasse.getLiDescTestMethoden().get(k);
 				if (strDescMeth.equals("Beschreibung fehlt")) {
 					if(isNextClazz) {
 						liMissDesc.add(strKlasse);
@@ -449,14 +449,14 @@ public class CTCIFileModel {
 				}
 				
 				//Gehe jedes Testattribut der Testklasse durch
-				for (String strAttr : testKlasse.getListeTestAttribute()) {
+				for (String strAttr : testKlasse.getLiTestAttribute()) {
 					if (strAttr.contains(strMeth)) {
 						String strDescAttr = 
-								testKlasse.getListeDescTestAttribute().get(j);
+								testKlasse.getLiDescTestAttribute().get(j);
 						if (strDescAttr.equals("Beschreibung fehlt"))  
 							liMissDesc.add("\t\t" + strAttr);
 						
-						listeElParameters.add(elParameter.clone()
+						liElParameters.add(elParameter.clone()
 							.addContent(elName.clone().setText(strAttr))
 							.addContent(elDescAttribut.clone().setText(strDescAttr))
 						);
@@ -464,9 +464,9 @@ public class CTCIFileModel {
 					j++; //naechstes testAttribut
 				}
 				
-				elParameters.setContent(listeElParameters);
+				elParameters.setContent(liElParameters);
 				//entferne alle Elemente der Liste fuer naechsten Durchlauf
-				listeElParameters.clear();
+				liElParameters.clear();
  
 				elTestCase.setContent(elPath.setText(strKlasse + "." + strMeth))
 					.addContent(elDescMethode.clone().setText(strDescMeth))
