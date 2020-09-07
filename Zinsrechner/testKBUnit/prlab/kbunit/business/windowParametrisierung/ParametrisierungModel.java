@@ -7,8 +7,6 @@ import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import prlab.kbunit.enums.Variables;
 
 /**
@@ -40,24 +38,30 @@ public class ParametrisierungModel {
 	 * Dies sind die Java Grunddatentypen {@code boolean}, {@code char},
 	 * {@code byte}, {@code short}, {@code int}, {@code long}, {@code float}
 	 * und {@code double} sowie der Datentyp {@code String}.
-	 * @return Datentypen
+	 * @return Liste
 	 */
-	public ObservableList<String> datenTypen() {
-		return FXCollections.observableArrayList(
-				"String", "boolean", "char", "byte",
-				"short", "int", "long", "float", "double"
-				);
+	public List<String> datenTypen() {
+		List<String> li = new ArrayList<>();
+		li.add("String");
+		li.add("boolean");
+		li.add("char");
+		li.add("byte");
+		li.add("short");
+		li.add("int");
+		li.add("long");
+		li.add("float");
+		li.add("double");
+		return li;
 	}
-
+	
 	/**
 	 * Gibt eine Liste mit Testmethoden zu einer Testklasse zur&uuml;ck.
 	 * @param pfad Pfad der Testklasse
 	 * @return Liste 
 	 * @throws ClassNotFoundException 
 	 */
-	public ObservableList<String> methoden(String pfad) 
-			throws ClassNotFoundException {
-		List<String> list = new ArrayList<>();
+	public List<String> methoden(String pfad) throws ClassNotFoundException {
+		List<String> li = new ArrayList<>();
 
 		Class<?> clazz = Class.forName(pfad);
 		//nur oeffentliche Methoden
@@ -71,16 +75,16 @@ public class ParametrisierungModel {
 					case Variables.ANNOTATION_TEST5_PARAMETERIZED:
 					case Variables.ANNOTATION_TEST5_FACTORY:
 					case Variables.ANNOTATION_TEST5_TEMPLATE:
-						list.add(method.getName());
+						li.add(method.getName());
 						break;
 					default:
 						break;
 				}
 			}
 		}
-		return FXCollections.observableArrayList(list);
+		return li;
 	}
-	
+
 	//getter setter
 	public StringProperty getTyp() {
 		return typ;

@@ -91,9 +91,11 @@ public class ParametrisierungController implements Initializable {
 		
 		parametrisierungModel = new ParametrisierungModel();
 		//***************fill Selection ComboBox************************************//
-		typComboBox.setItems(parametrisierungModel.datenTypen());
+		//typComboBox.setItems(parametrisierungModel.datenTypen());
+		typComboBox.getItems().addAll(parametrisierungModel.datenTypen());
 		try {
-			methodeComboBox.setItems(parametrisierungModel.methoden(klassePfad));
+			//methodeComboBox.setItems(parametrisierungModel.methoden(klassePfad));
+			methodeComboBox.getItems().addAll(parametrisierungModel.methoden(klassePfad));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -260,15 +262,13 @@ public class ParametrisierungController implements Initializable {
 	 */
 	@FXML
 	private void saveParamList(ActionEvent e) {
-		StringBuilder sb;
-		BufferedWriter out;
-		//Speicherort der Parameterzeilen
+		//Parameter.txt
 		File file = new File(Variables.PARAMETER_FILE_PATH);
 		try {
-			out = new BufferedWriter(new FileWriter(file));
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 			for (ParametrisierungModel pm : parameterTableView.getItems()) {
 				//Zeilenumbruch, bei laengeren Kommentaren
-				sb = new StringBuilder(pm.getDesc().getValue());
+				StringBuilder sb = new StringBuilder(pm.getDesc().getValue());
 				int i = 0;
 				while ((i = sb.indexOf(" ", i + 75)) != -1) {
 				    sb.replace(i, i + 1, "\n * ");
@@ -286,10 +286,8 @@ public class ParametrisierungController implements Initializable {
 		//parametrisiere und speichere Datei
 		saveFile("\\" + klassePfad.replace(".", "/") + ".java");
 		
-		//loesche Parameter.txt
 		file.delete();
 		
-		//Meldung, das erfolgreich erstellt wurde
 		showMessage(AlertType.INFORMATION, "Information",
 				"Generierte Testklasse wurde erfolgreich gespeichert!",
 				"Siehe im Sourceverzeichnis \"" + Variables.TEST_SOURCE + "\"!");
@@ -301,8 +299,7 @@ public class ParametrisierungController implements Initializable {
 	 */
 	public void saveFile(String path) {
 		String strZeile, txtLine;
-		List<String> temp = new ArrayList<>();
-		List<String> listeTestAttribute = new ArrayList<>();
+		List<String> liTestAttr = new ArrayList<>();
 		
 		try {
 			//TestPlain-Datei
@@ -313,7 +310,8 @@ public class ParametrisierungController implements Initializable {
 					Variables.PARAMETER_FILE_PATH));
 			//Generierte KBUnit-faehige JUnit Testklasse
 			File newFile = new File(Variables.TEST_SOURCE 
-					+ "/" + path.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME));
+					+ "/" + path.replace(Variables.TEST_PLAIN_NAME,
+							Variables.TEST_NAME));
 			BufferedWriter out = new BufferedWriter(new FileWriter(
 					FileCreator.createMissingPackages(newFile)));
 			
@@ -322,7 +320,8 @@ public class ParametrisierungController implements Initializable {
 				//falls Klassenname: Zeile drunter Attribute hinzufuegen
 				if (strZeile.matches("(class|public class).+Test.+")) {
 					//Klassenname anpassen
-					out.write(strZeile.replace(Variables.TEST_PLAIN_NAME, Variables.TEST_NAME) + "\n");
+					out.write(strZeile.replace(Variables.TEST_PLAIN_NAME, 
+							Variables.TEST_NAME) + "\n");
 					while (true) {
 						//Inhalt der .txt Datei lesen
 						txtLine = txt.readLine();
@@ -331,9 +330,8 @@ public class ParametrisierungController implements Initializable {
 						//kopiere Inhalt von .txt Datei
 						out.write("\t" + txtLine + "\n");
 						//falls aktuelle Zeile eine testAttribut Deklaration ist
-						if (txtLine.matches("public static.+test.+_.+=.+$")) {
-							listeTestAttribute.add(txtLine);
-						}
+						if (txtLine.matches("public static.+test.+_.+=.+$")) 
+							liTestAttr.add(txtLine);
 					}
 					txt.close();
 					break;
@@ -342,29 +340,37 @@ public class ParametrisierungController implements Initializable {
 			}
 			//ab letzte Testattribut Zeile
 			String strMethode = "";
+			List<String> liTestAttrDekl = new ArrayList<>();
 			while (true) {
 				strZeile = quelle.readLine();
 				//brich ab, wenn Dateiende erreicht
 				if (strZeile == null) break; 
-				
+				/*
+				 * Zeile aus "TestPlain" prüfen, ob es ein Methode der Combobox ist.
+				 */
 				for (String methodeName : methodeComboBox.getItems()) {
 					//method gefunden
 					if(strZeile.contains(methodeName + "(")) {
 						strMethode = methodeName;
-						temp.clear(); //leere Liste fuer neue Inhalte
+						liTestAttrDekl.clear();
 						//pruefe, ob Attribute zur Methode passen
-						for (String attr : listeTestAttribute) {
-							String strAttrName = attr.substring(attr.indexOf("test"),
-									attr.indexOf("_"));
-							if(methodeName.equals(strAttrName)) temp.add(attr);
+						for (String attr : liTestAttr) {
+							// ... "testABC"_XYZ ...
+							String strAttrName = attr.substring(
+									attr.indexOf("test"), attr.indexOf("_"));
+							if(methodeName.equals(strAttrName)) 
+								liTestAttrDekl.add(attr);
 						}
 						break;
 					}
 				}
 				
-				for (String attr : temp) {
+				for (String attr : liTestAttrDekl) {
+					// temp -> [public static ... testMethode_Attr1 = Wert;]
+					// public static ... [testMethode_Attr1] = Wert;
 					String strAttrNameFull = attr.substring(attr.indexOf("test"),
 							attr.indexOf("=") - 1);
+					// public static ... testMethode_Attr1 = [Wert];
 					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
 					//wenn wert identisch mit testattributwert
 					if (strZeile.contains(strAttrVal)) {
@@ -397,6 +403,7 @@ public class ParametrisierungController implements Initializable {
 					}
 				}
 				out.write(strZeile + "\n");
+				
 			}
 			quelle.close();
 			out.close();
