@@ -372,7 +372,7 @@ public class ParametrisierungController implements Initializable {
 							attr.indexOf("=") - 1);
 					// public static ... testMethode_Attr1 = [Wert];
 					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
-					//wenn wert identisch mit testattributwert
+					//wenn testattributwert vorkommt
 					if (strZeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
 						int count = StringUtils.countMatches(strZeile, strAttrVal);
@@ -380,7 +380,8 @@ public class ParametrisierungController implements Initializable {
 						int n = 0;
 						int index;
 						for (int i = 0; i < count; i++) {
-							index = ordinalIndexOf("" + sb, strAttrVal, n);
+							//Finde das n-te Vorkommen eines substring in einer Zeichenfolge
+							index = StringUtils.ordinalIndexOf(sb, strAttrVal, n+1);
 							//Fenster
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
@@ -410,24 +411,6 @@ public class ParametrisierungController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Finden das n-te Vorkommen eines substring in einer Zeichenfolge.
-	 * 
-	 * Aus <a href="https://programming.guide/java/nth-occurrence-in-string.html">https://programming.guide/</a>
-	 * &uuml;bernommen.
-	 * @param str Zeichenkette
-	 * @param substr Zu suchender Wert
-	 * @param n das n-te Vorkommen in der Zeichenkette
-	 * @return
-	 */
-	public static int ordinalIndexOf(String str, String substr, int n) {
-	    int pos = -1;
-	    do {
-	        pos = str.indexOf(substr, pos + 1);
-	    } while (n-- > 0 && pos != -1);
-	    return pos;
 	}
 	
 	private void falscheEingabe(String typ) {
