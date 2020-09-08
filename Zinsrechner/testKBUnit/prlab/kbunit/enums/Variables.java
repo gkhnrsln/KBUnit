@@ -97,13 +97,13 @@ public class Variables {
 	public final static String ANNOTATION_TEST4 = "@Test";
 	/**{@value #ANNOTATION_TEST5}*/
 	public final static String ANNOTATION_TEST5 = "@Test";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_REPEATED}*/
 	public final static String ANNOTATION_TEST5_REPEATED = "@RepeatedTest";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_PARAMETERIZED}*/
 	public final static String ANNOTATION_TEST5_PARAMETERIZED = "@ParameterizedTest";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_FACTORY}*/
 	public final static String ANNOTATION_TEST5_FACTORY = "@TestFactory";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_TEMPLATE}*/
 	public final static String ANNOTATION_TEST5_TEMPLATE = "@TestTemplate";
 
 	//-------------------------XML-LOG-FILE (CREATED BY LOGGER)-------------------------

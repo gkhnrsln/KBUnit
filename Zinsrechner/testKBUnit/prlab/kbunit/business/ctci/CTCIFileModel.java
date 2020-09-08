@@ -68,7 +68,7 @@ public class CTCIFileModel {
 	 * Singleton vom CTCIFileModel
 	 */
 	public static CTCIFileModel getInstance() {
-		if(ctciFileModel == null) {
+		if (ctciFileModel == null) {
 			ctciFileModel = new CTCIFileModel();
 		}
 		return ctciFileModel;
@@ -126,7 +126,7 @@ public class CTCIFileModel {
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		String s = in.readLine();
 		tmp.add(s);
-		while(s != null) {
+		while (s != null) {
 			s = s.trim();
 			tmp.add(s); 
 			s = in.readLine();
@@ -141,7 +141,7 @@ public class CTCIFileModel {
 			String strDesc = "";
 			String line = tmp.get(i); //aktuelle Zeile
 			//falls aktuelle Zeile eine Testmethode ist
-			if(line.contains("void test") 
+			if (line.contains("void test") 
 				|| line.contains(Variables.DYNAMIC_NODE) 
 				|| line.contains(Variables.DYNAMIC_TEST)
 				|| line.contains(Variables.DYNAMIC_CONTAINER)
@@ -149,7 +149,7 @@ public class CTCIFileModel {
 				int j = 1; //Zaehler fuer Zeilen (aufwaerts)
 				
 				/* pruefe bis Javadoc-Anfang vorkommt */
-				while (!tmp.get(i-j).startsWith("/**")) {
+				while (! tmp.get(i-j).startsWith("/**")) {
 					String prevLine = tmp.get(i-j);
 					//wenn kein Javadoc-Kommentar vorhanden
 					if (prevLine.endsWith("}") || (prevLine.endsWith(";") 
@@ -157,12 +157,12 @@ public class CTCIFileModel {
 						strDesc = "Beschreibung fehlt"; break;
 					} 
 					//Zeile ueberspringen wenn Annotation/Javadoc-Ende
-					else if(prevLine.startsWith("@") || prevLine.contains("*/")) {
+					else if (prevLine.matches("(^@.+|\\*\\/)")) {
 						j++; //naechste Zeile (aufwaerts)
 						continue;
 					}
 					//wenn Javadoc-Tag vorhanden
-					else if(prevLine.contains("* @")) {
+					else if (prevLine.contains("* @")) {
 						strDesc = ""; //vorherigen Inhalt entfernen
 						j++;
 						continue;
@@ -285,22 +285,22 @@ public class CTCIFileModel {
 					|| m.contains(Variables.DYNAMIC_NODE)
 					|| m.contains(Variables.DYNAMIC_CONTAINER)
 					|| m.contains(Variables.DYNAMIC_TEST)
-					|| m.endsWith(Variables.ANNOTATION_TEST5) 
 					|| m.contains(Variables.ANNOTATION_TEST5_REPEATED) 
 					|| m.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
 					|| m.contains(Variables.ANNOTATION_TEST5_FACTORY)
 					|| m.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
+					|| m.endsWith(Variables.ANNOTATION_TEST5)
 					)
 				.collect(Collectors.toList());
 		stream.close();
 		List<String> methoden = new ArrayList<>();
 		for (int i = 0; i < li.size(); i++) {
 			String line = li.get(i);
-			if (line.contains(Variables.ANNOTATION_TEST5)
-				|| line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
+			if ( line.contains(Variables.ANNOTATION_TEST5_PARAMETERIZED)
 				|| line.contains(Variables.ANNOTATION_TEST5_REPEATED)
 				|| line.contains(Variables.ANNOTATION_TEST5_FACTORY)
 				|| line.contains(Variables.ANNOTATION_TEST5_TEMPLATE)
+				|| line.contains(Variables.ANNOTATION_TEST5)
 				) {
 				String methode = li.get(i+1)
 						.substring(li.get(i+1).indexOf("test"));

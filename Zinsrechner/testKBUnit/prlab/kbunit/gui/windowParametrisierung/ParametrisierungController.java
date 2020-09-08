@@ -91,10 +91,8 @@ public class ParametrisierungController implements Initializable {
 		
 		parametrisierungModel = new ParametrisierungModel();
 		//***************fill Selection ComboBox************************************//
-		//typComboBox.setItems(parametrisierungModel.datenTypen());
 		typComboBox.getItems().addAll(parametrisierungModel.datenTypen());
 		try {
-			//methodeComboBox.setItems(parametrisierungModel.methoden(klassePfad));
 			methodeComboBox.getItems().addAll(parametrisierungModel.methoden(klassePfad));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -127,15 +125,14 @@ public class ParametrisierungController implements Initializable {
 	 */
 	private boolean isInputCorrect() {
 		//pruefe, ob Formular ausgefuellt ist
-		String datentyp = typComboBox.getSelectionModel().getSelectedItem();
+		String typ = typComboBox.getSelectionModel().getSelectedItem();
 		String wert = wertTextField.getText();
-		if (datentyp.equals("String") && !wert.startsWith("\"") && !wert.endsWith("\"")) {
+		
+		if (typ.equals("String") && ! wert.matches("^\".+\"$")) {
 			wertTextField.setText("\"" + wert + "\"");
-		} else if (datentyp.equals("boolean")) {
-			if(! wert.equals("true") && ! wert.equals("false")) {
-				falscheEingabe("boolean"); return false;
-			}
-		} else if (datentyp.equals("char")) {
+		} else if (typ.equals("boolean") && ! wert.matches("(true|false)")) {
+			falscheEingabe("boolean"); return false;
+		} else if (typ.equals("char")) {
 			//wenn (pos) Zahl
 			if (wert.matches("^[0-9]+$")) {
 				if (Integer.parseInt(wert) > Character.MAX_VALUE) {
@@ -151,37 +148,37 @@ public class ParametrisierungController implements Initializable {
 			} else {
 				falscheEingabe("char"); return false;
 			}
-		} else if (datentyp.equals("int")) {
+		} else if (typ.equals("int")) {
 			try {
 				Integer.parseInt(wert);
 			} catch (NumberFormatException nfe) {
 				falscheEingabe("int"); return false;
 			}
-		} else if (datentyp.equals("long")) {
+		} else if (typ.equals("long")) {
 			try {
 				Long.parseLong(wert);
 			} catch (NumberFormatException nfe) {
 				falscheEingabe("long"); return false;
 			}
-		} else if (datentyp.equals("short")) {
+		} else if (typ.equals("short")) {
 			try {
 				Short.parseShort(wert);
 			} catch (NumberFormatException nfe) {
 				falscheEingabe("short"); return false;
 			}
-		} else if (datentyp.equals("byte")) {
+		} else if (typ.equals("byte")) {
 			try {
 				Byte.parseByte(wert);
 			} catch (NumberFormatException nfe) {
 				falscheEingabe("byte"); return false;
 			}
-		} else if (datentyp.equals("float")) {
+		} else if (typ.equals("float")) {
 			try {
 				wertTextField.setText(Float.parseFloat(wert) + "f");
 			} catch (NumberFormatException nfe) {
 				falscheEingabe("float"); return false;
 			}
-		} else if (datentyp.equals("double")) {
+		} else if (typ.equals("double")) {
 			try {
 				wertTextField.setText(Double.parseDouble(wert) + "");
 			} catch (NumberFormatException nfe) {
@@ -284,7 +281,7 @@ public class ParametrisierungController implements Initializable {
 		}
 		
 		//parametrisiere und speichere Datei
-		saveFile("\\" + klassePfad.replace(".", "/") + ".java");
+		saveFile("\\" + klassePfad.replace(".", "/") + Variables.EXTENSION_JAVA);
 		
 		file.delete();
 		
@@ -339,7 +336,6 @@ public class ParametrisierungController implements Initializable {
 				out.write(strZeile + "\n");
 			}
 			//ab letzte Testattribut Zeile
-			String strMethode = "";
 			List<String> liTestAttrDekl = new ArrayList<>();
 			while (true) {
 				strZeile = quelle.readLine();
@@ -351,14 +347,12 @@ public class ParametrisierungController implements Initializable {
 				for (String methodeName : methodeComboBox.getItems()) {
 					//method gefunden
 					if(strZeile.contains(methodeName + "(")) {
-						strMethode = methodeName;
 						liTestAttrDekl.clear();
 						//pruefe, ob Attribute zur Methode passen
 						for (String attr : liTestAttr) {
 							// ... "testABC"_XYZ ...
-							String strAttrName = attr.substring(
-									attr.indexOf("test"), attr.indexOf("_"));
-							if(methodeName.equals(strAttrName)) 
+							if(methodeName.equals(attr.substring(attr.
+									indexOf("test"), attr.indexOf("_")))) 
 								liTestAttrDekl.add(attr);
 						}
 						break;
@@ -366,24 +360,28 @@ public class ParametrisierungController implements Initializable {
 				}
 				
 				for (String attr : liTestAttrDekl) {
-					// temp -> [public static ... testMethode_Attr1 = Wert;]
+					// attr -> [public static ... testMethode_Attr1 = Wert;]
 					// public static ... [testMethode_Attr1] = Wert;
-					String strAttrNameFull = attr.substring(attr.indexOf("test"),
+					String strAttrName = attr.substring(attr.indexOf("test"),
 							attr.indexOf("=") - 1);
 					// public static ... testMethode_Attr1 = [Wert];
-					String strAttrVal = attr.substring(attr.indexOf("=") + 2, attr.indexOf(";"));
+					String strAttrVal = attr.substring(attr.indexOf("=") + 2, 
+							attr.indexOf(";"));
+					// public static ... [testMethode]_Attr1 = Wert;
+					String strMethode = attr.substring(attr.indexOf("test"), 
+							attr.indexOf("_"));
 					//wenn testattributwert vorkommt
 					if (strZeile.contains(strAttrVal)) {
 						//falls in einer Zeile mehrere Faelle vorhanden
 						int count = StringUtils.countMatches(strZeile, strAttrVal);
+						//fuer die Vorschau der Aenderung
 						StringBuilder sb = new StringBuilder(strZeile);
-						
 						int n = 1;
 						for (int i = 0; i < count; i++) {
-							//Finde das n-te Vorkommen eines substring in einer Zeichenfolge
+							//finde den n-ten gesuchten substring innerhalb eines Strings
 							int index = StringUtils.ordinalIndexOf(sb, strAttrVal, n);
 							//Bestaetigungs-Fenster
-							sb.replace(index, index + strAttrVal.length(), strAttrNameFull);
+							sb.replace(index, index + strAttrVal.length(), strAttrName);
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("Bestätigung für Methode [" + strMethode + "]");
 							alert.setHeaderText("Zu ersetzender Wert [" + strAttrVal +"]"
@@ -392,13 +390,15 @@ public class ParametrisierungController implements Initializable {
 									+ sb.toString().trim()
 									);
 							alert.setContentText("Sind Sie damit einverstanden?");
-							//Aenderung zustimmen oder verweigern
+							//Aenderung bestaetigen oder verweigern
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
 								strZeile = sb.toString();
 							} else {
-								sb.replace(index, index + strAttrNameFull.length(), strAttrVal);
-								n++;
+								//Aenderung rueckgaengig machen
+								sb.replace(index, index + strAttrName.length(), strAttrVal);
+								//Treffer beim naechsten Durchlauf ueberspringen
+								n++; 
 							}
 						}	
 					}
