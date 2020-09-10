@@ -172,7 +172,7 @@ public class CTCIFileModel {
 					}
 				}
 				//letzte Formatierungen
-				strDesc = strDesc.replace("*", "").replace("[:ss]", "ß")
+				strDesc = strDesc.replace("*", "").replace("[sz]", "ß")
 						.replace("[:A]", "Ä").replace("[:O]", "Ö")
 						.replace("[:U]", "Ü").replace("[:a]", "ä")
 						.replace("[:o]", "ö").replace("[:u]", "ü");
@@ -237,7 +237,7 @@ public class CTCIFileModel {
 					    .replace("{@code", "")
 						.replace("}", "")
 						//Umlaute
-						.replace("[:ss]", "ß").replace("[:A]", "Ä")
+						.replace("[sz]", "ß").replace("[:A]", "Ä")
 						.replace("[:O]", "Ö").replace("[:U]", "Ü")
 						.replace("[:a]", "ä").replace("[:o]", "ö")
 						.replace("[:u]", "ü");
@@ -311,9 +311,9 @@ public class CTCIFileModel {
 	}
 
 	/**
-	 * Gibt JUnit Testtyp der &uuml;bergebenen Java Testklasse zur&uuml;ck.
+	 * Gibt den JUnit-Testtyp der &uuml;bergebenen Java Testklasse zur&uuml;ck.
 	 * @param file Datei, dessen JUnit-Testtyp (4 oder 5) erkannt werden soll
-	 * @return Entweder {@code 5} oder {@code 4}.
+	 * @return Entweder {@code 4} oder {@code 5}.
 	 * @exception IOException
 	 */
 	private int testType(URI file) throws IOException {
