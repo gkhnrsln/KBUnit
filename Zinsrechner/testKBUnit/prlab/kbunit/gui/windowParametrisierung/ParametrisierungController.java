@@ -294,7 +294,7 @@ public class ParametrisierungController implements Initializable {
 	 * Generiert neuen KBUnit-f&auml;higen JUnit-Testklasse.
 	 * @param path 
 	 */
-	public void saveFile(String path) {
+	private void saveFile(String path) {
 		String strZeile, txtLine;
 		List<String> liTestAttr = new ArrayList<>();
 		

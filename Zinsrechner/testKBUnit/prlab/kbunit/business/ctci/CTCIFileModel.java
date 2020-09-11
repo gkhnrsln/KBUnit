@@ -253,7 +253,7 @@ public class CTCIFileModel {
 	 * Gibt eine Liste mit jedem Testattribut in der angegebenen Datei zur&uuml;ck.
 	 * @param file Datei, dessen Attribute gelistet werden sollen
 	 * @return Liste der Testattribute
-	 * @exception IOException
+	 * @exception ClassNotFoundException wenn angegeben Klasse nicht vorhanden
 	 */
 	private List<String> testAttribute(File file) throws ClassNotFoundException {
 		//Formatierungen fuer den Pfad
@@ -336,7 +336,7 @@ public class CTCIFileModel {
 	 * @throws IOException
 	 * @throws ClassNotFoundException 
 	 */
-	public void createFile(int index) throws IOException, ClassNotFoundException {
+	public void createFile(int index) throws ClassNotFoundException, IOException {
 		load();
 		
 		//Gehe jede Testklasse durch

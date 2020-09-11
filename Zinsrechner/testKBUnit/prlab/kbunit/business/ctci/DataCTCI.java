@@ -30,8 +30,7 @@ public class DataCTCI {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public DataCTCI(int typ, List<String> liAttr, List<String> liMeth, List<String> liDescAttr, List<String> liDescMeth) 
-			throws IOException, ClassNotFoundException {
+	public DataCTCI(int typ, List<String> liAttr, List<String> liMeth, List<String> liDescAttr, List<String> liDescMeth) {
 		this.testTyp = typ;
 		this.liTestAttribute = liAttr;
 		this.liTestMethoden = liMeth;
