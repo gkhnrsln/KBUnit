@@ -33,7 +33,7 @@ public class ParametrisierungModel {
 	}
 	
 	/**
-	 * Legt die moeglichen Datentypen der ComboBox "typComboBox" fest.
+	 * Legt die m&ouml;glichen Datentypen der ComboBox "typComboBox" fest.
 	 * 
 	 * Dies sind die Java Grunddatentypen {@code boolean}, {@code char},
 	 * {@code byte}, {@code short}, {@code int}, {@code long}, {@code float}

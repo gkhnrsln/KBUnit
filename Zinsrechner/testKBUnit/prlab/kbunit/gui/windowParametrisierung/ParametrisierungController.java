@@ -117,9 +117,9 @@ public class ParametrisierungController implements Initializable {
 	
 	/**
 	 * Pr&uuml;ft, ob der Wert in Zusammenhang mit dem ausgew&auml;hlten Datentypen
-	 * korrekt ist. Bei Zahlen wird auf Min und Max werte geachtet. Fehlende 
-	 * Formatierungen bei 'String' und ggf. 'char' werden erg&auml;nzt. L&auml;ngere
-	 * Zahlendarstellungen (z. B. bei 'double') werden in die wissenschaftliche
+	 * korrekt ist. Bei Zahlen wird auf Min/Max-Werte geachtet. Fehlende 
+	 * Formatierungen bei {@code String} und ggf. {@code char} werden erg&auml;nzt. L&auml;ngere
+	 * Zahlendarstellungen (z. B. bei {@code double}) werden in die wissenschaftliche
 	 * Schreibweise umgewandelt.
 	 * @return true, wenn Wert korrekt
 	 */
@@ -205,6 +205,7 @@ public class ParametrisierungController implements Initializable {
 
 		if (isInputCorrect()) {
 			String strType = typComboBox.getSelectionModel().getSelectedItem();
+			//Konkatenation von Parameter und Bezeichner -> testAttribut
 			String strAttr = methodeComboBox.getSelectionModel().getSelectedItem()
 					+ "_" + parameterTextField.getText(); 
 			String strVal = wertTextField.getText().trim();
