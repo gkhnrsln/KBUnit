@@ -344,10 +344,8 @@ public class CTCIFileModel {
 		FolderScanner.scanFolder(new File(Variables.TEST_SOURCE), liKlassen,
 				Variables.EXTENSION_TEST_JAVA);
 
-		String strKlasse = liKlassen.get(index).toString();
-		strKlasse = strKlasse
-				.replace("\\", ".")
-				.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
+		String strKlasse = ClassCreator.convertIntoClassName(liKlassen.get(index), 
+				Variables.TEST_SOURCE);
 		
 		testKlasse = new DataCTCI(
 				testType(liKlassen.get(index).toURI()),
@@ -420,11 +418,9 @@ public class CTCIFileModel {
 		liMissDesc = new ArrayList<>();
 		
 		for (int i = 0; liKlassen.size() > i; i++) {
-			String strKlasse = liKlassen.get(i).toString();
-			strKlasse = strKlasse
-					.replace("\\", ".")
-					.substring(5, strKlasse.indexOf(Variables.EXTENSION_JAVA));
-		
+			 String strKlasse = ClassCreator.convertIntoClassName(liKlassen.get(i), 
+					 Variables.TEST_SOURCE);
+
 			 testKlasse = new DataCTCI(
 					testType(liKlassen.get(i).toURI()),
 					testAttribute(liKlassen.get(i)),
