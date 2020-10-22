@@ -14,11 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import junit.framework.TestResult;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import prlab.kbunit.Main;
+import prlab.kbunit.business.ctci.CTCIFileModel;
 import prlab.kbunit.business.dataModel.ActiveResult;
 import prlab.kbunit.business.dataModel.ActiveResultParameter;
 import prlab.kbunit.business.dataModel.InactiveResult;
@@ -29,6 +32,7 @@ import prlab.kbunit.enums.Selection;
 import prlab.kbunit.enums.Variables;
 import prlab.kbunit.gui.util.TooltipTableRow;
 import prlab.kbunit.gui.windowNewTestkonfiguration.NewTestkonfigurationController;
+import prlab.kbunit.gui.windowParametrisierung.ParametrisierungController;
 import prlab.kbunit.test.TestParameterInfo;
 import prlab.kbunit.test.TestResultInfo;
 
@@ -49,7 +53,6 @@ import java.util.stream.Collectors;
  * @author Patrick Pete
  */
 public class MainFrameController implements Initializable {
-
 	// HostService zum oeffnen einer Datei
 	private HostServices hostServices ;
 
@@ -82,13 +85,23 @@ public class MainFrameController implements Initializable {
 	@FXML
 	private Button deleteActiveButton;
 
-	// Combobox mit allen Testklassen (*.java), die sich in 
-	// Sourcefolder "test" befinden
+	// Combobox mit allen Testklassen
 	@FXML
 	private ComboBox<File> javafileComboBox;
 	@FXML 
-	private Button javaFileButton;
+	private Button javafileButton;
 
+	@FXML
+	private ComboBox<File> javafilePlainComboBox;
+	@FXML 
+	private Button javafilePlainButton;
+	
+	// Generate CTCI
+	@FXML
+	private Button startGenerateCTCIButton;
+	@FXML
+	private Button startGenerateCTCIButtonAllTestclasses;
+	
 	// Logger
 	@FXML
 	private ComboBox<Selection> selectionComboBox; 
@@ -108,8 +121,10 @@ public class MainFrameController implements Initializable {
 	private ComboBox<String> newTestcaseComboBox;
 	@FXML
 	private Button newTestcaseButton;
-
+    
 	private MainFrameModel mainFrameModel;
+	
+	private CTCIFileModel ctciFileModel;
 
 	/**
 	 * Konstruktor MainFrameControll
@@ -154,16 +169,25 @@ public class MainFrameController implements Initializable {
 
 		try {
 			javafileComboBox.setItems(mainFrameModel
-				.scanSourceFolder(Variables.TEST_SOURCE));
+				.scanSourceFolder(Variables.TEST_SOURCE, Variables.EXTENSION_TEST_JAVA));
+			javafilePlainComboBox.setItems(mainFrameModel
+				.scanSourceFolder(Variables.TEST_PLAIN_SOURCE,
+						Variables.EXTENSION_TEST_PLAIN_JAVA));
+			//falls Testklassen vorhanden, sind Buttons aktiv
+			if (mainFrameModel.scanSourceFolder(Variables.TEST_SOURCE,
+					Variables.EXTENSION_TEST_JAVA) != null) {
+				startGenerateCTCIButtonAllTestclasses.setDisable(false);
+				startLoggerButtonAllTestclasses.setDisable(false);
+				startRunnerButtonAllTestclasses.setDisable(false);
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Fehler!");
-			alert.setHeaderText("Fehler beim Laden der Testklassen");
-			alert.setContentText(e1.getMessage());
-			alert.showAndWait();
+			showMessage(AlertType.WARNING, "Fehler!", 
+					"Fehler beim Laden der Testklassen", e1.getMessage());
 		}
-		javafileComboBox.getSelectionModel().select(0);
+
+		javafileComboBox.getSelectionModel().select(-1); //obersten Eintrag ist Leer
+		javafilePlainComboBox.getSelectionModel().select(-1);
 		activeResultTable.setItems(activeList);
 		inactiveResultTable.setItems(mainFrameModel.getInactiveResults());
 
@@ -418,7 +442,191 @@ public class MainFrameController implements Initializable {
 		tri.setParameters(params);
 		return tri;
 	}
+	
+	/**
+	 * method for the "javaFilePlain" Combobox.
+	 * @param event
+	 */
+	@FXML
+	private void javafilePlainChoose(ActionEvent event) {
+		if (javafilePlainComboBox.getSelectionModel().selectedItemProperty() != null) {
+			javafilePlainButton.setDisable(false);
+		}
+	}
+	
+	/**
+	 * method for the "javaFile" Combobox.
+	 * @param event
+	 */
+	@FXML
+	private void javafileChoose(ActionEvent event) {
+		if (javafileComboBox.getSelectionModel().selectedItemProperty() != null) {
+			startGenerateCTCIButton.setDisable(false);
+			if (mainFrameModel.getCtciFile().exists()) javafileButton.setDisable(false);
+		}
+	}
+	
 
+	/**
+	 * method for the "parameterize" button.
+	 * @param event
+	 * @throws IOException 
+	 */
+	@FXML
+	private void parameterizeTestclass(ActionEvent event)  {
+		//Maske ParametrisierungScene.fxml oeffnen
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource(
+			"/prlab/kbunit/resources/view/ParametrisierungScene.fxml"));
+		
+		AnchorPane resultsDialog;
+		Stage dialogStage = new Stage();
+		dialogStage.setResizable(false);
+		dialogStage.setTitle("Parameter eingeben");
+		dialogStage.initModality(Modality.APPLICATION_MODAL);
+		try {
+			resultsDialog = (AnchorPane) loader.load();
+			Scene scene = new Scene(resultsDialog);
+			dialogStage.setScene(scene);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ParametrisierungController parametrisierungController = loader.getController();
+		parametrisierungController.setKlassePfad(javafilePlainComboBox.getSelectionModel().getSelectedItem().toString());
+		parametrisierungController.initModel();
+		dialogStage.showAndWait();
+	}
+	
+	/**
+	 * method for the "generate CustomerTestCaseInformation" button.
+	 * @param event
+	 */
+	@FXML
+	private void generateCTCI(ActionEvent event)  {
+		Alert alert;
+		//bestaetigung fuer das ersetzen der XML Datei
+		Boolean isPermitted = true;
+		
+		if (mainFrameModel.getCtciFile().exists()) {
+			alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setContentText("Sind Sie damit einverstanden?");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() != ButtonType.OK){
+				isPermitted = false;
+			}
+		}
+		
+		if (isPermitted) {
+			try {
+				this.ctciFileModel = CTCIFileModel.getInstance();
+				ctciFileModel.createFile(javafileComboBox.getSelectionModel().getSelectedIndex());
+				
+				if (ctciFileModel.getLiMissDesc().isEmpty()) {
+					showMessage(AlertType.INFORMATION, "Information",
+							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
+				} else if (!ctciFileModel.getLiMissDesc().isEmpty()) {
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Problem!");
+					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
+					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
+					
+					String temp = "";
+					for (String s : ctciFileModel.getLiMissDesc()) {
+						temp += s + "\n";
+					}
+					
+					TextArea textArea = new TextArea(temp);
+					textArea.setEditable(false);
+					textArea.setWrapText(true);
+					
+					textArea.setMaxWidth(Double.MAX_VALUE);
+					textArea.setMaxHeight(Double.MAX_VALUE);
+					GridPane.setVgrow(textArea, Priority.ALWAYS);
+					GridPane.setHgrow(textArea, Priority.ALWAYS);
+					
+					GridPane expContent = new GridPane();
+					expContent.setMaxWidth(Double.MAX_VALUE);
+					expContent.add(textArea, 0, 0);
+					
+					// Set expandable Exception into the dialog pane.
+					alert.getDialogPane().setExpandableContent(expContent);
+					alert.showAndWait();
+				}
+			} catch(ClassNotFoundException | IOException ex) {
+				showMessage(AlertType.ERROR, "Information",
+						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
+			}
+		}
+		
+	}
+	
+	/**
+	 * method for the "generate All CustomerTestCaseInformation" button.
+	 */
+	@FXML
+	private void generateCTCIAllTestclasses(ActionEvent event) {
+		Alert alert;
+		//bestaetigung fuer das ersetzen der XML Datei
+		Boolean isPermitted = true;
+		
+		if (mainFrameModel.getCtciFile().exists()) {
+			alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Bestätigung");
+			alert.setHeaderText("Die bestehende CustomerTestCaseInformation.xml wird überschrieben.");
+			alert.setContentText("Sind Sie damit einverstanden?");
+			
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.isPresent() && result.get() != ButtonType.OK){
+				isPermitted = false;
+			}
+		}
+		
+		if (isPermitted) {
+			try {
+				this.ctciFileModel = CTCIFileModel.getInstance();
+				ctciFileModel.createFile();
+				if (ctciFileModel.getLiMissDesc().isEmpty()) {
+					showMessage(AlertType.INFORMATION, "Information",
+							"Die CustomerTestCaseInformation.xml wurde erfolgreich generiert.", null);
+				} else if (!ctciFileModel.getLiMissDesc().isEmpty()) {
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Problem!");
+					alert.setHeaderText("Die CustomerTestCaseInformation.xml wurde generiert.");
+					alert.setContentText("Es fehlt eine Beschreibung zu folgenden Methoden oder Attributen:");
+					
+					String temp = "";
+					for (String s : ctciFileModel.getLiMissDesc()) {
+						temp += s + "\n";
+					}
+					
+					TextArea textArea = new TextArea(temp);
+					textArea.setEditable(false);
+					textArea.setWrapText(true);
+					
+					textArea.setMaxWidth(Double.MAX_VALUE);
+					textArea.setMaxHeight(Double.MAX_VALUE);
+					GridPane.setVgrow(textArea, Priority.ALWAYS);
+					GridPane.setHgrow(textArea, Priority.ALWAYS);
+					
+					GridPane expContent = new GridPane();
+					expContent.setMaxWidth(Double.MAX_VALUE);
+					expContent.add(textArea, 0, 0);
+					
+					// Set expandable Exception into the dialog pane.
+					alert.getDialogPane().setExpandableContent(expContent);
+					alert.showAndWait();
+				}
+			} catch(ClassNotFoundException | IOException ex) {
+				showMessage(AlertType.ERROR, "Information",
+						"Die CustomerTestCaseInformation.xml konnte nicht generiert werden.", null);
+			}
+		}
+		
+	}
+	
 	/**
 	 * method for the delete button.
 	 */
@@ -601,7 +809,7 @@ public class MainFrameController implements Initializable {
         }
 		catch(Exception exc) {
 			System.out.println(
-				"CustomerTestcaseInformation.xml konnte nicht geöffnet werden.");
+				"CustomerTestCaseInformation.xml konnte nicht geöffnet werden.");
 		}
 	}
 

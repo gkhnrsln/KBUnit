@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prlab.kbunit.gui.windowParametrisierung.ParametrisierungController">
+  <children>
+      <BorderPane prefHeight="526.0" prefWidth="777.0">
+         <bottom>
+            <SplitPane dividerPositions="0.743801652892562" orientation="VERTICAL" prefHeight="244.0" prefWidth="790.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane prefHeight="158.0" prefWidth="795.0">
+                     <children>
+                        <Label layoutX="15.0" layoutY="9.0" text="Typ" />
+                        <ComboBox fx:id="typComboBox" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="91.0" />
+                        <ComboBox fx:id="methodeComboBox" layoutX="115.0" layoutY="35.0" prefHeight="25.0" prefWidth="258.0" />
+                        <Label layoutX="116.0" layoutY="9.0" text="Methode" />
+                        <Label layoutX="15.0" layoutY="70.0" text="Beschreibung" />
+                        <Label layoutX="385.0" layoutY="9.0" text="Parameter" />
+                        <TextField fx:id="parameterTextField" layoutX="383.0" layoutY="35.0" prefHeight="25.0" prefWidth="189.0" />
+                        <Label layoutX="583.0" layoutY="8.0" text="Wert" />
+                        <TextField fx:id="wertTextField" layoutX="581.0" layoutY="35.0" prefHeight="25.0" prefWidth="178.0" />
+                        <Button fx:id="addButton" layoutX="15.0" layoutY="129.0" mnemonicParsing="false" onAction="#addToParamList" prefHeight="25.0" prefWidth="132.0" text="Eintrag hinzufügen" />
+                        <Button fx:id="deleteButton" layoutX="157.0" layoutY="129.0" mnemonicParsing="false" onAction="#deleteFromParamList" prefHeight="25.0" prefWidth="130.0" text="Eintrag löschen" />
+                        <TextField fx:id="descTextField" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="745.0" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="65.0" prefWidth="775.0">
+                     <children>
+                        <Button fx:id="saveButton" layoutX="338.0" layoutY="17.0" mnemonicParsing="false" onAction="#saveParamList" text="Transferieren" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </bottom>
+         <center>
+            <TableView fx:id="parameterTableView" prefHeight="358.0" prefWidth="767.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="typColumn" minWidth="0.0" prefWidth="73.71432387828827" sortable="false" text="Typ" />
+                <TableColumn fx:id="attributColumn" minWidth="0.0" prefWidth="191.0" sortable="true" text="Attribut" />
+                <TableColumn fx:id="wertColumn" minWidth="0.0" prefWidth="106.0" sortable="false" text="Wert" />
+                <TableColumn fx:id="descColumn" minWidth="0.0" prefWidth="405.0" sortable="false" text="Beschreibung" />
+              </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

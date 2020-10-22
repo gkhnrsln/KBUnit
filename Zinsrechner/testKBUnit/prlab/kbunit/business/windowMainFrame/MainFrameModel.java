@@ -33,6 +33,8 @@ public final class MainFrameModel {
 	private TestClassInfo openedTestClass;
 	// gewaehlte Java Testklasse
 	private File file;
+	// CustomerTestCaseInformation.xml
+	private File ctciFile = new File(Variables.CUSTOMER_TEST_CASE_INFO_FILE_PATH);
 	// Daten fuer die GUI
 	private ObservableList<ActiveResult> activeResults 
 	    = FXCollections.observableArrayList();
@@ -170,16 +172,17 @@ public final class MainFrameModel {
 	}
 
 	/**
-	 * Scannt nach allen Java-Files im sourcefolder "test"
+	 * Scannt nach allen Java-Files im sourcefolder
 	 * @param dirName
+	 * @param extension
 	 * @return
 	 * @throws IOException
 	 */
-	public ObservableList<File> scanSourceFolder(String dirName) throws IOException {
+	public ObservableList<File> scanSourceFolder(String dirName, String extension) 
+			throws IOException {
 		ObservableList<File> filePaths 
 		    = FXCollections.observableArrayList(FolderScanner
-		    .scanFolder(new File(dirName), new ArrayList<File>(), 
-		    Variables.EXTENSION_JAVA));
+		    .scanFolder(new File(dirName), new ArrayList<File>(), extension));
 		return filePaths;
 	}
 
@@ -277,6 +280,14 @@ public final class MainFrameModel {
 				openedTestClass.getTriList().remove(i);
 			}	
 		}
+	}
+
+	public File getCtciFile() {
+		return ctciFile;
+	}
+
+	public void setCtciFile(File ctciFile) {
+		this.ctciFile = ctciFile;
 	}
 	
 }

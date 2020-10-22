@@ -30,13 +30,13 @@ public class MathDotPowTest {
     
     public static int testRaiseToPowerPerformance_Base = 2;    
     /** vom Wissenstraeger einstellbarer Wert, nach wie vielen Millisekunden die
-        Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist */
-    public static int testRaiseToPowerPerformance_TimeoutInNanos = 1000000;    
+     * Testmethode fehlschlagen soll, wenn sie dann immer noch nicht fertig ist */
+    public static int testRaiseToPowerPerformance_TimeoutInNanos = 1000000; 
     /** vom Wissenstraeger einstellbarer Exponent, mit der die zugehoerige Basis 
-        im Performance-Test potenziert werden soll */
+     * im Performance-Test potenziert werden soll */
     public static int testRaiseToPowerPerformance_Exponent = 2;    
     /** vom Wissenstraeger einstellbares Ergebnis, das im Performance-Test zu den 
-        entsprechenden Parametern erwartet wird */
+     * entsprechenden Parametern erwartet wird */
     public static long testRaiseToPowerPerformance_exp_Result = 4;
     
     /** vom Wissenstraeger einstellbare Basis fuer die TestFactory, die potenziert werden soll */

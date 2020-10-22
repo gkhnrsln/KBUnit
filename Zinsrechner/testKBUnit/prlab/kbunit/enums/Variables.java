@@ -37,7 +37,13 @@ public class Variables {
 	
 	//-------------------------FILES, FOLDERS-------------------------------------------
 	/**{@value #TEST_SOURCE}*/
-	public final static String TEST_SOURCE     = "test";
+	public final static String TEST_SOURCE = "test";
+	/**{@value #TEST_NAME}*/
+	public final static String TEST_NAME = "Test";
+	/**{@value #TEST_PLAIN_NAME}*/
+	public final static String TEST_PLAIN_NAME = "TestPlain";
+	/**{@value #TEST_PLAIN_SOURCE}*/
+	public final static String TEST_PLAIN_SOURCE = "testPlain";
 	/**{@value #TEST_NEW_SOURCE}*/
 	public final static String TEST_NEW_SOURCE = "testKBUnit";
 	/**{@value #ALLTEST_PACKAGE}*/
@@ -49,10 +55,17 @@ public class Variables {
 	/**{@value #CUSTOMER_TEST_CASE_INFO_FILE_PATH}*/
 	public final static String CUSTOMER_TEST_CASE_INFO_FILE_PATH
 			= "test\\CustomerTestCaseInformation.xml";
+	/**{@value #PARAMETER_FILE_PATH}*/
+	public final static String PARAMETER_FILE_PATH
+	= "testKBUnit\\Parameter.txt";
 
 	//-------------------------FILE-SCANNER---------------------------------------------
 	/**{@value #EXTENSION_JAVA}*/
 	public final static String EXTENSION_JAVA = ".java";
+	/**{@value #EXTENSION_TEST_JAVA}*/
+	public final static String EXTENSION_TEST_JAVA = "Test.java";
+	/**{@value #EXTENSION_TEST_PLAIN_JAVA}*/
+	public final static String EXTENSION_TEST_PLAIN_JAVA = "TestPlain.java";
 	/**{@value #EXTENSION_XML}*/  
 	public final static String EXTENSION_XML = ".xml";
 	
@@ -84,13 +97,13 @@ public class Variables {
 	public final static String ANNOTATION_TEST4 = "@Test";
 	/**{@value #ANNOTATION_TEST5}*/
 	public final static String ANNOTATION_TEST5 = "@Test";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_REPEATED}*/
 	public final static String ANNOTATION_TEST5_REPEATED = "@RepeatedTest";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_PARAMETERIZED}*/
 	public final static String ANNOTATION_TEST5_PARAMETERIZED = "@ParameterizedTest";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_FACTORY}*/
 	public final static String ANNOTATION_TEST5_FACTORY = "@TestFactory";
-	/**{@value #ANNOTATION_TEST5}*/
+	/**{@value #ANNOTATION_TEST5_TEMPLATE}*/
 	public final static String ANNOTATION_TEST5_TEMPLATE = "@TestTemplate";
 
 	//-------------------------XML-LOG-FILE (CREATED BY LOGGER)-------------------------
